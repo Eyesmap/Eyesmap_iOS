@@ -10,12 +10,13 @@
 		478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA01F2A6E600F000FA196 /* AppDelegate.swift */; };
 		478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0212A6E600F000FA196 /* SceneDelegate.swift */; };
 		478CA0242A6E600F000FA196 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0232A6E600F000FA196 /* ViewController.swift */; };
-		478CA0272A6E600F000FA196 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 478CA0252A6E600F000FA196 /* Main.storyboard */; };
 		478CA0292A6E6012000FA196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 478CA0282A6E6012000FA196 /* Assets.xcassets */; };
 		478CA02C2A6E6012000FA196 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 478CA02A2A6E6012000FA196 /* LaunchScreen.storyboard */; };
 		478CA0372A6E6012000FA196 /* EyesMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0362A6E6012000FA196 /* EyesMapTests.swift */; };
 		478CA0412A6E6012000FA196 /* EyesMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0402A6E6012000FA196 /* EyesMapUITests.swift */; };
 		478CA0432A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */; };
+		478CA0522A6E6E5A000FA196 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 478CA0512A6E6E5A000FA196 /* SnapKit */; };
+		478CA0552A6E6EC0000FA196 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 478CA0542A6E6EC0000FA196 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +41,6 @@
 		478CA01F2A6E600F000FA196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		478CA0212A6E600F000FA196 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		478CA0232A6E600F000FA196 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		478CA0262A6E600F000FA196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		478CA0282A6E6012000FA196 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		478CA02B2A6E6012000FA196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		478CA02D2A6E6012000FA196 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				478CA0522A6E6E5A000FA196 /* SnapKit in Frameworks */,
+				478CA0552A6E6EC0000FA196 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +104,6 @@
 				478CA01F2A6E600F000FA196 /* AppDelegate.swift */,
 				478CA0212A6E600F000FA196 /* SceneDelegate.swift */,
 				478CA0232A6E600F000FA196 /* ViewController.swift */,
-				478CA0252A6E600F000FA196 /* Main.storyboard */,
 				478CA0282A6E6012000FA196 /* Assets.xcassets */,
 				478CA02A2A6E6012000FA196 /* LaunchScreen.storyboard */,
 				478CA02D2A6E6012000FA196 /* Info.plist */,
@@ -143,6 +144,10 @@
 			dependencies = (
 			);
 			name = EyesMap;
+			packageProductDependencies = (
+				478CA0512A6E6E5A000FA196 /* SnapKit */,
+				478CA0542A6E6EC0000FA196 /* Alamofire */,
+			);
 			productName = EyesMap;
 			productReference = 478CA01C2A6E600F000FA196 /* EyesMap.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +220,10 @@
 				Base,
 			);
 			mainGroup = 478CA0132A6E600F000FA196;
+			packageReferences = (
+				478CA0502A6E6E5A000FA196 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				478CA0532A6E6EBF000FA196 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 478CA01D2A6E600F000FA196 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,7 +242,6 @@
 			files = (
 				478CA02C2A6E6012000FA196 /* LaunchScreen.storyboard in Resources */,
 				478CA0292A6E6012000FA196 /* Assets.xcassets in Resources */,
-				478CA0272A6E600F000FA196 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +305,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		478CA0252A6E600F000FA196 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				478CA0262A6E600F000FA196 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		478CA02A2A6E6012000FA196 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -366,7 +366,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -420,7 +420,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -442,9 +442,9 @@
 				INFOPLIST_FILE = EyesMap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -470,9 +470,9 @@
 				INFOPLIST_FILE = EyesMap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -602,6 +602,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		478CA0502A6E6E5A000FA196 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		478CA0532A6E6EBF000FA196 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		478CA0512A6E6E5A000FA196 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 478CA0502A6E6E5A000FA196 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		478CA0542A6E6EC0000FA196 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 478CA0532A6E6EBF000FA196 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 478CA0142A6E600F000FA196 /* Project object */;
 }
