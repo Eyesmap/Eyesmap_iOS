@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA01F2A6E600F000FA196 /* AppDelegate.swift */; };
 		478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0212A6E600F000FA196 /* SceneDelegate.swift */; };
-		478CA0242A6E600F000FA196 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0232A6E600F000FA196 /* ViewController.swift */; };
+		478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0232A6E600F000FA196 /* HomeViewController.swift */; };
 		478CA0292A6E6012000FA196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 478CA0282A6E6012000FA196 /* Assets.xcassets */; };
 		478CA02C2A6E6012000FA196 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 478CA02A2A6E6012000FA196 /* LaunchScreen.storyboard */; };
 		478CA0372A6E6012000FA196 /* EyesMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0362A6E6012000FA196 /* EyesMapTests.swift */; };
@@ -17,6 +17,7 @@
 		478CA0432A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */; };
 		478CA0522A6E6E5A000FA196 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 478CA0512A6E6E5A000FA196 /* SnapKit */; };
 		478CA0552A6E6EC0000FA196 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 478CA0542A6E6EC0000FA196 /* Alamofire */; };
+		478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0592A6EB21F000FA196 /* LocationHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +41,7 @@
 		478CA01C2A6E600F000FA196 /* EyesMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyesMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		478CA01F2A6E600F000FA196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		478CA0212A6E600F000FA196 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		478CA0232A6E600F000FA196 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		478CA0232A6E600F000FA196 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		478CA0282A6E6012000FA196 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		478CA02B2A6E6012000FA196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		478CA02D2A6E6012000FA196 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		478CA03C2A6E6012000FA196 /* EyesMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EyesMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		478CA0402A6E6012000FA196 /* EyesMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesMapUITests.swift; sourceTree = "<group>"; };
 		478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		478CA0592A6EB21F000FA196 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +103,10 @@
 		478CA01E2A6E600F000FA196 /* EyesMap */ = {
 			isa = PBXGroup;
 			children = (
+				478CA0572A6EB1C2000FA196 /* Sources */,
+				478CA0562A6EB1AF000FA196 /* Utils */,
 				478CA01F2A6E600F000FA196 /* AppDelegate.swift */,
 				478CA0212A6E600F000FA196 /* SceneDelegate.swift */,
-				478CA0232A6E600F000FA196 /* ViewController.swift */,
 				478CA0282A6E6012000FA196 /* Assets.xcassets */,
 				478CA02A2A6E6012000FA196 /* LaunchScreen.storyboard */,
 				478CA02D2A6E6012000FA196 /* Info.plist */,
@@ -126,6 +129,30 @@
 				478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */,
 			);
 			path = EyesMapUITests;
+			sourceTree = "<group>";
+		};
+		478CA0562A6EB1AF000FA196 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				478CA0592A6EB21F000FA196 /* LocationHandler.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		478CA0572A6EB1C2000FA196 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				478CA0582A6EB1FD000FA196 /* HomeScene */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		478CA0582A6EB1FD000FA196 /* HomeScene */ = {
+			isa = PBXGroup;
+			children = (
+				478CA0232A6E600F000FA196 /* HomeViewController.swift */,
+			);
+			path = HomeScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,9 +293,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				478CA0242A6E600F000FA196 /* ViewController.swift in Sources */,
+				478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
+				478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
