@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D6E67C41D2CE8963671545F /* Pods_EyesMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952C865199B62CCB80BD7609 /* Pods_EyesMapTests.framework */; };
 		478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA01F2A6E600F000FA196 /* AppDelegate.swift */; };
 		478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0212A6E600F000FA196 /* SceneDelegate.swift */; };
 		478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0232A6E600F000FA196 /* HomeViewController.swift */; };
@@ -15,9 +16,10 @@
 		478CA0372A6E6012000FA196 /* EyesMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0362A6E6012000FA196 /* EyesMapTests.swift */; };
 		478CA0412A6E6012000FA196 /* EyesMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0402A6E6012000FA196 /* EyesMapUITests.swift */; };
 		478CA0432A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */; };
-		478CA0522A6E6E5A000FA196 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 478CA0512A6E6E5A000FA196 /* SnapKit */; };
-		478CA0552A6E6EC0000FA196 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 478CA0542A6E6EC0000FA196 /* Alamofire */; };
 		478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0592A6EB21F000FA196 /* LocationHandler.swift */; };
+		47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4DE392A72554200FEA000 /* Secret.swift */; };
+		8BE7AC8407F016C2FC467A11 /* Pods_EyesMap_EyesMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB3D1DB9C0E13985806C2C9 /* Pods_EyesMap_EyesMapUITests.framework */; };
+		C7CC97840DED558AD074A722 /* Pods_EyesMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD704819C0FB6ACD2F5983F /* Pods_EyesMap.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D341D8A83E804F7ED90F79C /* Pods-EyesMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMapTests.debug.xcconfig"; path = "Target Support Files/Pods-EyesMapTests/Pods-EyesMapTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.debug.xcconfig"; sourceTree = "<group>"; };
 		478CA01C2A6E600F000FA196 /* EyesMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyesMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		478CA01F2A6E600F000FA196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		478CA0212A6E600F000FA196 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +55,14 @@
 		478CA0402A6E6012000FA196 /* EyesMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesMapUITests.swift; sourceTree = "<group>"; };
 		478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		478CA0592A6EB21F000FA196 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
+		47B4DE392A72554200FEA000 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		5BB3D1DB9C0E13985806C2C9 /* Pods_EyesMap_EyesMapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EyesMap_EyesMapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6995D490ED02FD6FEDC09ABF /* Pods-EyesMap-EyesMapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap-EyesMapUITests.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap-EyesMapUITests/Pods-EyesMap-EyesMapUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8CD704819C0FB6ACD2F5983F /* Pods_EyesMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EyesMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EF040E85EC6435926EC7488 /* Pods-EyesMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.release.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.release.xcconfig"; sourceTree = "<group>"; };
+		952C865199B62CCB80BD7609 /* Pods_EyesMapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EyesMapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAECDEF67BFE1587A0DF5159 /* Pods-EyesMapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMapTests.release.xcconfig"; path = "Target Support Files/Pods-EyesMapTests/Pods-EyesMapTests.release.xcconfig"; sourceTree = "<group>"; };
+		FF08826AD812A70609F1B4A4 /* Pods-EyesMap-EyesMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap-EyesMapUITests.release.xcconfig"; path = "Target Support Files/Pods-EyesMap-EyesMapUITests/Pods-EyesMap-EyesMapUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				478CA0522A6E6E5A000FA196 /* SnapKit in Frameworks */,
-				478CA0552A6E6EC0000FA196 /* Alamofire in Frameworks */,
+				C7CC97840DED558AD074A722 /* Pods_EyesMap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D6E67C41D2CE8963671545F /* Pods_EyesMapTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE7AC8407F016C2FC467A11 /* Pods_EyesMap_EyesMapUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +100,8 @@
 				478CA0352A6E6012000FA196 /* EyesMapTests */,
 				478CA03F2A6E6012000FA196 /* EyesMapUITests */,
 				478CA01D2A6E600F000FA196 /* Products */,
+				72D69A467EAD3F7B54CA723D /* Pods */,
+				878397E0929BDCCE63628BC9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +118,7 @@
 		478CA01E2A6E600F000FA196 /* EyesMap */ = {
 			isa = PBXGroup;
 			children = (
+				47B4DE382A72552600FEA000 /* Secret */,
 				478CA0572A6EB1C2000FA196 /* Sources */,
 				478CA0562A6EB1AF000FA196 /* Utils */,
 				478CA01F2A6E600F000FA196 /* AppDelegate.swift */,
@@ -155,6 +171,37 @@
 			path = HomeScene;
 			sourceTree = "<group>";
 		};
+		47B4DE382A72552600FEA000 /* Secret */ = {
+			isa = PBXGroup;
+			children = (
+				47B4DE392A72554200FEA000 /* Secret.swift */,
+			);
+			path = Secret;
+			sourceTree = "<group>";
+		};
+		72D69A467EAD3F7B54CA723D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */,
+				8EF040E85EC6435926EC7488 /* Pods-EyesMap.release.xcconfig */,
+				6995D490ED02FD6FEDC09ABF /* Pods-EyesMap-EyesMapUITests.debug.xcconfig */,
+				FF08826AD812A70609F1B4A4 /* Pods-EyesMap-EyesMapUITests.release.xcconfig */,
+				2D341D8A83E804F7ED90F79C /* Pods-EyesMapTests.debug.xcconfig */,
+				BAECDEF67BFE1587A0DF5159 /* Pods-EyesMapTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		878397E0929BDCCE63628BC9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8CD704819C0FB6ACD2F5983F /* Pods_EyesMap.framework */,
+				5BB3D1DB9C0E13985806C2C9 /* Pods_EyesMap_EyesMapUITests.framework */,
+				952C865199B62CCB80BD7609 /* Pods_EyesMapTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -162,19 +209,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 478CA0462A6E6012000FA196 /* Build configuration list for PBXNativeTarget "EyesMap" */;
 			buildPhases = (
+				01D9183430FE113CEAFB8C10 /* [CP] Check Pods Manifest.lock */,
 				478CA0182A6E600F000FA196 /* Sources */,
 				478CA0192A6E600F000FA196 /* Frameworks */,
 				478CA01A2A6E600F000FA196 /* Resources */,
+				9925923A6835376010AD149F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = EyesMap;
-			packageProductDependencies = (
-				478CA0512A6E6E5A000FA196 /* SnapKit */,
-				478CA0542A6E6EC0000FA196 /* Alamofire */,
-			);
 			productName = EyesMap;
 			productReference = 478CA01C2A6E600F000FA196 /* EyesMap.app */;
 			productType = "com.apple.product-type.application";
@@ -183,6 +228,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 478CA0492A6E6012000FA196 /* Build configuration list for PBXNativeTarget "EyesMapTests" */;
 			buildPhases = (
+				E9BA815295F570F492B42471 /* [CP] Check Pods Manifest.lock */,
 				478CA02E2A6E6012000FA196 /* Sources */,
 				478CA02F2A6E6012000FA196 /* Frameworks */,
 				478CA0302A6E6012000FA196 /* Resources */,
@@ -201,9 +247,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 478CA04C2A6E6012000FA196 /* Build configuration list for PBXNativeTarget "EyesMapUITests" */;
 			buildPhases = (
+				94CB848CDCD4D063CB755827 /* [CP] Check Pods Manifest.lock */,
 				478CA0382A6E6012000FA196 /* Sources */,
 				478CA0392A6E6012000FA196 /* Frameworks */,
 				478CA03A2A6E6012000FA196 /* Resources */,
+				AF0E0A5C3B13C24BB02409D8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -247,10 +295,6 @@
 				Base,
 			);
 			mainGroup = 478CA0132A6E600F000FA196;
-			packageReferences = (
-				478CA0502A6E6E5A000FA196 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				478CA0532A6E6EBF000FA196 /* XCRemoteSwiftPackageReference "Alamofire" */,
-			);
 			productRefGroup = 478CA01D2A6E600F000FA196 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -288,12 +332,116 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		01D9183430FE113CEAFB8C10 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EyesMap-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		94CB848CDCD4D063CB755827 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EyesMap-EyesMapUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9925923A6835376010AD149F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EyesMap/Pods-EyesMap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EyesMap/Pods-EyesMap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EyesMap/Pods-EyesMap-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF0E0A5C3B13C24BB02409D8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EyesMap-EyesMapUITests/Pods-EyesMap-EyesMapUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EyesMap-EyesMapUITests/Pods-EyesMap-EyesMapUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EyesMap-EyesMapUITests/Pods-EyesMap-EyesMapUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9BA815295F570F492B42471 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EyesMapTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		478CA0182A6E600F000FA196 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */,
+				47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
 				478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */,
@@ -460,6 +608,7 @@
 		};
 		478CA0472A6E6012000FA196 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -488,6 +637,7 @@
 		};
 		478CA0482A6E6012000FA196 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EF040E85EC6435926EC7488 /* Pods-EyesMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -516,6 +666,7 @@
 		};
 		478CA04A2A6E6012000FA196 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D341D8A83E804F7ED90F79C /* Pods-EyesMapTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -536,6 +687,7 @@
 		};
 		478CA04B2A6E6012000FA196 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BAECDEF67BFE1587A0DF5159 /* Pods-EyesMapTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -556,6 +708,7 @@
 		};
 		478CA04D2A6E6012000FA196 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6995D490ED02FD6FEDC09ABF /* Pods-EyesMap-EyesMapUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -574,6 +727,7 @@
 		};
 		478CA04E2A6E6012000FA196 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF08826AD812A70609F1B4A4 /* Pods-EyesMap-EyesMapUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -630,38 +784,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		478CA0502A6E6E5A000FA196 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		478CA0532A6E6EBF000FA196 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		478CA0512A6E6E5A000FA196 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 478CA0502A6E6E5A000FA196 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		478CA0542A6E6EC0000FA196 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 478CA0532A6E6EBF000FA196 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 478CA0142A6E600F000FA196 /* Project object */;
 }

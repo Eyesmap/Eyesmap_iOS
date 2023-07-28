@@ -7,22 +7,20 @@
 
 import UIKit
 import SnapKit
-import MapKit
+import NMapsMap
 import CoreLocation
 
 class HomeViewController: UIViewController {
 
 //MARK: - Properties
-    private let mapView = MKMapView()
-    
+    private let mapView = NMFMapView()
     private let locationManager = LocationHandler.shared.locationManager
     
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        enableLocationServices()
         setUIandConstraints()
-        
+        enableLocationServices()
         
     }
 
@@ -33,28 +31,50 @@ class HomeViewController: UIViewController {
     
     // MapView Setting
     func configureMapView() {
+        mapView.delegate = self
         view.addSubview(mapView)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        self.mapView.showsUserLocation = true
-        self.mapView.setUserTrackingMode(.follow, animated: true)
-        self.mapView.delegate = self
+        mapView.positionMode = .compass
+        currentLocationCameraUpdate()
+        drawMarking(position: NMGLatLng(lat: 37.63, lng: 126.8))
+        
     }
     
     
-}
-
-//MARK: - MKMapViewDelegate
-extension HomeViewController: MKMapViewDelegate {
+    // 현 위치 카메라 업데이트
+    func currentLocationCameraUpdate() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
+        cameraUpdate.animation = .easeIn
+        mapView.moveCamera(cameraUpdate)
+    }
     
-
+    // 마커 표시 & 이벤트 처리
+    func drawMarking(position: NMGLatLng) {
+        let marker = NMFMarker()
+        marker.position = position
+        marker.mapView = mapView
+        marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+        
+        marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            guard let self = self else { return false }
+            
+            if let marker = overlay as? NMFMarker {
+                print("MARKER 클릭")
+            }
+            
+            return true
+        }
+    }
 }
 
+//MARK: - CLLocationManagerDelegate
 extension HomeViewController: CLLocationManagerDelegate {
-    // 위치 권한 설정
     func enableLocationServices() {
         locationManager?.delegate = self
          
@@ -89,7 +109,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         let settingsAction = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
-            // 위치 권한 설정 화면으로 이동
+            // 설정 화면으로 이동
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         }
         
@@ -98,5 +118,12 @@ extension HomeViewController: CLLocationManagerDelegate {
         
         present(alertController, animated: true, completion: nil)
     }
-    
+}
+
+//MARK: - NMFMapViewDelegate
+extension HomeViewController: NMFMapViewDelegate, NMFMapViewTouchDelegate {
+    // 지도 탭 시
+    func didTapMapView(_ point: CGPoint, latLng latlng: NMGLatLng) {
+        print("지도 탭했음")
+    }
 }
