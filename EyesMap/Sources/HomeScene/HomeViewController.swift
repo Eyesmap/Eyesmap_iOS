@@ -9,12 +9,18 @@ import UIKit
 import SnapKit
 import NMapsMap
 import CoreLocation
+import CoreMotion
 
 class HomeViewController: UIViewController {
 
 //MARK: - Properties
-    private let mapView = NMFMapView()
     private let locationManager = LocationHandler.shared.locationManager
+    private var userLocation: CLLocation? // 현 위치
+    private var userHeading: CLHeading? // 바라보는 방향
+    private var complaints = [NMFMarker]() // API 연결 민원들 추가 값
+    
+    
+    private let mapView = NMFMapView()
     
 //MARK: - Life Cycles
     override func viewDidLoad() {
@@ -75,9 +81,24 @@ class HomeViewController: UIViewController {
 
 //MARK: - CLLocationManagerDelegate
 extension HomeViewController: CLLocationManagerDelegate {
+    // 사용자 위치 변경 시
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        userLocation = location
+        
+    }
+    
+    // 사용자 장치 방향
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        userHeading = newHeading
+        guard let userHeading = userHeading else { return }
+        print("userHeading = \(userHeading)")
+    }
+    
+    // GPS 사용 권한 확인
     func enableLocationServices() {
         locationManager?.delegate = self
-         
+        
         switch CLLocationManager.authorizationStatus() {
         case .denied:
             print("DEBUG: 거절 됨")
@@ -90,10 +111,12 @@ extension HomeViewController: CLLocationManagerDelegate {
         case .authorizedAlways:
             print("DEBUG: 항상 위치정보 권한 사용중")
             locationManager?.startUpdatingLocation()
+            locationManager?.startUpdatingHeading()
             locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         case .authorizedWhenInUse:
             print("DEBUG: 앱을 사용할 때만 위치정보 권한 사용중")
             locationManager?.requestAlwaysAuthorization()
+            locationManager?.startUpdatingHeading()
         @unknown default:
             break
         }

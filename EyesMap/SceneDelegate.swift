@@ -18,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController(rootViewController : HomeViewController())
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        window?.overrideUserInterfaceStyle = .light // 라이트 모드 고정
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
