@@ -71,11 +71,50 @@ class HomeViewController: UIViewController {
             guard let self = self else { return false }
             
             if let marker = overlay as? NMFMarker {
-                print("MARKER 클릭")
+                print("DEBUG: MARKER 클릭")
             }
             
             return true
         }
+    }
+    
+    // 현재 위치와 complaints에 저장된 민원들의 주소 위치 거리 파악
+    func checkComplaintsDistance() {
+        guard let userLocation = userLocation,
+              let userHeading = userHeading else { return }
+        
+        for complaint in complaints {
+            let complaintLocaion = CLLocation(latitude: complaint.position.lat, longitude: complaint.position.lng)
+            let distance = userLocation.distance(from: complaintLocaion)
+            
+            if distance <= 5.0 {
+                let bearing = calculateBearing(location: userLocation, destination: complaintLocaion)
+                let headingDifference = abs(userHeading.trueHeading - bearing)
+                
+                // 45도 이내인지 확인
+                if headingDifference <= .pi / 4 {
+                    print("DEBUG: 사용자 디바이스 방향으로 마킹의 위치에 5미터 내로 접근하였습니다.")
+                }
+                
+            }
+        }
+    }
+    
+    // 사용자의 현재 위치와 민원의 위치 사이의 방향 각도를 계산하는 함수
+    func calculateBearing(location: CLLocation, destination: CLLocation) -> Double {
+        let userLat = location.coordinate.latitude.toRadians()
+        let userLon = location.coordinate.longitude.toRadians()
+        let destinationLat = destination.coordinate.latitude.toRadians()
+        let destinationLon = destination.coordinate.longitude.toRadians()
+
+        // 현재위치와 사용자 위치 경도 차이
+        let deltaLon = destinationLon - userLon
+
+        let y = sin(deltaLon) * cos(destinationLat)
+        let x = cos(userLat) * sin(destinationLat) - sin(userLat) * cos(destinationLat) * cos(deltaLon)
+        let radiansBearing = atan2(y, x)
+
+        return radiansBearing.toDegrees()
     }
 }
 
@@ -85,7 +124,7 @@ extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         userLocation = location
-        
+        checkComplaintsDistance()
     }
     
     // 사용자 장치 방향
