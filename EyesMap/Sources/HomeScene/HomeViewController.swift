@@ -17,17 +17,17 @@ class HomeViewController: UIViewController {
     private let locationManager = LocationHandler.shared.locationManager
     private var userLocation: CLLocation? // 현 위치
     private var userHeading: CLHeading? // 바라보는 방향
-    private var complaints = [NMFMarker]() // API 연결 민원들 추가 값
-    
+    private var complaints = [ComplaintModel]() // API 연결 민원들 추가 값
     
     private let mapView = NMFMapView()
+    private lazy var locationOverlay = mapView.locationOverlay // 사용자 위치 표시
     
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        getPositions()
         setUIandConstraints()
         enableLocationServices()
-        
     }
 
 //MARK: - set UI
@@ -43,39 +43,49 @@ class HomeViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        mapView.positionMode = .compass
         currentLocationCameraUpdate()
-        drawMarking(position: NMGLatLng(lat: 37.63, lng: 126.8))
+        drawMarking(positions: complaints)
         
     }
     
-    
-    // 현 위치 카메라 업데이트
+    // 현 위치 아이콘 & 카메라 업데이트
     func currentLocationCameraUpdate() {
         guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
         guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        
+        locationOverlay.location = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
+        locationOverlay.hidden = false
+        locationOverlay.icon = NMFOverlayImage(name: "image1") //NMFOverlayImage(image: UIImage(systemName: "xmark")! )
+        locationOverlay.iconWidth = 30
+        locationOverlay.iconHeight = 30
+        locationOverlay.anchor = CGPoint(x: 0.5, y: 1)
+        
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
         cameraUpdate.animation = .easeIn
         mapView.moveCamera(cameraUpdate)
     }
     
     // 마커 표시 & 이벤트 처리
-    func drawMarking(position: NMGLatLng) {
-        let marker = NMFMarker()
-        marker.position = position
-        marker.mapView = mapView
-        marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+    func drawMarking(positions: [ComplaintModel]) {
         
-        marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
-            guard let self = self else { return false }
+        for location in positions {
+            let marker = NMFMarker()
+            print("lat: \(location.latitude), lng: \(location.longitude)")
+            marker.position = NMGLatLng(lat: location.latitude, lng: location.longitude)
+            marker.mapView = mapView
+            marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
             
-            if let marker = overlay as? NMFMarker {
-                print("DEBUG: MARKER 클릭")
+            marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                guard let self = self else { return false }
+                
+                if let marker = overlay as? NMFMarker {
+                    print("DEBUG: MARKER 클릭")
+                }
+                
+                return true
             }
-            
-            return true
         }
+        
     }
     
     // 현재 위치와 complaints에 저장된 민원들의 주소 위치 거리 파악
@@ -84,7 +94,7 @@ class HomeViewController: UIViewController {
               let userHeading = userHeading else { return }
         
         for complaint in complaints {
-            let complaintLocaion = CLLocation(latitude: complaint.position.lat, longitude: complaint.position.lng)
+            let complaintLocaion = CLLocation(latitude: complaint.latitude, longitude: complaint.longitude)
             let distance = userLocation.distance(from: complaintLocaion)
             
             if distance <= 5.0 {
@@ -116,6 +126,19 @@ class HomeViewController: UIViewController {
 
         return radiansBearing.toDegrees()
     }
+    
+    // API 이후 Response 값
+    func getPositions() {
+        complaints = [
+        ComplaintModel(latitude: 37.658649, longitude: 126.831221),
+        ComplaintModel(latitude: 37.569771, longitude: 126.897160),
+        ComplaintModel(latitude: 37.667478, longitude: 126.751685),
+        ComplaintModel(latitude: 37.643139, longitude: 126.788088),
+        ComplaintModel(latitude: 37.693203, longitude: 126.727257),
+        ComplaintModel(latitude: 37.612836, longitude: 126.834498),
+        ComplaintModel(latitude: 37.634592, longitude: 126.832650)
+        ]
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -124,14 +147,16 @@ extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         userLocation = location
+        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: self.userLocation?.coordinate.latitude ?? 0,
+                                                               lng: self.userLocation?.coordinate.longitude ?? 0)))
         checkComplaintsDistance()
     }
     
     // 사용자 장치 방향
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         userHeading = newHeading
-        guard let userHeading = userHeading else { return }
-        print("userHeading = \(userHeading)")
+        locationOverlay.heading = newHeading.trueHeading
+        print("trueHeading: \(newHeading.trueHeading)")
     }
     
     // GPS 사용 권한 확인
