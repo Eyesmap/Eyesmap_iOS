@@ -22,6 +22,25 @@ class HomeViewController: UIViewController {
     private let mapView = NMFMapView()
     private lazy var locationOverlay = mapView.locationOverlay // 사용자 위치 표시
     
+    private lazy var complaintCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .clear
+        cv.layer.cornerRadius = 13
+        cv.showsHorizontalScrollIndicator = false
+        cv.allowsMultipleSelection = false
+        cv.isPagingEnabled = false
+        cv.decelerationRate = .fast
+        cv.register(ComplaintCollectionViewCell.self, forCellWithReuseIdentifier: ComplaintCollectionViewCell.identifier)
+        cv.delegate = self
+        cv.dataSource = self
+        return cv
+    }()
+    
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +52,7 @@ class HomeViewController: UIViewController {
 //MARK: - set UI
     func setUIandConstraints() {
         configureMapView()
+        configureCollectionView()
     }
     
     // MapView Setting
@@ -45,7 +65,16 @@ class HomeViewController: UIViewController {
         }
         currentLocationCameraUpdate()
         drawMarking(positions: complaints)
+    }
+    
+    func configureCollectionView() {
+        view.addSubview(complaintCollectionView)
         
+        complaintCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(400)
+            make.bottom.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview()
+        }
     }
     
     // 현 위치 아이콘 & 카메라 업데이트
@@ -214,5 +243,31 @@ extension HomeViewController: NMFMapViewDelegate, NMFMapViewTouchDelegate {
         print("lat: \(latlng.lat), lng: \(latlng.lng)")
         
     }
+    
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 40, height: 212)
+    }
+    
+}
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComplaintCollectionViewCell.identifier, for: indexPath) as? ComplaintCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+    
     
 }
