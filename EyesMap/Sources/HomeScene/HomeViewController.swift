@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        getPositions()
+        getPositions() // 서버연동 시
         setUIandConstraints()
         enableLocationServices()
     }
@@ -55,7 +55,7 @@ class HomeViewController: UIViewController {
         
         locationOverlay.location = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
         locationOverlay.hidden = false
-        locationOverlay.icon = NMFOverlayImage(name: "image1") //NMFOverlayImage(image: UIImage(systemName: "xmark")! )
+        locationOverlay.icon = NMFOverlayImage(name: "image1")
         locationOverlay.iconWidth = 30
         locationOverlay.iconHeight = 30
         locationOverlay.anchor = CGPoint(x: 0.5, y: 1)
@@ -85,7 +85,6 @@ class HomeViewController: UIViewController {
                 return true
             }
         }
-        
     }
     
     // 현재 위치와 complaints에 저장된 민원들의 주소 위치 거리 파악
@@ -211,6 +210,9 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController: NMFMapViewDelegate, NMFMapViewTouchDelegate {
     // 지도 탭 시
     func didTapMapView(_ point: CGPoint, latLng latlng: NMGLatLng) {
-        print("지도 탭했음")
+        print("탭한 지역 - ")
+        print("lat: \(latlng.lat), lng: \(latlng.lng)")
+        
     }
+    
 }
