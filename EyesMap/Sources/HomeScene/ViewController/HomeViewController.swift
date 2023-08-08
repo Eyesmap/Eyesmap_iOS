@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     private var userLocation: CLLocation? // 현 위치
     private var userHeading: CLHeading? // 바라보는 방향
     private var complaints = [ComplaintModel]() // API 연결 민원들 추가 값
+    private var selectedComplaints: ComplaintModel? = nil
     
     private let mapView = NMFMapView()
     private lazy var locationOverlay = mapView.locationOverlay // 사용자 위치 표시
@@ -38,13 +39,14 @@ class HomeViewController: UIViewController {
         cv.register(ComplaintCollectionViewCell.self, forCellWithReuseIdentifier: ComplaintCollectionViewCell.identifier)
         cv.delegate = self
         cv.dataSource = self
+        cv.alpha = 0
         return cv
     }()
     
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        getPositions() // 서버연동 시
+        getComplaints() // 서버연동 시 변경
         setUIandConstraints()
         enableLocationServices()
     }
@@ -108,7 +110,8 @@ class HomeViewController: UIViewController {
                 guard let self = self else { return false }
                 
                 if let marker = overlay as? NMFMarker {
-                    print("DEBUG: MARKER 클릭")
+                    selectedComplaints = location
+                    print(self.selectedComplaints)
                 }
                 
                 return true
@@ -119,23 +122,35 @@ class HomeViewController: UIViewController {
     // 현재 위치와 complaints에 저장된 민원들의 주소 위치 거리 파악
     func checkComplaintsDistance() {
         guard let userLocation = userLocation,
-              let userHeading = userHeading else { return }
+              let userHeading = userHeading?.trueHeading else { return }
         
         for complaint in complaints {
             let complaintLocaion = CLLocation(latitude: complaint.latitude, longitude: complaint.longitude)
             let distance = userLocation.distance(from: complaintLocaion)
             
-            if distance <= 5.0 {
+            if distance <= 10.0 {
+                print("거리는 들어왔음")
                 let bearing = calculateBearing(location: userLocation, destination: complaintLocaion)
-                let headingDifference = abs(userHeading.trueHeading - bearing)
+                let headingDifference = abs(calculateHeadingDifference(userHeading, bearing))
                 
                 // 45도 이내인지 확인
-                if headingDifference <= .pi / 4 {
+                let maxAllowedDifference = 45.0 // 허용 오차 범위 (45도)
+                if headingDifference <= maxAllowedDifference {
                     print("DEBUG: 사용자 디바이스 방향으로 마킹의 위치에 5미터 내로 접근하였습니다.")
                 }
-                
             }
         }
+    }
+    
+    // 사용자의 디바이스 방향과 마킹을 바라보는 방향 간의 차이를 계산하는 함수
+    func calculateHeadingDifference(_ userHeading: Double, _ markingHeading: Double) -> Double {
+        let difference = userHeading - markingHeading
+        if difference > 180 {
+            return 360 - difference
+        } else if difference < -180 {
+            return 360 + difference
+        }
+        return abs(difference)
     }
     
     // 사용자의 현재 위치와 민원의 위치 사이의 방향 각도를 계산하는 함수
@@ -156,7 +171,7 @@ class HomeViewController: UIViewController {
     }
     
     // API 이후 Response 값
-    func getPositions() {
+    func getComplaints() {
         complaints = [
         ComplaintModel(latitude: 37.658649, longitude: 126.831221),
         ComplaintModel(latitude: 37.569771, longitude: 126.897160),
@@ -164,7 +179,8 @@ class HomeViewController: UIViewController {
         ComplaintModel(latitude: 37.643139, longitude: 126.788088),
         ComplaintModel(latitude: 37.693203, longitude: 126.727257),
         ComplaintModel(latitude: 37.612836, longitude: 126.834498),
-        ComplaintModel(latitude: 37.634592, longitude: 126.832650)
+        ComplaintModel(latitude: 37.634592, longitude: 126.832650),
+        ComplaintModel(latitude: 37.62146193038201, longitude: 126.83230989248261)
         ]
     }
 }
@@ -241,9 +257,8 @@ extension HomeViewController: NMFMapViewDelegate, NMFMapViewTouchDelegate {
     func didTapMapView(_ point: CGPoint, latLng latlng: NMGLatLng) {
         print("탭한 지역 - ")
         print("lat: \(latlng.lat), lng: \(latlng.lng)")
-        
+        print("현위치에서 거리 차이 = \(userLocation?.distance(from: CLLocation(latitude: latlng.lat, longitude: latlng.lng)))")
     }
-    
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
@@ -255,10 +270,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
