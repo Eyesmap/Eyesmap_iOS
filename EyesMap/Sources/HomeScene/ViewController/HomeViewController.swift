@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import NMapsMap
 import CoreLocation
-import CoreMotion
+//import CoreMotion
 
 class HomeViewController: UIViewController {
 
@@ -18,7 +18,11 @@ class HomeViewController: UIViewController {
     private var userLocation: CLLocation? // 현 위치
     private var userHeading: CLHeading? // 바라보는 방향
     private var complaints = [ComplaintModel]() // API 연결 민원들 추가 값
+    private var markers = [NMFMarker]()
+    
     private var selectedComplaints: ComplaintModel? = nil
+    private var selectedMarker: NMFMarker? = nil
+    
     
     private let mapView = NMFMapView()
     private lazy var locationOverlay = mapView.locationOverlay // 사용자 위치 표시
@@ -60,13 +64,16 @@ class HomeViewController: UIViewController {
     // MapView Setting
     func configureMapView() {
         mapView.delegate = self
+        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(_:)))
+        mapView.addGestureRecognizer(longTapGesture)
+        
         view.addSubview(mapView)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         currentLocationCameraUpdate()
-        drawMarking(positions: complaints)
+        configureMarking(complaints: complaints)
     }
     
     func configureCollectionView() {
@@ -97,20 +104,29 @@ class HomeViewController: UIViewController {
     }
     
     // 마커 표시 & 이벤트 처리
-    func drawMarking(positions: [ComplaintModel]) {
+    func configureMarking(complaints: [ComplaintModel]) {
         
-        for location in positions {
+        for complaint in complaints {
             let marker = NMFMarker()
-            print("lat: \(location.latitude), lng: \(location.longitude)")
-            marker.position = NMGLatLng(lat: location.latitude, lng: location.longitude)
+            print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
+            marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
             marker.mapView = mapView
             marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                 guard let self = self else { return false }
                 
+                // 마커 선택 시
                 if let marker = overlay as? NMFMarker {
-                    selectedComplaints = location
+                    // 이미 선택된 마커 초기화
+                    if let selectedMarker = selectedMarker {
+                        selectedMarker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+                    }
+                    
+                    marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "xmark")!)
+                    selectedMarker = marker
+                    
+                    selectedComplaints = complaint
                     print(self.selectedComplaints)
                 }
                 
@@ -128,8 +144,8 @@ class HomeViewController: UIViewController {
             let complaintLocaion = CLLocation(latitude: complaint.latitude, longitude: complaint.longitude)
             let distance = userLocation.distance(from: complaintLocaion)
             
-            if distance <= 10.0 {
-                print("거리는 들어왔음")
+            if distance <= 30.0 {
+                print("DEBUG: 거리 들어옴")
                 let bearing = calculateBearing(location: userLocation, destination: complaintLocaion)
                 let headingDifference = abs(calculateHeadingDifference(userHeading, bearing))
                 
@@ -173,15 +189,42 @@ class HomeViewController: UIViewController {
     // API 이후 Response 값
     func getComplaints() {
         complaints = [
-        ComplaintModel(latitude: 37.658649, longitude: 126.831221),
-        ComplaintModel(latitude: 37.569771, longitude: 126.897160),
-        ComplaintModel(latitude: 37.667478, longitude: 126.751685),
-        ComplaintModel(latitude: 37.643139, longitude: 126.788088),
-        ComplaintModel(latitude: 37.693203, longitude: 126.727257),
-        ComplaintModel(latitude: 37.612836, longitude: 126.834498),
-        ComplaintModel(latitude: 37.634592, longitude: 126.832650),
-        ComplaintModel(latitude: 37.62146193038201, longitude: 126.83230989248261)
+//            ComplaintModel(latitude: 37.658649, longitude: 126.831221),
+//            ComplaintModel(latitude: 37.569771, longitude: 126.897160),
+//            ComplaintModel(latitude: 37.667478, longitude: 126.751685),
+//            ComplaintModel(latitude: 37.643139, longitude: 126.788088),
+//            ComplaintModel(latitude: 37.693203, longitude: 126.727257),
+            ComplaintModel(latitude: 37.612836, longitude: 126.834498),
+            ComplaintModel(latitude: 37.634592, longitude: 126.832650),
+            ComplaintModel(latitude: 37.62146193038201, longitude: 126.83230989248261)
         ]
+        
+        markers = [
+//            NMFMarker(position: NMGLatLng(lat: 37.658649, lng: 126.831221), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
+//            NMFMarker(position: NMGLatLng(lat: 37.569771, lng: 126.897160), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
+//            NMFMarker(position: NMGLatLng(lat: 37.667478, lng: 126.751685), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
+//            NMFMarker(position: NMGLatLng(lat: 37.643139, lng: 126.788088), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
+//            NMFMarker(position: NMGLatLng(lat: 37.693203, lng: 126.727257), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
+            NMFMarker(position: NMGLatLng(lat: 37.612836, lng: 126.834498), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
+            NMFMarker(position: NMGLatLng(lat: 37.634592, lng: 126.832650), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
+            NMFMarker(position: NMGLatLng(lat: 37.62146193038201, lng: 126.83230989248261), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!))
+
+        ]
+        
+    }
+    
+    //MARK: - Handler
+    // 길게 탭 했을 시
+    @objc func handleLongTap(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            let point = gesture.location(in: mapView)
+            let latlng = mapView.projection.latlng(from: point)
+            
+            print("길게 탭한 지역 - ")
+            print("lat: \(latlng.lat), lng: \(latlng.lng)")
+            guard let userLocation = userLocation else { return }
+            print("현위치에서 거리 차이 = \(userLocation.distance(from: CLLocation(latitude: latlng.lat, longitude: latlng.lng)))")
+        }
     }
 }
 
@@ -252,12 +295,13 @@ extension HomeViewController: CLLocationManagerDelegate {
 }
 
 //MARK: - NMFMapViewDelegate
-extension HomeViewController: NMFMapViewDelegate, NMFMapViewTouchDelegate {
+extension HomeViewController: NMFMapViewDelegate {
     // 지도 탭 시
     func didTapMapView(_ point: CGPoint, latLng latlng: NMGLatLng) {
         print("탭한 지역 - ")
         print("lat: \(latlng.lat), lng: \(latlng.lng)")
-        print("현위치에서 거리 차이 = \(userLocation?.distance(from: CLLocation(latitude: latlng.lat, longitude: latlng.lng)))")
+        guard let userLocation = userLocation else { return }
+        print("현위치에서 거리 차이 = \(userLocation.distance(from: CLLocation(latitude: latlng.lat, longitude: latlng.lng)))")
     }
 }
 
@@ -271,7 +315,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return markers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
