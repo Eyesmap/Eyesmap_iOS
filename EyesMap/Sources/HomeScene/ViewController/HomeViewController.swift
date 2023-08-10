@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     private var complaints = [ComplaintModel]() // API 연결 민원들 추가 값
     private var markers = [NMFMarker]()
     
-    private var selectedComplaints: ComplaintModel? = nil
+    private var selectedComplaint: ComplaintModel? = nil
     private var selectedMarker: NMFMarker? = nil
     
     
@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
         cv.register(ComplaintCollectionViewCell.self, forCellWithReuseIdentifier: ComplaintCollectionViewCell.identifier)
         cv.delegate = self
         cv.dataSource = self
-        cv.alpha = 0
+        cv.alpha = 1
         return cv
     }()
     
@@ -54,6 +54,7 @@ class HomeViewController: UIViewController {
         setUIandConstraints()
         enableLocationServices()
     }
+
 
 //MARK: - set UI
     func setUIandConstraints() {
@@ -126,8 +127,8 @@ class HomeViewController: UIViewController {
                     marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "xmark")!)
                     selectedMarker = marker
                     
-                    selectedComplaints = complaint
-                    print(self.selectedComplaints)
+                    selectedComplaint = complaint
+                    print(self.selectedComplaint)
                 }
                 
                 return true
@@ -324,5 +325,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let complaint = self.selectedComplaint else { return }
+        
+        let detailVC = DetailViewController(complaint: complaint)
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
