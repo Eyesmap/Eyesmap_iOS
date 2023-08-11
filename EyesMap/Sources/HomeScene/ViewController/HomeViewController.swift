@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     private var complaints = [ComplaintModel]() // API 연결 민원들 추가 값
     private var markers = [NMFMarker]()
     
-    private var selectedComplaints: ComplaintModel? = nil
+    private var selectedComplaint: ComplaintModel? = nil
     private var selectedMarker: NMFMarker? = nil
     
     
@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
         cv.register(ComplaintCollectionViewCell.self, forCellWithReuseIdentifier: ComplaintCollectionViewCell.identifier)
         cv.delegate = self
         cv.dataSource = self
-        cv.alpha = 0
+        cv.alpha = 1
         return cv
     }()
     
@@ -54,6 +54,7 @@ class HomeViewController: UIViewController {
         setUIandConstraints()
         enableLocationServices()
     }
+
 
 //MARK: - set UI
     func setUIandConstraints() {
@@ -93,9 +94,9 @@ class HomeViewController: UIViewController {
         
         locationOverlay.location = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
         locationOverlay.hidden = false
-        locationOverlay.icon = NMFOverlayImage(name: "image1")
-        locationOverlay.iconWidth = 30
-        locationOverlay.iconHeight = 30
+        locationOverlay.icon = NMFOverlayImage(name: "myPosition")
+        locationOverlay.iconWidth = 38
+        locationOverlay.iconHeight = 38
         locationOverlay.anchor = CGPoint(x: 0.5, y: 1)
         
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
@@ -111,7 +112,7 @@ class HomeViewController: UIViewController {
             print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
             marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
             marker.mapView = mapView
-            marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+            marker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                 guard let self = self else { return false }
@@ -120,14 +121,14 @@ class HomeViewController: UIViewController {
                 if let marker = overlay as? NMFMarker {
                     // 이미 선택된 마커 초기화
                     if let selectedMarker = selectedMarker {
-                        selectedMarker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+                        selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
                     }
                     
-                    marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "xmark")!)
+                    marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
                     selectedMarker = marker
                     
-                    selectedComplaints = complaint
-                    print(self.selectedComplaints)
+                    selectedComplaint = complaint
+                    print(self.selectedComplaint)
                 }
                 
                 return true
@@ -324,5 +325,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let complaint = self.selectedComplaint else { return }
+        
+        let detailVC = DetailViewController(complaint: complaint)
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
