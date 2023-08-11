@@ -25,6 +25,7 @@
 		47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B32A8518C200529342 /* DetailComplaintView.swift */; };
 		47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B92A85F92400529342 /* DeleteAlertController.swift */; };
 		47FD24BC2A86189900529342 /* DeleteRequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24BB2A86189900529342 /* DeleteRequestButton.swift */; };
+		47FD24BE2A862D8500529342 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24BD2A862D8500529342 /* UIColor.swift */; };
 		47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE7A902A7C0BD500075B0C /* ComplaintModel.swift */; };
 		8BE7AC8407F016C2FC467A11 /* Pods_EyesMap_EyesMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB3D1DB9C0E13985806C2C9 /* Pods_EyesMap_EyesMapUITests.framework */; };
 		C7CC97840DED558AD074A722 /* Pods_EyesMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD704819C0FB6ACD2F5983F /* Pods_EyesMap.framework */; };
@@ -71,6 +72,7 @@
 		47FD24B32A8518C200529342 /* DetailComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailComplaintView.swift; sourceTree = "<group>"; };
 		47FD24B92A85F92400529342 /* DeleteAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertController.swift; sourceTree = "<group>"; };
 		47FD24BB2A86189900529342 /* DeleteRequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRequestButton.swift; sourceTree = "<group>"; };
+		47FD24BD2A862D8500529342 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		47FE7A902A7C0BD500075B0C /* ComplaintModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplaintModel.swift; sourceTree = "<group>"; };
 		5BB3D1DB9C0E13985806C2C9 /* Pods_EyesMap_EyesMapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EyesMap_EyesMapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6995D490ED02FD6FEDC09ABF /* Pods-EyesMap-EyesMapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap-EyesMapUITests.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap-EyesMapUITests/Pods-EyesMap-EyesMapUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		47CB4A822A7941CD00E001D2 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				47FD24BD2A862D8500529342 /* UIColor.swift */,
 				47CB4A832A7941DE00E001D2 /* Double.swift */,
 				47FD24BB2A86189900529342 /* DeleteRequestButton.swift */,
 			);
@@ -529,6 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
+				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
 				478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */,
 				47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,

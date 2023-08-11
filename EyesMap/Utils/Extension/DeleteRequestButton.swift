@@ -19,11 +19,9 @@ class DeleteRequestButton: UIButton {
     }
     
     private func commonInit(text: String) {
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.lightGray,
-            .font: UIFont.boldSystemFont(ofSize: 12)]
-        let attributedString = NSAttributedString(string: text, attributes: textAttributes)
-        setAttributedTitle(attributedString, for: .normal)
+        setTitle(text, for: .normal)
+        setTitleColor(UIColor.lightGray, for: .normal)
+        titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         
         contentHorizontalAlignment = .leading
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)

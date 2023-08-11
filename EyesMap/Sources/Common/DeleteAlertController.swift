@@ -86,6 +86,8 @@ class DeletedAlertController: UIViewController {
         $0.setAttributedTitle(attributedString, for: .normal)
         $0.backgroundColor = .lightGray
         $0.layer.cornerRadius = 20
+        $0.addTarget(self, action: #selector(reasonButtonTap), for: .touchUpInside)
+        $0.isEnabled = false
         return $0
     }(UIButton())
     
@@ -188,6 +190,117 @@ class DeletedAlertController: UIViewController {
     }
     
     @objc func reasonButtonTap(_ sender: UIButton) {
-    
+        if sender == restoreButton {
+            if isReasonButtonTaped == false {
+                sender.isSelected = true
+                sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
+                sender.setTitleColor(.white, for: .normal)
+                isReasonButtonTaped = true
+//                categoryClicked = .selfDevelopment
+                sender.backgroundColor = UIColor.alertDeleteButton
+            } else {
+                if falseReportButton.isSelected == true || duplicatedButton.isSelected == true {
+                    falseReportButton.isSelected = false
+                    duplicatedButton.isSelected = false
+                    falseReportButton.setTitleColor(.lightGray, for: .normal)
+                    duplicatedButton.setTitleColor(.lightGray, for: .normal)
+                    falseReportButton.layer.borderColor = UIColor.systemGray4.cgColor
+                    duplicatedButton.layer.borderColor = UIColor.systemGray4.cgColor
+                    falseReportButton.backgroundColor = UIColor.white
+                    duplicatedButton.backgroundColor = UIColor.white
+//                    categoryClicked = .selfDevelopment
+                    sender.isSelected = true
+                    sender.setTitleColor(.white, for: .normal)
+                    sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
+                    sender.backgroundColor = UIColor.alertDeleteButton
+                } else {
+                    sender.isSelected = false
+                    sender.setTitleColor(.lightGray, for: .normal)
+                    sender.layer.borderColor = UIColor.systemGray4.cgColor
+                    isReasonButtonTaped = false
+//                    categoryClicked = nil
+                    sender.backgroundColor = UIColor.white
+                }
+            }
+        } else if sender == falseReportButton {
+            if isReasonButtonTaped == false {
+                sender.isSelected = true
+                sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
+                sender.setTitleColor(.white, for: .normal)
+                isReasonButtonTaped = true
+//                categoryClicked = .productivity
+                sender.backgroundColor = UIColor.alertDeleteButton
+
+            } else {
+                if restoreButton.isSelected == true || duplicatedButton.isSelected == true {
+                    restoreButton.isSelected = false
+                    duplicatedButton.isSelected = false
+                    restoreButton.setTitleColor(.lightGray, for: .normal)
+                    duplicatedButton.setTitleColor(.lightGray, for: .normal)
+                    restoreButton.layer.borderColor = UIColor.systemGray4.cgColor
+                    duplicatedButton.layer.borderColor = UIColor.systemGray4.cgColor
+                    restoreButton.backgroundColor = UIColor.white
+                    duplicatedButton.backgroundColor = UIColor.white
+//                    categoryClicked = .productivity
+                    sender.isSelected = true
+                    sender.setTitleColor(.white, for: .normal)
+                    sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
+                    sender.backgroundColor = UIColor.alertDeleteButton
+                } else {
+                    sender.isSelected = false
+                    sender.setTitleColor(.lightGray, for: .normal)
+                    sender.layer.borderColor = UIColor.systemGray4.cgColor
+                    isReasonButtonTaped = false
+//                    categoryClicked = nil
+                    sender.backgroundColor = UIColor.white
+                }
+            }
+        } else if sender == duplicatedButton {
+            if isReasonButtonTaped == false {
+                sender.isSelected = true
+                sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
+                sender.setTitleColor(.white, for: .normal)
+                isReasonButtonTaped = true
+//                categoryClicked = .wellness
+                sender.backgroundColor = UIColor.alertDeleteButton
+                
+            } else {
+                if restoreButton.isSelected == true || falseReportButton.isSelected == true {
+                    restoreButton.isSelected = false
+                    falseReportButton.isSelected = false
+                    restoreButton.setTitleColor(.lightGray, for: .normal)
+                    falseReportButton.setTitleColor(.lightGray, for: .normal)
+                    restoreButton.layer.borderColor = UIColor.systemGray4.cgColor
+                    falseReportButton.layer.borderColor = UIColor.systemGray4.cgColor
+                    restoreButton.backgroundColor = UIColor.white
+                    falseReportButton.backgroundColor = UIColor.white
+//                    categoryClicked = .wellness
+                    sender.isSelected = true
+                    sender.setTitleColor(.white, for: .normal)
+                    sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
+                    sender.backgroundColor = UIColor.alertDeleteButton
+                } else {
+                    sender.isSelected = false
+                    sender.setTitleColor(.lightGray, for: .normal)
+                    sender.layer.borderColor = UIColor.systemGray4.cgColor
+                    isReasonButtonTaped = false
+//                    categoryClicked = nil
+                    sender.backgroundColor = UIColor.white
+                }
+                
+            }
+        } else if sender == deleteRequestButton {
+            //신고 API 연결
+            self.dismiss(animated: true)
+        }
+        
+        if isReasonButtonTaped == true {
+            deleteRequestButton.isEnabled = true
+            deleteRequestButton.backgroundColor = UIColor.black
+        } else {
+            deleteRequestButton.isEnabled = false
+            deleteRequestButton.backgroundColor = UIColor.systemGray4
+        }
+        
     }
 }
