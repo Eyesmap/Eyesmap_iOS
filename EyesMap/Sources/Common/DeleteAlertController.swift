@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol DeletedAlertControllerProtocol: AnyObject {
+    func deleted()
+}
+
 class DeletedAlertController: UIViewController {
     
     var isReasonButtonTaped = false
@@ -90,6 +94,8 @@ class DeletedAlertController: UIViewController {
         $0.isEnabled = false
         return $0
     }(UIButton())
+    
+    weak var delegate: DeletedAlertControllerProtocol?
     
 //MARK: - Life Cycles
     init() {
@@ -291,7 +297,10 @@ class DeletedAlertController: UIViewController {
             }
         } else if sender == deleteRequestButton {
             //신고 API 연결
-            self.dismiss(animated: true)
+            self.dismiss(animated: true) {
+                print("dismiss")
+                self.delegate?.deleted()
+            }
         }
         
         if isReasonButtonTaped == true {

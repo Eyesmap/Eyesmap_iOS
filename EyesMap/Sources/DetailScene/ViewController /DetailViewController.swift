@@ -90,6 +90,14 @@ class DetailViewController: UIViewController {
         return cv
     }()
 
+    private lazy var fpc: FloatingPanelController = {
+        let controller = FloatingPanelController(delegate: self)
+        controller.changePanelStyle()
+        controller.layout = ReportFloatingPanelLayout()
+        return controller
+    }()
+    
+    
     
 //MARK: - Life Cycles
     init(complaint: ComplaintModel) {
@@ -184,6 +192,13 @@ class DetailViewController: UIViewController {
         mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)))
     }
     
+    func presentFinishedView() {
+        let reportVC = FinishedReportController()
+        reportVC.delegate = self
+        fpc.set(contentViewController: reportVC)
+        fpc.track(scrollView: reportVC.scrollView)
+        self.present(fpc, animated: true)
+    }
     
 //MARK: - Handler
     @objc func backButtonTap() {
@@ -191,7 +206,18 @@ class DetailViewController: UIViewController {
     }
     
     @objc func deleteButtonTap() {
+        let bv: UIView = {
+            $0.backgroundColor = .black.withAlphaComponent(0.4)
+            return $0
+        }(UIView())
+        
+        view.addSubview(bv)
+        bv.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         let deleteAlert = DeletedAlertController()
+        deleteAlert.delegate = self
         self.present(deleteAlert, animated: true)
     }
 }
@@ -228,5 +254,32 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.configure(image: image)
         
         return cell
+    }
+}
+
+//MARK: - FloatingPanelControllerDelegate
+extension DetailViewController: FloatingPanelControllerDelegate {
+    func floatingPanelDidChangePosition(_ fpc: FloatingPanelController) {
+        if fpc.state == .half {
+            
+        } else {
+            fpc.move(to: .half, animated: true)
+        }
+    }
+}
+
+//MARK: - DeletedAlertControllerProtocol
+extension DetailViewController: DeletedAlertControllerProtocol {
+    func deleted() {
+        self.presentFinishedView()
+    }
+}
+
+//MARK: - FinishedReportControllerDelegate
+extension DetailViewController: FinishedReportControllerDelegate {
+    func dismiss() {
+        if let iv = view.subviews.last {
+            iv.removeFromSuperview()
+        }
     }
 }
