@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import NMapsMap
 import CoreLocation
+import FloatingPanel
 
 class DetailViewController: UIViewController {
     
