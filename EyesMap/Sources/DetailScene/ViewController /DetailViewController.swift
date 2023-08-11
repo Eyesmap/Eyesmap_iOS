@@ -60,6 +60,7 @@ class DetailViewController: UIViewController {
         $0.setTitle("삭제 요청", for: .normal)
         $0.setTitleColor(.darkGray, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        $0.addTarget(self, action: #selector(deleteButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -186,6 +187,11 @@ class DetailViewController: UIViewController {
 //MARK: - Handler
     @objc func backButtonTap() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func deleteButtonTap() {
+        let deleteAlert = DeletedAlertController()
+        self.present(deleteAlert, animated: true)
     }
 }
 
