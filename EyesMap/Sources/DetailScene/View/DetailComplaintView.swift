@@ -63,7 +63,7 @@ class DetailComplaintView: UIView {
     private let distanceStackView: UIStackView = {
         let distanceImageView: UIImageView = {
             let imageView = UIImageView()
-            imageView.image = UIImage(named: "image2")
+            imageView.image = UIImage(named: "distance")
             imageView.snp.makeConstraints { make in
                 make.height.width.equalTo(19)
             }
@@ -88,7 +88,7 @@ class DetailComplaintView: UIView {
     private let statusStackView: UIStackView = {
         let statusImageView: UIImageView = {
             let imageView = UIImageView()
-            imageView.image = UIImage(named: "image2")
+            imageView.image = UIImage(named: "status_bad")
             imageView.snp.makeConstraints { make in
                 make.height.width.equalTo(19)
             }
@@ -116,13 +116,15 @@ class DetailComplaintView: UIView {
     }(UIView())
     
     private let dangerStackView: UIStackView = {
-        let dangerImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.image = UIImage(named: "image2")
-            imageView.snp.makeConstraints { make in
+        let dangerImageButton: UIButton = {
+            let btn = UIButton()
+            btn.setImage(UIImage(named: "danger"), for: .normal)
+            btn.setImage(UIImage(named: "selectedDanger"), for: .selected)
+            
+            btn.snp.makeConstraints { make in
                 make.height.width.equalTo(19)
             }
-            return imageView
+            return btn
         }()
         
         let dangerLabel: UILabel = {
@@ -134,7 +136,7 @@ class DetailComplaintView: UIView {
         }()
         $0.axis = .horizontal
         $0.spacing = 10
-        $0.addArrangedSubview(dangerImageView)
+        $0.addArrangedSubview(dangerImageButton)
         $0.addArrangedSubview(dangerLabel)
             
         return $0

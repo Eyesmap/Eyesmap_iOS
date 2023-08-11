@@ -94,9 +94,9 @@ class HomeViewController: UIViewController {
         
         locationOverlay.location = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
         locationOverlay.hidden = false
-        locationOverlay.icon = NMFOverlayImage(name: "image1")
-        locationOverlay.iconWidth = 30
-        locationOverlay.iconHeight = 30
+        locationOverlay.icon = NMFOverlayImage(name: "myPosition")
+        locationOverlay.iconWidth = 38
+        locationOverlay.iconHeight = 38
         locationOverlay.anchor = CGPoint(x: 0.5, y: 1)
         
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
@@ -112,7 +112,7 @@ class HomeViewController: UIViewController {
             print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
             marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
             marker.mapView = mapView
-            marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+            marker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                 guard let self = self else { return false }
@@ -121,10 +121,10 @@ class HomeViewController: UIViewController {
                 if let marker = overlay as? NMFMarker {
                     // 이미 선택된 마커 초기화
                     if let selectedMarker = selectedMarker {
-                        selectedMarker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+                        selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
                     }
                     
-                    marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "xmark")!)
+                    marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
                     selectedMarker = marker
                     
                     selectedComplaint = complaint

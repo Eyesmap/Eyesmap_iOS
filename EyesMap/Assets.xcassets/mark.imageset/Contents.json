@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "image 7.png",
+      "filename" : "mark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "mark2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "mark3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

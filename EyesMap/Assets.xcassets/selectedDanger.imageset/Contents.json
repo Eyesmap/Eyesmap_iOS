@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "mainImage.png",
+      "filename" : "selectedDanger.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "selectedDanger2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "selectedDanger3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

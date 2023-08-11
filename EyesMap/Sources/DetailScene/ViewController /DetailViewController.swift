@@ -178,7 +178,7 @@ class DetailViewController: UIViewController {
         print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
         marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
         marker.mapView = mapView
-        marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "house")!)
+        marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
         mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)))
     }
     
