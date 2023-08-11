@@ -206,16 +206,6 @@ class DetailViewController: UIViewController {
     }
     
     @objc func deleteButtonTap() {
-        let bv: UIView = {
-            $0.backgroundColor = .black.withAlphaComponent(0.4)
-            return $0
-        }(UIView())
-        
-        view.addSubview(bv)
-        bv.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
         let deleteAlert = DeletedAlertController()
         deleteAlert.delegate = self
         self.present(deleteAlert, animated: true)
@@ -271,6 +261,15 @@ extension DetailViewController: FloatingPanelControllerDelegate {
 //MARK: - DeletedAlertControllerProtocol
 extension DetailViewController: DeletedAlertControllerProtocol {
     func deleted() {
+        let bv: UIView = {
+            $0.backgroundColor = .black.withAlphaComponent(0.4)
+            return $0
+        }(UIView())
+
+        view.addSubview(bv)
+        bv.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         self.presentFinishedView()
     }
 }
