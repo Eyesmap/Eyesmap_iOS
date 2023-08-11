@@ -25,27 +25,43 @@ class HomeViewController: UIViewController {
     
     
     private let mapView = NMFMapView()
+    
+    private lazy var positionButton: UIView = {
+        $0.backgroundColor = .white
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.2
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2)
+        $0.layer.shadowRadius = 4
+        $0.layer.cornerRadius = 48 / 2
+        
+        let imageBtn: UIButton = {
+            let btn = UIButton()
+            btn.setImage(UIImage(named: "target"), for: .normal)
+            btn.addTarget(self, action: #selector(targetTap), for: .touchUpInside)
+            return btn
+        }()
+        
+        $0.addSubview(imageBtn)
+        imageBtn.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        return $0
+    }(UIView())
+    
+    private lazy var complaintView: HomeComplaintView = {
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.2
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2)
+        $0.layer.shadowRadius = 4
+        $0.alpha = 0
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(complaintViewTap(_:)))
+        $0.addGestureRecognizer(tapGesture)
+        return $0
+    }(HomeComplaintView())
+    
     private lazy var locationOverlay = mapView.locationOverlay // 사용자 위치 표시
     
-    private lazy var complaintCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .clear
-        cv.layer.cornerRadius = 13
-        cv.showsHorizontalScrollIndicator = false
-        cv.allowsMultipleSelection = false
-        cv.isPagingEnabled = false
-        cv.decelerationRate = .fast
-        cv.register(ComplaintCollectionViewCell.self, forCellWithReuseIdentifier: ComplaintCollectionViewCell.identifier)
-        cv.delegate = self
-        cv.dataSource = self
-        cv.alpha = 1
-        return cv
-    }()
+    
     
 //MARK: - Life Cycles
     override func viewDidLoad() {
@@ -59,7 +75,7 @@ class HomeViewController: UIViewController {
 //MARK: - set UI
     func setUIandConstraints() {
         configureMapView()
-        configureCollectionView()
+        configureOtherView()
     }
     
     // MapView Setting
@@ -73,17 +89,25 @@ class HomeViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
         currentLocationCameraUpdate()
         configureMarking(complaints: complaints)
     }
     
-    func configureCollectionView() {
-        view.addSubview(complaintCollectionView)
+    func configureOtherView() {
+        view.addSubview(complaintView)
+        view.addSubview(positionButton)
         
-        complaintCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(400)
-            make.bottom.equalToSuperview().inset(30)
-            make.leading.trailing.equalToSuperview()
+        complaintView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
+            make.leading.trailing.equalToSuperview().inset(19)
+            make.height.equalTo(200)
+        }
+        
+        positionButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(complaintView.snp.top).inset(-33)
+            make.width.height.equalTo(48)
         }
     }
     
@@ -96,8 +120,8 @@ class HomeViewController: UIViewController {
         locationOverlay.hidden = false
         locationOverlay.icon = NMFOverlayImage(name: "myPosition")
         locationOverlay.iconWidth = 38
-        locationOverlay.iconHeight = 38
-        locationOverlay.anchor = CGPoint(x: 0.5, y: 1)
+        locationOverlay.iconHeight = 42
+        locationOverlay.anchor = CGPoint(x: 0.5, y: 0.5)
         
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
         cameraUpdate.animation = .easeIn
@@ -109,9 +133,9 @@ class HomeViewController: UIViewController {
         
         for complaint in complaints {
             let marker = NMFMarker()
-            print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
             marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
             marker.mapView = mapView
+            marker.anchor = CGPoint(x: 0.5, y: 1)
             marker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
@@ -124,13 +148,14 @@ class HomeViewController: UIViewController {
                         selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
                     }
                     
-                    marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
-                    selectedMarker = marker
+                    UIView.animate(withDuration: 0.5) {
+                        self.complaintView.alpha = 1
+                        marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
+                        self.selectedMarker = marker
+                        self.selectedComplaint = complaint
+                    }
                     
-                    selectedComplaint = complaint
-                    print(self.selectedComplaint)
                 }
-                
                 return true
             }
         }
@@ -190,22 +215,12 @@ class HomeViewController: UIViewController {
     // API 이후 Response 값
     func getComplaints() {
         complaints = [
-//            ComplaintModel(latitude: 37.658649, longitude: 126.831221),
-//            ComplaintModel(latitude: 37.569771, longitude: 126.897160),
-//            ComplaintModel(latitude: 37.667478, longitude: 126.751685),
-//            ComplaintModel(latitude: 37.643139, longitude: 126.788088),
-//            ComplaintModel(latitude: 37.693203, longitude: 126.727257),
             ComplaintModel(latitude: 37.612836, longitude: 126.834498),
             ComplaintModel(latitude: 37.634592, longitude: 126.832650),
             ComplaintModel(latitude: 37.62146193038201, longitude: 126.83230989248261)
         ]
         
         markers = [
-//            NMFMarker(position: NMGLatLng(lat: 37.658649, lng: 126.831221), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
-//            NMFMarker(position: NMGLatLng(lat: 37.569771, lng: 126.897160), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
-//            NMFMarker(position: NMGLatLng(lat: 37.667478, lng: 126.751685), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
-//            NMFMarker(position: NMGLatLng(lat: 37.643139, lng: 126.788088), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
-//            NMFMarker(position: NMGLatLng(lat: 37.693203, lng: 126.727257), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
             NMFMarker(position: NMGLatLng(lat: 37.612836, lng: 126.834498), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
             NMFMarker(position: NMGLatLng(lat: 37.634592, lng: 126.832650), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
             NMFMarker(position: NMGLatLng(lat: 37.62146193038201, lng: 126.83230989248261), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!))
@@ -227,6 +242,21 @@ class HomeViewController: UIViewController {
             print("현위치에서 거리 차이 = \(userLocation.distance(from: CLLocation(latitude: latlng.lat, longitude: latlng.lng)))")
         }
     }
+    
+    @objc func complaintViewTap(_ gesture: UIGestureRecognizer) {
+        print("tap")
+        guard let complaint = selectedComplaint else { return }
+        let detailVC = DetailViewController(complaint: complaint)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    @objc func targetTap() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
+        cameraUpdate.animation = .easeIn
+        mapView.moveCamera(cameraUpdate)
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -235,8 +265,7 @@ extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         userLocation = location
-        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: self.userLocation?.coordinate.latitude ?? 0,
-                                                               lng: self.userLocation?.coordinate.longitude ?? 0)))
+    
         checkComplaintsDistance()
     }
     
@@ -299,36 +328,14 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController: NMFMapViewDelegate {
     // 지도 탭 시
     func didTapMapView(_ point: CGPoint, latLng latlng: NMGLatLng) {
-        print("탭한 지역 - ")
-        print("lat: \(latlng.lat), lng: \(latlng.lng)")
-        guard let userLocation = userLocation else { return }
-        print("현위치에서 거리 차이 = \(userLocation.distance(from: CLLocation(latitude: latlng.lat, longitude: latlng.lng)))")
-    }
-}
-
-//MARK: - UICollectionViewDelegateFlowLayout
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 40, height: 212)
-    }
-    
-}
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return markers.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComplaintCollectionViewCell.identifier, for: indexPath) as? ComplaintCollectionViewCell else { return UICollectionViewCell() }
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let complaint = self.selectedComplaint else { return }
-        
-        let detailVC = DetailViewController(complaint: complaint)
-        self.navigationController?.pushViewController(detailVC, animated: true)
+        // 마킹 제거
+        UIView.animate(withDuration: 0.5) {
+            if let selectedMarker = self.selectedMarker {
+                selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
+                self.complaintView.alpha = 0
+            }
+            self.selectedMarker = nil
+            self.selectedComplaint = nil
+        }
     }
 }

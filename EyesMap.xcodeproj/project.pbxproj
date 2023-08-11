@@ -19,7 +19,7 @@
 		478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0592A6EB21F000FA196 /* LocationHandler.swift */; };
 		47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4DE392A72554200FEA000 /* Secret.swift */; };
 		47CB4A842A7941DE00E001D2 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB4A832A7941DE00E001D2 /* Double.swift */; };
-		47FD24A32A80CB3400529342 /* ComplaintCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24A22A80CB3400529342 /* ComplaintCollectionViewCell.swift */; };
+		47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24A22A80CB3400529342 /* HomeComplaintView.swift */; };
 		47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24AD2A84FB0A00529342 /* DetailViewController.swift */; };
 		47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */; };
 		47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B32A8518C200529342 /* DetailComplaintView.swift */; };
@@ -63,7 +63,7 @@
 		478CA0592A6EB21F000FA196 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		47B4DE392A72554200FEA000 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		47CB4A832A7941DE00E001D2 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		47FD24A22A80CB3400529342 /* ComplaintCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplaintCollectionViewCell.swift; sourceTree = "<group>"; };
+		47FD24A22A80CB3400529342 /* HomeComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComplaintView.swift; sourceTree = "<group>"; };
 		47FD24AD2A84FB0A00529342 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		47FD24B32A8518C200529342 /* DetailComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailComplaintView.swift; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
 		47FD24A12A80CB0C00529342 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				47FD24A22A80CB3400529342 /* ComplaintCollectionViewCell.swift */,
+				47FD24A22A80CB3400529342 /* HomeComplaintView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -523,7 +523,7 @@
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,
-				47FD24A32A80CB3400529342 /* ComplaintCollectionViewCell.swift in Sources */,
+				47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */,
 				478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
