@@ -8,7 +8,8 @@ target 'EyesMap' do
   # Pods for EyesMap
 pod 'SnapKit', '~> 5.6.0'
 pod 'Alamofire'
-pod 'NMapsMap' 
+pod 'NMapsMap'
+pod 'FloatingPanel'
 
   target 'EyesMapTests' do
     inherit! :search_paths
