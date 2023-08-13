@@ -9,6 +9,7 @@ target 'EyesMap' do
 pod 'SnapKit', '~> 5.6.0'
 pod 'Alamofire'
 pod 'NMapsMap' 
+pod 'Tabman', '~> 2.11'
 
   target 'EyesMapTests' do
     inherit! :search_paths
