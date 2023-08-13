@@ -39,6 +39,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Functions
     private func setupUI() {
+        detailImageView.layer.cornerRadius = 10
+        detailImageView.clipsToBounds = true
+        
         addSubview(detailImageView)
         
         detailImageView.snp.makeConstraints { make in

@@ -10,6 +10,7 @@ pod 'SnapKit', '~> 5.6.0'
 pod 'Alamofire'
 pod 'NMapsMap'
 pod 'FloatingPanel'
+pod 'BetterSegmentedControl', '~> 2.0'
 
   target 'EyesMapTests' do
     inherit! :search_paths

@@ -66,7 +66,7 @@ class DetailViewController: UIViewController {
     }(UIButton())
     
     private lazy var reportImageNumLabel: UILabel = {
-        $0.text = "신고 사진 3개"
+        $0.text = "신고 사진 5개"
         $0.font = UIFont.systemFont(ofSize: 15)
         $0.textColor = .black
         return $0
@@ -229,6 +229,9 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: size, height: size)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
 }
 
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
