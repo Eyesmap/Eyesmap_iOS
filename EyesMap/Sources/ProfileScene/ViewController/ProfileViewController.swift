@@ -108,6 +108,10 @@ class ProfileViewController: UIViewController {
         setupPageViewController()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = false
+    }
+    
 //MARK: - Set UI
     private func setUI() {
         view.backgroundColor = .white
@@ -194,8 +198,12 @@ class ProfileViewController: UIViewController {
     private func configureNavBar() {
         navigationItem.title = "MY"
         let settingImage = UIImage(systemName: "gearshape.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        let setting = UIBarButtonItem.init(image: settingImage)
+        let setting = UIBarButtonItem(image: settingImage, style: .done, target: self, action: #selector(settingBtnTap))
         navigationItem.rightBarButtonItem = setting
+        
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        navigationItem.backBarButtonItem = backBarButtonItem
     }
     
 //MARK: - Functionse
@@ -217,6 +225,11 @@ class ProfileViewController: UIViewController {
 //MARK: - Handler
     @objc func segmentedControlValueChanged(_ sender: BetterSegmentedControl) {
         currentPage = sender.index
+    }
+    
+    @objc func settingBtnTap() {
+        let setVC = SettingViewController()
+        navigationController?.pushViewController(setVC, animated: true)
     }
 }
 

@@ -19,6 +19,7 @@
 		478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0592A6EB21F000FA196 /* LocationHandler.swift */; };
 		47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4DE392A72554200FEA000 /* Secret.swift */; };
 		47CB4A842A7941DE00E001D2 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB4A832A7941DE00E001D2 /* Double.swift */; };
+		47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0499C2A8A2D10000A789D /* SettingViewController.swift */; };
 		47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24A22A80CB3400529342 /* HomeComplaintView.swift */; };
 		47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24AD2A84FB0A00529342 /* DetailViewController.swift */; };
 		47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */; };
@@ -71,6 +72,7 @@
 		478CA0592A6EB21F000FA196 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		47B4DE392A72554200FEA000 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		47CB4A832A7941DE00E001D2 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		47E0499C2A8A2D10000A789D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		47FD24A22A80CB3400529342 /* HomeComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComplaintView.swift; sourceTree = "<group>"; };
 		47FD24AD2A84FB0A00529342 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				478CA0582A6EB1FD000FA196 /* HomeScene */,
 				47FD24AC2A84FAF000529342 /* DetailScene */,
 				47FD24C52A8691F600529342 /* ProfileScene */,
+				47E0499A2A8A2CBA000A789D /* SettingScene */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -222,6 +225,22 @@
 				47FD24C32A864C6600529342 /* FloatPanelController.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		47E0499A2A8A2CBA000A789D /* SettingScene */ = {
+			isa = PBXGroup;
+			children = (
+				47E0499B2A8A2CC8000A789D /* ViewController */,
+			);
+			path = SettingScene;
+			sourceTree = "<group>";
+		};
+		47E0499B2A8A2CC8000A789D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				47E0499C2A8A2D10000A789D /* SettingViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		47FD24A02A80CAF700529342 /* ViewController */ = {
@@ -585,6 +604,7 @@
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
+				47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,
 				47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */,
