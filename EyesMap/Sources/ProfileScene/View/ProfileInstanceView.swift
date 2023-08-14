@@ -16,7 +16,7 @@ class ProfileInstanceView: UIView {
         return $0
     }(UILabel())
     
-    let nickNameLabel: UILabel = {
+    let valueLabel: UILabel = {
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: 14)
         return $0

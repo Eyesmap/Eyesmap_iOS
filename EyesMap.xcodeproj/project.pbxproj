@@ -30,7 +30,6 @@
 		47FD24C22A8637A400529342 /* FinishedReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24C12A8637A400529342 /* FinishedReportController.swift */; };
 		47FD24C42A864C6600529342 /* FloatPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24C32A864C6600529342 /* FloatPanelController.swift */; };
 		47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24C62A86921900529342 /* ProfileViewController.swift */; };
-		47FD24CB2A88A23600529342 /* ProfileInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24CA2A88A23600529342 /* ProfileInstanceView.swift */; };
 		47FD24CD2A88A7DD00529342 /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24CC2A88A7DD00529342 /* ProfileCollectionViewController.swift */; };
 		47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE7A902A7C0BD500075B0C /* ComplaintModel.swift */; };
 		8BE7AC8407F016C2FC467A11 /* Pods_EyesMap_EyesMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB3D1DB9C0E13985806C2C9 /* Pods_EyesMap_EyesMapUITests.framework */; };
@@ -83,7 +82,6 @@
 		47FD24C12A8637A400529342 /* FinishedReportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedReportController.swift; sourceTree = "<group>"; };
 		47FD24C32A864C6600529342 /* FloatPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatPanelController.swift; sourceTree = "<group>"; };
 		47FD24C62A86921900529342 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		47FD24CA2A88A23600529342 /* ProfileInstanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInstanceView.swift; sourceTree = "<group>"; };
 		47FD24CC2A88A7DD00529342 /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
 		47FE7A902A7C0BD500075B0C /* ComplaintModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplaintModel.swift; sourceTree = "<group>"; };
 		5BB3D1DB9C0E13985806C2C9 /* Pods_EyesMap_EyesMapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EyesMap_EyesMapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,7 +288,6 @@
 		47FD24C82A88A21500529342 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				47FD24CA2A88A23600529342 /* ProfileInstanceView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -587,7 +584,6 @@
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
-				47FD24CB2A88A23600529342 /* ProfileInstanceView.swift in Sources */,
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,

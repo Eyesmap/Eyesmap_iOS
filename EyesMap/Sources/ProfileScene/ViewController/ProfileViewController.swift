@@ -18,17 +18,57 @@ class ProfileViewController: UIViewController {
         return $0
     }(UILabel())
 
-    private let nicknameView: ProfileInstanceView = {
-        $0.titleLabel.text = "닉네임"
-        $0.nickNameLabel.text = "01012345678"
+    private let imageLabel: UILabel = {
+        $0.text = "이미지"
+        $0.textColor = .black
+        $0.font = UIFont.systemFont(ofSize: 14)
         return $0
-    }(ProfileInstanceView())
+    }(UILabel())
     
-    private let sepLine: UIView = {
+    private let imageValueImageView: UIImageView = {
+        $0.image = UIImage(named: "mark")
+        return $0
+    }(UIImageView())
+    
+    private let imageButton: UIButton = {
+        $0.setImage(UIImage(systemName: "chevron.right")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal), for: .normal)
+        return $0
+    }(UIButton())
+    
+    private let firstSepLine: UIView = {
+        $0.backgroundColor = .systemGray
+        return $0
+    }(UIView())
+    
+    private let nickNameLabel: UILabel = {
+        $0.text = "닉네임"
+        $0.textColor = .black
+        $0.font = UIFont.systemFont(ofSize: 14)
+        return $0
+    }(UILabel())
+    
+    private let nickNameValueLabel: UILabel = {
+        $0.text = "01012345678"
+        $0.textColor = .black
+        $0.font = UIFont.systemFont(ofSize: 14)
+        return $0
+    }(UILabel())
+    
+    private let nickNameButton: UIButton = {
+        $0.setImage(UIImage(systemName: "chevron.right")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal), for: .normal)
+        return $0
+    }(UIButton())
+    
+    private let secondSepLine: UIView = {
         $0.backgroundColor = .systemGray
         return $0
     }(UIView())
 
+    private let thirdSepLine: UIView = {
+        $0.backgroundColor = .systemGray
+        return $0
+    }(UIView())
+    
     var currentPage: Int = 0 {
         didSet {
             configurePage(previousPage: oldValue, currentPage: currentPage)
@@ -73,26 +113,67 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(profileLabel)
-        view.addSubview(nicknameView)
+        view.addSubview(imageLabel)
+        view.addSubview(imageValueImageView)
+        view.addSubview(imageButton)
+        view.addSubview(firstSepLine)
+        view.addSubview(nickNameLabel)
+        view.addSubview(nickNameValueLabel)
+        view.addSubview(nickNameButton)
+        view.addSubview(secondSepLine)
         view.addSubview(resultTypeSegmentControl)
-        view.addSubview(sepLine)
+        view.addSubview(thirdSepLine)
         
         profileLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(15)
             make.leading.equalToSuperview().inset(20)
         }
-        nicknameView.snp.makeConstraints { make in
-            make.top.equalTo(profileLabel.snp.bottom).inset(-15)
+        imageLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileLabel.snp.bottom).inset(-40)
+            make.leading.equalToSuperview().inset(20)
+        }
+        imageButton.snp.makeConstraints { make in
+            make.centerY.equalTo(imageLabel.snp.centerY)
+            make.trailing.equalToSuperview().inset(20)
+            make.width.equalTo(10)
+            make.height.equalTo(14)
+        }
+        imageValueImageView.snp.makeConstraints { make in
+            make.bottom.equalTo(imageLabel.snp.bottom)
+            make.trailing.equalTo(imageButton.snp.leading).inset(-17)
+            make.width.height.equalTo(46)
+        }
+        firstSepLine.snp.makeConstraints { make in
+            make.top.equalTo(imageLabel.snp.bottom).inset(-15)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(40)
+            make.height.equalTo(0.8)
+        }
+        nickNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(firstSepLine.snp.bottom).inset(-15)
+            make.leading.equalToSuperview().inset(20)
+        }
+        nickNameButton.snp.makeConstraints { make in
+            make.centerY.equalTo(nickNameLabel.snp.centerY)
+            make.trailing.equalToSuperview().inset(20)
+            make.width.equalTo(10)
+            make.height.equalTo(14)
+        }
+        nickNameValueLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(nickNameLabel.snp.centerY)
+            make.trailing.equalTo(nickNameButton.snp.leading).inset(-17)
+        }
+        secondSepLine.snp.makeConstraints { make in
+            make.top.equalTo(nickNameLabel.snp.bottom).inset(-15)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(0.8)
         }
         resultTypeSegmentControl.snp.makeConstraints { make in
-            make.top.equalTo(nicknameView.snp.bottom)
+            make.top.equalTo(secondSepLine.snp.bottom)
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(100)
         }
-        sepLine.snp.makeConstraints { make in
+        thirdSepLine.snp.makeConstraints { make in
             make.top.equalTo(resultTypeSegmentControl.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(0.8)
@@ -103,7 +184,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(pageViewController.view)
         
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(sepLine.snp.bottom).inset(-10)
+            $0.top.equalTo(thirdSepLine.snp.bottom).inset(-10)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview()
         }
