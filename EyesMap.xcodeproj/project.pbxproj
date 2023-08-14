@@ -20,6 +20,7 @@
 		47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4DE392A72554200FEA000 /* Secret.swift */; };
 		47CB4A842A7941DE00E001D2 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB4A832A7941DE00E001D2 /* Double.swift */; };
 		47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0499C2A8A2D10000A789D /* SettingViewController.swift */; };
+		47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0499F2A8A31D2000A789D /* TapBarController.swift */; };
 		47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24A22A80CB3400529342 /* HomeComplaintView.swift */; };
 		47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24AD2A84FB0A00529342 /* DetailViewController.swift */; };
 		47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */; };
@@ -73,6 +74,7 @@
 		47B4DE392A72554200FEA000 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		47CB4A832A7941DE00E001D2 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		47E0499C2A8A2D10000A789D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		47E0499F2A8A31D2000A789D /* TapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarController.swift; sourceTree = "<group>"; };
 		47FD24A22A80CB3400529342 /* HomeComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComplaintView.swift; sourceTree = "<group>"; };
 		47FD24AD2A84FB0A00529342 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		478CA0572A6EB1C2000FA196 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				47E0499E2A8A31C1000A789D /* Base */,
 				47FD24B82A85F91000529342 /* Common */,
 				47FE7A8F2A7C0BB800075B0C /* Model */,
 				478CA0582A6EB1FD000FA196 /* HomeScene */,
@@ -241,6 +244,14 @@
 				47E0499C2A8A2D10000A789D /* SettingViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		47E0499E2A8A31C1000A789D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				47E0499F2A8A31D2000A789D /* TapBarController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		47FD24A02A80CAF700529342 /* ViewController */ = {
@@ -590,6 +601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47FD24CD2A88A7DD00529342 /* ProfileCollectionViewController.swift in Sources */,
+				47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */,
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
 				47FD24C02A86369100529342 /* ReportFloatingPanelLayout.swift in Sources */,
