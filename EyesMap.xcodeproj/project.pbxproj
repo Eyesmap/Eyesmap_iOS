@@ -21,6 +21,8 @@
 		47CB4A842A7941DE00E001D2 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB4A832A7941DE00E001D2 /* Double.swift */; };
 		47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0499C2A8A2D10000A789D /* SettingViewController.swift */; };
 		47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0499F2A8A31D2000A789D /* TapBarController.swift */; };
+		47E049A72A8B644B000A789D /* CustomToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E049A62A8B644B000A789D /* CustomToggleButton.swift */; };
+		47E049A92A8B83E4000A789D /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E049A82A8B83E4000A789D /* TermView.swift */; };
 		47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24A22A80CB3400529342 /* HomeComplaintView.swift */; };
 		47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24AD2A84FB0A00529342 /* DetailViewController.swift */; };
 		47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */; };
@@ -75,6 +77,8 @@
 		47CB4A832A7941DE00E001D2 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		47E0499C2A8A2D10000A789D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		47E0499F2A8A31D2000A789D /* TapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarController.swift; sourceTree = "<group>"; };
+		47E049A62A8B644B000A789D /* CustomToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleButton.swift; sourceTree = "<group>"; };
+		47E049A82A8B83E4000A789D /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
 		47FD24A22A80CB3400529342 /* HomeComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComplaintView.swift; sourceTree = "<group>"; };
 		47FD24AD2A84FB0A00529342 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 		47E0499A2A8A2CBA000A789D /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
+				47E049AA2A8B83E7000A789D /* View */,
 				47E0499B2A8A2CC8000A789D /* ViewController */,
 			);
 			path = SettingScene;
@@ -252,6 +257,14 @@
 				47E0499F2A8A31D2000A789D /* TapBarController.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		47E049AA2A8B83E7000A789D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				47E049A82A8B83E4000A789D /* TermView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		47FD24A02A80CAF700529342 /* ViewController */ = {
@@ -302,6 +315,7 @@
 				47FD24B92A85F92400529342 /* DeleteAlertController.swift */,
 				47FD24BF2A86369100529342 /* ReportFloatingPanelLayout.swift */,
 				47FD24C12A8637A400529342 /* FinishedReportController.swift */,
+				47E049A62A8B644B000A789D /* CustomToggleButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -600,6 +614,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47E049A92A8B83E4000A789D /* TermView.swift in Sources */,
 				47FD24CD2A88A7DD00529342 /* ProfileCollectionViewController.swift in Sources */,
 				47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */,
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
@@ -616,6 +631,7 @@
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
+				47E049A72A8B644B000A789D /* CustomToggleButton.swift in Sources */,
 				47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,
