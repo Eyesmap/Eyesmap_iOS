@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.6.4)
+  - BSImagePicker (3.3.1)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.17.0):
     - NMapsGeometry
@@ -7,22 +8,25 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - BSImagePicker (~> 3.1)
   - NMapsMap
   - SnapKit (~> 5.6.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BSImagePicker
     - NMapsGeometry
     - NMapsMap
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 5eac3ac51618a22a26a49eb0ec4e04e62d48f678
+PODFILE CHECKSUM: 0fd485e2231d966d501423edb4a471df640fbd8b
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

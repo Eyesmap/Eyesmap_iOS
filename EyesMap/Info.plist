@@ -11,6 +11,8 @@
 	<string>위치정보를 알 수 있게 허용해주세요.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>앱 사용 중에만 위치정보를 알 수 있게 허용해주세요.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>앨범에서 사진 선택</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
