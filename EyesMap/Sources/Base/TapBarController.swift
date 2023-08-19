@@ -74,7 +74,7 @@ class TabBarController: UITabBarController {
         
         nav.navigationBar.standardAppearance = appearance
         nav.navigationItem.largeTitleDisplayMode = .automatic
-        nav.navigationBar.tintColor = .white
+        nav.navigationBar.tintColor = .black
         
         nav.tabBarItem.image = image
         nav.tabBarItem.selectedImage = image
