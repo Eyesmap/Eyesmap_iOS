@@ -84,12 +84,12 @@ class HomeViewController: UIViewController {
         let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(_:)))
         mapView.addGestureRecognizer(longTapGesture)
         
+        
         view.addSubview(mapView)
-        
-        mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+                
+                mapView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
         currentLocationCameraUpdate()
         configureMarking(complaints: complaints)
     }
@@ -235,11 +235,11 @@ class HomeViewController: UIViewController {
         if gesture.state == .began {
             let point = gesture.location(in: mapView)
             let latlng = mapView.projection.latlng(from: point)
-            
-            print("길게 탭한 지역 - ")
-            print("lat: \(latlng.lat), lng: \(latlng.lng)")
-            guard let userLocation = userLocation else { return }
-            print("현위치에서 거리 차이 = \(userLocation.distance(from: CLLocation(latitude: latlng.lat, longitude: latlng.lng)))")
+
+            let vc = ReportMapViewController(location: CLLocation(latitude: latlng.lat, longitude: latlng.lng))
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .overFullScreen
+            self.present(nav, animated: true)
         }
     }
     
