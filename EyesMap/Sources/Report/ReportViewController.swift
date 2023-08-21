@@ -30,7 +30,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     
     private let locationTextfield: UITextField = {
         let input = UITextField()
-//        input.addLeftPadding()
+        input.addLeftPadding()
         input.text = "서울특별시 용산구 동자동 43-209"
         input.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
         
@@ -51,7 +51,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     
     private let TitleTextfield: UITextField = {
         let input = UITextField()
-//        input.addLeftPadding()
+        input.addLeftPadding()
         
         input.placeholder = "인도 보도블럭 파손"
         //        input.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
@@ -161,7 +161,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     
     private let setImageLabel: UILabel = {
         let label = UILabel()
-        label.text = "사진 첨부 (선택)"
+        label.text = "사진 첨부"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = UIColor(red: 37/255, green: 38/255, blue: 42/255, alpha: 1)
         return label
