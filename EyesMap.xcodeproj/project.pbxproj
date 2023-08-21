@@ -10,6 +10,7 @@
 		2D6E67C41D2CE8963671545F /* Pods_EyesMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952C865199B62CCB80BD7609 /* Pods_EyesMapTests.framework */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
+		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
 		478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA01F2A6E600F000FA196 /* AppDelegate.swift */; };
 		478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0212A6E600F000FA196 /* SceneDelegate.swift */; };
 		478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0232A6E600F000FA196 /* HomeViewController.swift */; };
@@ -66,6 +67,7 @@
 		3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.debug.xcconfig"; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
+		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
 		478CA01C2A6E600F000FA196 /* EyesMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyesMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		478CA01F2A6E600F000FA196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		478CA0212A6E600F000FA196 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				47FD24B92A85F92400529342 /* DeleteAlertController.swift */,
+				475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */,
 				47FD24BF2A86369100529342 /* ReportFloatingPanelLayout.swift */,
 				47FD24C12A8637A400529342 /* FinishedReportController.swift */,
 				47E049A62A8B644B000A789D /* CustomToggleButton.swift */,
@@ -693,6 +696,7 @@
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,
 				47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */,
 				478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */,
+				475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

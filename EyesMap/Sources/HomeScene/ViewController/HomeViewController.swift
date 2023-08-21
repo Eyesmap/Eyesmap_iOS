@@ -76,6 +76,7 @@ class HomeViewController: UIViewController {
     func setUIandConstraints() {
         configureMapView()
         configureOtherView()
+        configureNavBar()
     }
     
     // MapView Setting
@@ -109,6 +110,12 @@ class HomeViewController: UIViewController {
             make.bottom.equalTo(complaintView.snp.top).inset(-33)
             make.width.height.equalTo(48)
         }
+    }
+    
+    func configureNavBar() {
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     // 현 위치 아이콘 & 카메라 업데이트

@@ -28,12 +28,6 @@ class DetailViewController: UIViewController {
     ]
     
 //MARK: - Properties
-    private let backButton: UIButton = {
-        $0.setImage(UIImage(systemName: "chevron.backward")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
-        $0.addTarget(self, action: #selector(backButtonTap), for: .touchUpInside)
-        return $0
-    }(UIButton())
-    
     private lazy var scrollView: UIScrollView = {
         $0.backgroundColor = .white
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -54,6 +48,7 @@ class DetailViewController: UIViewController {
         $0.layer.shadowOpacity = 0.2
         $0.layer.shadowOffset = CGSize(width: 0, height: 2) 
         $0.layer.shadowRadius = 4
+        $0.dangerButton.addTarget(self, action: #selector(dangerButtonTap), for: .touchUpInside)
         return $0
     }(DetailComplaintView())
     
@@ -113,12 +108,8 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setUIandConstraints()
         configureMapView()
-        
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
-    }
+
     
 //MARK: - set UI
     func setUIandConstraints() {
@@ -127,7 +118,6 @@ class DetailViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(mapView)
-        contentView.addSubview(backButton)
         contentView.addSubview(detailComplaintView)
         contentView.addSubview(deleteButton)
         contentView.addSubview(reportImageNumLabel)
@@ -146,11 +136,6 @@ class DetailViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(350)
             make.width.equalToSuperview()
-        }
-        backButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(55)
-            make.leading.equalToSuperview().inset(18)
-            make.height.width.equalTo(35)
         }
         detailComplaintView.snp.makeConstraints { make in
             make.top.equalTo(mapView.snp.bottom).inset(50)
@@ -179,6 +164,8 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    
+    
 
 //MARK: - MapView
     private func configureMapView() {
@@ -200,15 +187,21 @@ class DetailViewController: UIViewController {
         self.present(fpc, animated: true)
     }
     
-//MARK: - Handler
-    @objc func backButtonTap() {
-        self.navigationController?.popViewController(animated: true)
+    func presentRestoreAlertView() {
+        let restoreAlert = RestoreAlertController()
+        restoreAlert.delegate = self
+        self.present(restoreAlert, animated: true)
     }
     
+//MARK: - Handler
     @objc func deleteButtonTap() {
         let deleteAlert = DeletedAlertController()
         deleteAlert.delegate = self
         self.present(deleteAlert, animated: true)
+    }
+    
+    @objc func dangerButtonTap() {
+        print("위험해요 버튼 Tap")
     }
 }
 
@@ -263,7 +256,31 @@ extension DetailViewController: FloatingPanelControllerDelegate {
 
 //MARK: - DeletedAlertControllerProtocol
 extension DetailViewController: DeletedAlertControllerProtocol {
-    func deleted() {
+    func deleted(type: DeleteType) {
+        switch type {
+        case .restore:
+            // RestoreAlert
+            presentRestoreAlertView()
+            
+        case .falseReport, .duplicate:
+            let bv: UIView = {
+                $0.backgroundColor = .black.withAlphaComponent(0.4)
+                return $0
+            }(UIView())
+
+            view.addSubview(bv)
+            bv.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
+            self.presentFinishedView()
+        }
+    }
+}
+
+//MARK: - RestoreAlertControllerProtocol
+extension DetailViewController: RestoreAlertControllerProtocol {
+    func uploadImage() {
         let bv: UIView = {
             $0.backgroundColor = .black.withAlphaComponent(0.4)
             return $0
@@ -273,6 +290,7 @@ extension DetailViewController: DeletedAlertControllerProtocol {
         bv.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
         self.presentFinishedView()
     }
 }
