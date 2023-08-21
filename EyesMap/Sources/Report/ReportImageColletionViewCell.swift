@@ -26,11 +26,22 @@ class ReportImageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let deleteBtn : UIButton = {
+    let deleteBtn: UIButton = {
         var btn = UIButton()
-        btn.setImage(UIImage(systemName: "xmark")! as UIImage, for: .normal)
+        btn.setImage(UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        btn.tintColor = UIColor.white
+        btn.backgroundColor = UIColor.black
+        btn.layer.cornerRadius = 10
+        btn.widthAnchor.constraint(equalToConstant: 20).isActive = true // 너비를 20으로 설정
+        btn.heightAnchor.constraint(equalToConstant: 20).isActive = true // 높이를 20으로 설정
+        btn.clipsToBounds = true
+        btn.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        btn.layer.borderWidth = 1.0 // 테두리 두께 설정
+        btn.layer.borderColor = UIColor.white.cgColor // 테두리 색상 설정
+
         return btn
     }()
+
     
 //MARK: - Life Cycles
     override init(frame: CGRect) {

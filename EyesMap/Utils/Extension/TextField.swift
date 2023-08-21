@@ -1,8 +1,10 @@
 import Foundation
+import UIKit
 
-struct Secret {
-    static let shared = Secret()
-
-    let clientId = "r1j2x11iaj"
-    let clientSecret = "wJtwuCjErrGOcL76UXTO8EEKP1IGV0Hz5cyVINyp"
+extension UITextField {
+    func addLeftPadding() {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
+        self.leftView = paddingView
+        self.leftViewMode = ViewMode.always
+    }
 }
