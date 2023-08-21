@@ -7,6 +7,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사진을 불러올 수 있게 허용해주세요.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>위치정보를 알 수 있게 허용해주세요.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

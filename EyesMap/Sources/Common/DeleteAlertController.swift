@@ -9,12 +9,19 @@ import UIKit
 import SnapKit
 
 protocol DeletedAlertControllerProtocol: AnyObject {
-    func deleted()
+    func deleted(type: DeleteType)
+}
+
+enum DeleteType: CaseIterable {
+    case restore
+    case falseReport
+    case duplicate
 }
 
 class DeletedAlertController: UIViewController {
     
     var isReasonButtonTaped = false
+    var deleteType: DeleteType? = nil // 초기값
     
 //MARK: - Properties
     private let backgroudView: UIView = {
@@ -202,7 +209,7 @@ class DeletedAlertController: UIViewController {
                 sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
                 sender.setTitleColor(.white, for: .normal)
                 isReasonButtonTaped = true
-//                categoryClicked = .selfDevelopment
+                deleteType = .restore
                 sender.backgroundColor = UIColor.alertDeleteButton
             } else {
                 if falseReportButton.isSelected == true || duplicatedButton.isSelected == true {
@@ -214,7 +221,7 @@ class DeletedAlertController: UIViewController {
                     duplicatedButton.layer.borderColor = UIColor.systemGray4.cgColor
                     falseReportButton.backgroundColor = UIColor.white
                     duplicatedButton.backgroundColor = UIColor.white
-//                    categoryClicked = .selfDevelopment
+                    deleteType = .restore
                     sender.isSelected = true
                     sender.setTitleColor(.white, for: .normal)
                     sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
@@ -224,7 +231,7 @@ class DeletedAlertController: UIViewController {
                     sender.setTitleColor(.lightGray, for: .normal)
                     sender.layer.borderColor = UIColor.systemGray4.cgColor
                     isReasonButtonTaped = false
-//                    categoryClicked = nil
+                    deleteType = nil
                     sender.backgroundColor = UIColor.white
                 }
             }
@@ -234,7 +241,7 @@ class DeletedAlertController: UIViewController {
                 sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
                 sender.setTitleColor(.white, for: .normal)
                 isReasonButtonTaped = true
-//                categoryClicked = .productivity
+                deleteType = .falseReport
                 sender.backgroundColor = UIColor.alertDeleteButton
 
             } else {
@@ -247,7 +254,7 @@ class DeletedAlertController: UIViewController {
                     duplicatedButton.layer.borderColor = UIColor.systemGray4.cgColor
                     restoreButton.backgroundColor = UIColor.white
                     duplicatedButton.backgroundColor = UIColor.white
-//                    categoryClicked = .productivity
+                    deleteType = .falseReport
                     sender.isSelected = true
                     sender.setTitleColor(.white, for: .normal)
                     sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
@@ -257,7 +264,7 @@ class DeletedAlertController: UIViewController {
                     sender.setTitleColor(.lightGray, for: .normal)
                     sender.layer.borderColor = UIColor.systemGray4.cgColor
                     isReasonButtonTaped = false
-//                    categoryClicked = nil
+                    deleteType = nil
                     sender.backgroundColor = UIColor.white
                 }
             }
@@ -267,7 +274,7 @@ class DeletedAlertController: UIViewController {
                 sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
                 sender.setTitleColor(.white, for: .normal)
                 isReasonButtonTaped = true
-//                categoryClicked = .wellness
+                deleteType = .duplicate
                 sender.backgroundColor = UIColor.alertDeleteButton
                 
             } else {
@@ -280,7 +287,7 @@ class DeletedAlertController: UIViewController {
                     falseReportButton.layer.borderColor = UIColor.systemGray4.cgColor
                     restoreButton.backgroundColor = UIColor.white
                     falseReportButton.backgroundColor = UIColor.white
-//                    categoryClicked = .wellness
+                    deleteType = .duplicate
                     sender.isSelected = true
                     sender.setTitleColor(.white, for: .normal)
                     sender.layer.borderColor = UIColor.alertDeleteButton.cgColor
@@ -290,16 +297,31 @@ class DeletedAlertController: UIViewController {
                     sender.setTitleColor(.lightGray, for: .normal)
                     sender.layer.borderColor = UIColor.systemGray4.cgColor
                     isReasonButtonTaped = false
-//                    categoryClicked = nil
+                    deleteType = nil
                     sender.backgroundColor = UIColor.white
                 }
                 
             }
         } else if sender == deleteRequestButton {
             //신고 API 연결
-            self.dismiss(animated: true) {
-                print("dismiss")
-                self.delegate?.deleted()
+            switch deleteType {
+            case .restore:
+                self.dismiss(animated: true) {
+                    print("dismiss")
+                    self.delegate?.deleted(type: .restore)
+                }
+            case .falseReport:
+                self.dismiss(animated: true) {
+                    print("dismiss")
+                    self.delegate?.deleted(type: .falseReport)
+                }
+            case .duplicate:
+                self.dismiss(animated: true) {
+                    print("dismiss")
+                    self.delegate?.deleted(type: .duplicate)
+                }
+            default:
+                return
             }
         }
         

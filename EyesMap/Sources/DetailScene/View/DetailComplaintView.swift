@@ -9,6 +9,13 @@ import UIKit
 import SnapKit
 
 class DetailComplaintView: UIView {
+    
+    var isSelected: Bool = false {
+        didSet {
+            configure()
+        }
+    }
+    
 //MARK: - Properties
     private let titleLabel: UILabel = {
         $0.text = "인도 도로블럭 파손"
@@ -115,32 +122,23 @@ class DetailComplaintView: UIView {
         return $0
     }(UIView())
     
-    private let dangerStackView: UIStackView = {
-        let dangerImageButton: UIButton = {
-            let btn = UIButton()
-            btn.setImage(UIImage(named: "danger"), for: .normal)
-            btn.setImage(UIImage(named: "selectedDanger"), for: .selected)
-            
-            btn.snp.makeConstraints { make in
-                make.height.width.equalTo(19)
-            }
-            return btn
-        }()
+    let dangerButton: UIButton = {
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray2,
+            .font: UIFont.boldSystemFont(ofSize: 13)]
+        let attributedString = NSAttributedString(string: "위험해요 101", attributes: textAttributes)
+        let combinedString = NSMutableAttributedString()
+        combinedString.append(attributedString)
+        $0.setAttributedTitle(combinedString, for: .normal)
         
-        let dangerLabel: UILabel = {
-            let label = UILabel()
-            label.text = "'위험해요'에 공감하기"
-            label.font = UIFont.systemFont(ofSize: 13)
-            label.textColor = .black
-            return label
-        }()
-        $0.axis = .horizontal
-        $0.spacing = 10
-        $0.addArrangedSubview(dangerImageButton)
-        $0.addArrangedSubview(dangerLabel)
-            
+        $0.setImage(UIImage(named: "danger"), for: .normal)
+        $0.setImage(UIImage(named: "selectedDanger"), for: .selected)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 20)
+        $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        $0.backgroundColor = UIColor.white
+        $0.isSelected = false
         return $0
-    }(UIStackView())
+    }(UIButton())
     
     
 //MARK: - Life Cycles
@@ -169,7 +167,7 @@ class DetailComplaintView: UIView {
         addSubview(distanceStackView)
         addSubview(statusStackView)
         addSubview(divideLine)
-        addSubview(dangerStackView)
+        addSubview(dangerButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(19)
@@ -215,11 +213,24 @@ class DetailComplaintView: UIView {
             make.leading.trailing.equalToSuperview().inset(11)
             make.height.equalTo(0.8)
         }
-        dangerStackView.snp.makeConstraints { make in
+        dangerButton.snp.makeConstraints { make in
             make.top.equalTo(divideLine.snp.bottom).inset(-16)
-            make.leading.equalToSuperview().inset(24)
+            make.trailing.equalToSuperview().inset(17)
             make.height.equalTo(22)
+            make.width.equalTo(120)
         }
     }
     
+    func configure() {
+        if isSelected {
+            dangerButton.isSelected = isSelected
+            let textAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.red,
+                .font: UIFont.boldSystemFont(ofSize: 13)]
+            let attributedString = NSAttributedString(string: "위험해요 101", attributes: textAttributes)
+            let combinedString = NSMutableAttributedString()
+            combinedString.append(attributedString)
+            dangerButton.setAttributedTitle(combinedString, for: .normal)
+        }
+    }
 }
