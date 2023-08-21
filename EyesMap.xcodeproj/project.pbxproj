@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2D6E67C41D2CE8963671545F /* Pods_EyesMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952C865199B62CCB80BD7609 /* Pods_EyesMapTests.framework */; };
+		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
+		37ED1DD22A93488A00636B6A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD12A93488A00636B6A /* TextField.swift */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -22,7 +24,6 @@
 		478CA0412A6E6012000FA196 /* EyesMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0402A6E6012000FA196 /* EyesMapUITests.swift */; };
 		478CA0432A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */; };
 		478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0592A6EB21F000FA196 /* LocationHandler.swift */; };
-		47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4DE392A72554200FEA000 /* Secret.swift */; };
 		47CB4A842A7941DE00E001D2 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB4A832A7941DE00E001D2 /* Double.swift */; };
 		47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0499C2A8A2D10000A789D /* SettingViewController.swift */; };
 		47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0499F2A8A31D2000A789D /* TapBarController.swift */; };
@@ -66,6 +67,8 @@
 
 /* Begin PBXFileReference section */
 		2D341D8A83E804F7ED90F79C /* Pods-EyesMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMapTests.debug.xcconfig"; path = "Target Support Files/Pods-EyesMapTests/Pods-EyesMapTests.debug.xcconfig"; sourceTree = "<group>"; };
+		37ED1DCF2A93486700636B6A /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		37ED1DD12A93488A00636B6A /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.debug.xcconfig"; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
@@ -85,7 +88,6 @@
 		478CA0402A6E6012000FA196 /* EyesMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesMapUITests.swift; sourceTree = "<group>"; };
 		478CA0422A6E6012000FA196 /* EyesMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		478CA0592A6EB21F000FA196 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
-		47B4DE392A72554200FEA000 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		47CB4A832A7941DE00E001D2 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		47E0499C2A8A2D10000A789D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		47E0499F2A8A31D2000A789D /* TapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarController.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37ED1DCE2A93485800636B6A /* Secret */ = {
+			isa = PBXGroup;
+			children = (
+				37ED1DCF2A93486700636B6A /* Secret.swift */,
+			);
+			path = Secret;
+			sourceTree = "<group>";
+		};
 		475B74312A90AD8200C8BB97 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +203,7 @@
 		478CA01E2A6E600F000FA196 /* EyesMap */ = {
 			isa = PBXGroup;
 			children = (
-				47B4DE382A72552600FEA000 /* Secret */,
+				37ED1DCE2A93485800636B6A /* Secret */,
 				475B74312A90AD8200C8BB97 /* API */,
 				478CA0572A6EB1C2000FA196 /* Sources */,
 				478CA0562A6EB1AF000FA196 /* Utils */,
@@ -257,14 +267,6 @@
 			path = HomeScene;
 			sourceTree = "<group>";
 		};
-		47B4DE382A72552600FEA000 /* Secret */ = {
-			isa = PBXGroup;
-			children = (
-				47B4DE392A72554200FEA000 /* Secret.swift */,
-			);
-			path = Secret;
-			sourceTree = "<group>";
-		};
 		47CB4A822A7941CD00E001D2 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +274,7 @@
 				47CB4A832A7941DE00E001D2 /* Double.swift */,
 				47FD24BB2A86189900529342 /* DeleteRequestButton.swift */,
 				47FD24C32A864C6600529342 /* FloatPanelController.swift */,
+				37ED1DD12A93488A00636B6A /* TextField.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47E049A92A8B83E4000A789D /* TermView.swift in Sources */,
+				37ED1DD02A93486700636B6A /* Secret.swift in Sources */,
 				47E049B32A8F7BBA000A789D /* ReportMapViewController.swift in Sources */,
 				47FD24CD2A88A7DD00529342 /* ProfileCollectionViewController.swift in Sources */,
 				475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */,
@@ -698,12 +702,12 @@
 				475B74402A93006400C8BB97 /* ReportImageColletionViewCell.swift in Sources */,
 				47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */,
 				475B743E2A93003C00C8BB97 /* ReportViewController.swift in Sources */,
-				47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,
 				47FD24BC2A86189900529342 /* DeleteRequestButton.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
+				37ED1DD22A93488A00636B6A /* TextField.swift in Sources */,
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
 				47E049B62A8FB3CE000A789D /* ReportLocationSettingView.swift in Sources */,
 				47E049A72A8B644B000A789D /* CustomToggleButton.swift in Sources */,
