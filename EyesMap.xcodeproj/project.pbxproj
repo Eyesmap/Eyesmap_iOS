@@ -13,6 +13,10 @@
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
 		475B743E2A93003C00C8BB97 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B743D2A93003C00C8BB97 /* ReportViewController.swift */; };
 		475B74402A93006400C8BB97 /* ReportImageColletionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B743F2A93006400C8BB97 /* ReportImageColletionViewCell.swift */; };
+		475B74442A93485600C8BB97 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74432A93485500C8BB97 /* LoginViewController.swift */; };
+		475B74472A9359AC00C8BB97 /* AuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74462A9359AC00C8BB97 /* AuthNetworkManager.swift */; };
+		475B744C2A935E1D00C8BB97 /* HttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B744B2A935E1D00C8BB97 /* HttpRouter.swift */; };
+		475B744E2A935E3C00C8BB97 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B744D2A935E3C00C8BB97 /* AuthRouter.swift */; };
 		478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA01F2A6E600F000FA196 /* AppDelegate.swift */; };
 		478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0212A6E600F000FA196 /* SceneDelegate.swift */; };
 		478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478CA0232A6E600F000FA196 /* HomeViewController.swift */; };
@@ -72,6 +76,10 @@
 		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
 		475B743D2A93003C00C8BB97 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		475B743F2A93006400C8BB97 /* ReportImageColletionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportImageColletionViewCell.swift; sourceTree = "<group>"; };
+		475B74432A93485500C8BB97 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		475B74462A9359AC00C8BB97 /* AuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkManager.swift; sourceTree = "<group>"; };
+		475B744B2A935E1D00C8BB97 /* HttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRouter.swift; sourceTree = "<group>"; };
+		475B744D2A935E3C00C8BB97 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		478CA01C2A6E600F000FA196 /* EyesMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyesMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		478CA01F2A6E600F000FA196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		478CA0212A6E600F000FA196 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,17 +154,19 @@
 		475B74312A90AD8200C8BB97 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				475B74322A90AD8900C8BB97 /* GeoCodingNetworkManager */,
+				475B74482A935B8100C8BB97 /* HTTP */,
+				475B74452A93598B00C8BB97 /* Auth */,
+				475B74322A90AD8900C8BB97 /* GeoCoding */,
 			);
 			path = API;
 			sourceTree = "<group>";
 		};
-		475B74322A90AD8900C8BB97 /* GeoCodingNetworkManager */ = {
+		475B74322A90AD8900C8BB97 /* GeoCoding */ = {
 			isa = PBXGroup;
 			children = (
 				475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */,
 			);
-			path = GeoCodingNetworkManager;
+			path = GeoCoding;
 			sourceTree = "<group>";
 		};
 		475B743C2A92FFF600C8BB97 /* Report */ = {
@@ -166,6 +176,39 @@
 				475B743F2A93006400C8BB97 /* ReportImageColletionViewCell.swift */,
 			);
 			path = Report;
+			sourceTree = "<group>";
+		};
+		475B74412A93482500C8BB97 /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				475B74422A93483500C8BB97 /* ViewController */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		475B74422A93483500C8BB97 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				475B74432A93485500C8BB97 /* LoginViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		475B74452A93598B00C8BB97 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				475B74462A9359AC00C8BB97 /* AuthNetworkManager.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		475B74482A935B8100C8BB97 /* HTTP */ = {
+			isa = PBXGroup;
+			children = (
+				475B744B2A935E1D00C8BB97 /* HttpRouter.swift */,
+				475B744D2A935E3C00C8BB97 /* AuthRouter.swift */,
+			);
+			path = HTTP;
 			sourceTree = "<group>";
 		};
 		478CA0132A6E600F000FA196 = {
@@ -238,6 +281,7 @@
 				47E0499E2A8A31C1000A789D /* Base */,
 				47FD24B82A85F91000529342 /* Common */,
 				47FE7A8F2A7C0BB800075B0C /* Model */,
+				475B74412A93482500C8BB97 /* LoginScene */,
 				478CA0582A6EB1FD000FA196 /* HomeScene */,
 				47E049B02A8F7BA3000A789D /* ReportMapScene */,
 				475B743C2A92FFF600C8BB97 /* Report */,
@@ -689,6 +733,7 @@
 				475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */,
 				47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */,
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
+				475B744E2A935E3C00C8BB97 /* AuthRouter.swift in Sources */,
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
 				47FD24C02A86369100529342 /* ReportFloatingPanelLayout.swift in Sources */,
 				475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */,
@@ -696,10 +741,12 @@
 				47FD24C42A864C6600529342 /* FloatPanelController.swift in Sources */,
 				478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */,
 				475B74402A93006400C8BB97 /* ReportImageColletionViewCell.swift in Sources */,
+				475B74442A93485600C8BB97 /* LoginViewController.swift in Sources */,
 				47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */,
 				475B743E2A93003C00C8BB97 /* ReportViewController.swift in Sources */,
 				47B4DE3A2A72554200FEA000 /* Secret.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,
+				475B74472A9359AC00C8BB97 /* AuthNetworkManager.swift in Sources */,
 				47FD24BC2A86189900529342 /* DeleteRequestButton.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
@@ -707,6 +754,7 @@
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
 				47E049B62A8FB3CE000A789D /* ReportLocationSettingView.swift in Sources */,
 				47E049A72A8B644B000A789D /* CustomToggleButton.swift in Sources */,
+				475B744C2A935E1D00C8BB97 /* HttpRouter.swift in Sources */,
 				47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,

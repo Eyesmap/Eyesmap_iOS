@@ -2,6 +2,17 @@ PODS:
   - Alamofire (5.6.4)
   - BetterSegmentedControl (2.0.1)
   - FloatingPanel (2.6.6)
+  - KakaoSDKAuth (2.14.0):
+    - KakaoSDKCommon (= 2.14.0)
+  - KakaoSDKCommon (2.14.0):
+    - KakaoSDKCommon/Common (= 2.14.0)
+    - KakaoSDKCommon/Network (= 2.14.0)
+  - KakaoSDKCommon/Common (2.14.0)
+  - KakaoSDKCommon/Network (2.14.0):
+    - Alamofire (~> 5.1)
+    - KakaoSDKCommon/Common (= 2.14.0)
+  - KakaoSDKUser (2.14.0):
+    - KakaoSDKAuth (= 2.14.0)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.17.0):
     - NMapsGeometry
@@ -11,6 +22,9 @@ DEPENDENCIES:
   - Alamofire
   - BetterSegmentedControl (~> 2.0)
   - FloatingPanel
+  - KakaoSDKAuth
+  - KakaoSDKCommon
+  - KakaoSDKUser
   - NMapsMap
   - SnapKit (~> 5.6.0)
 
@@ -19,6 +33,9 @@ SPEC REPOS:
     - Alamofire
     - BetterSegmentedControl
     - FloatingPanel
+    - KakaoSDKAuth
+    - KakaoSDKCommon
+    - KakaoSDKUser
     - NMapsGeometry
     - NMapsMap
     - SnapKit
@@ -27,10 +44,13 @@ SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   BetterSegmentedControl: 09607b27861d49cbce48b7673b74f9150a3d371a
   FloatingPanel: 667860b0346a683f136d7048a91999b73b66907a
+  KakaoSDKAuth: 8fca87815de22062a23297983f327613b087b8bb
+  KakaoSDKCommon: 0ce638f7a2e49704943c0b74a087a9f8067bba1c
+  KakaoSDKUser: 2ca18314ce72e6690f76cb1f6f9fbc771d31a803
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 98cc20784e976a6faf12d136bf55f869741034f5
+PODFILE CHECKSUM: 725021560a4820b9d58d46bb345673b06101f5e5
 
 COCOAPODS: 1.11.3

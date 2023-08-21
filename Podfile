@@ -6,6 +6,9 @@ target 'EyesMap' do
   use_frameworks!
 
   # Pods for EyesMap
+pod 'KakaoSDKCommon'  # 필수 요소를 담은 공통 모듈
+pod 'KakaoSDKAuth'  # 카카오 로그인
+pod 'KakaoSDKUser'  # 사용자 관리
 pod 'SnapKit', '~> 5.6.0'
 pod 'Alamofire'
 pod 'NMapsMap'
