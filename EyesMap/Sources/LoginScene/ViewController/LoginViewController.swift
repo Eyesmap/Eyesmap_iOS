@@ -13,6 +13,12 @@ import KakaoSDKUser
 
 class LoginViewController: UIViewController {
 //MARK: - Properties
+    private let dismissButton: UIButton = {
+        $0.setImage(UIImage(systemName: "xmark")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        $0.addTarget(self, action: #selector(dismissLoginView), for: .touchUpInside)
+        return $0
+    }(UIButton())
+    
     private let mainLogoImageView: UIImageView = {
         $0.image = UIImage(named: "mainLogo")
         return $0
@@ -45,33 +51,38 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         setUI()
     }
-    
 
 //MARK: - Set UI
     private func setUI() {
         view.backgroundColor = .white
         
+        view.addSubview(dismissButton)
         view.addSubview(mainLogoImageView)
         view.addSubview(mainTitleLabel)
         view.addSubview(subTitleLabel)
         view.addSubview(kakaoButton)
         
+        dismissButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.leading.equalToSuperview().inset(25)
+            make.width.height.equalTo(18)
+        }
         mainLogoImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(100)
+            make.top.equalTo(dismissButton.snp.bottom).inset(-100)
             make.centerX.equalToSuperview()
             make.width.equalTo(80)
             make.height.equalTo(105)
         }
         mainTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainLogoImageView.snp.bottom).inset(-7)
+            make.top.equalTo(mainLogoImageView.snp.bottom).inset(-10)
             make.centerX.equalToSuperview()
         }
         subTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainTitleLabel.snp.bottom).inset(-20)
+            make.top.equalTo(mainTitleLabel.snp.bottom).inset(-25)
             make.centerX.equalToSuperview()
         }
         kakaoButton.snp.makeConstraints { make in
-            make.top.equalTo(subTitleLabel.snp.bottom).inset(-50)
+            make.top.equalTo(subTitleLabel.snp.bottom).inset(-60)
             make.leading.trailing.equalToSuperview().inset(35)
             make.height.equalTo(60)
         }
@@ -87,6 +98,11 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @objc func dismissLoginView() {
+        self.dismiss(animated: true)
+    }
+
+//MARK: - Kakao
     func loginWithWeb() {
         // 유저 정보
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
@@ -106,8 +122,8 @@ class LoginViewController: UIViewController {
                 guard let self = self,
                       let userId = user?.id else { return }
                 
-                self.kakaoLoginRequest(userId: Int(userId)) { model in
-                    
+                self.kakaoLoginRequest(userId: Int(userId)) { [weak self] model in
+                    self?.dismissLoginView()
                 }
             }
         }
@@ -132,8 +148,8 @@ class LoginViewController: UIViewController {
                 guard let self = self,
                       let userId = user?.id else { return }
                 
-                self.kakaoLoginRequest(userId: Int(userId)) { model in
-                    
+                self.kakaoLoginRequest(userId: Int(userId)) { [weak self] model in
+                    self?.dismissLoginView()
                 }
             }
         }

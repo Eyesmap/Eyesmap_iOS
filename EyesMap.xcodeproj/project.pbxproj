@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D6E67C41D2CE8963671545F /* Pods_EyesMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952C865199B62CCB80BD7609 /* Pods_EyesMapTests.framework */; };
+		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -71,6 +72,7 @@
 /* Begin PBXFileReference section */
 		2D341D8A83E804F7ED90F79C /* Pods-EyesMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMapTests.debug.xcconfig"; path = "Target Support Files/Pods-EyesMapTests/Pods-EyesMapTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.debug.xcconfig"; sourceTree = "<group>"; };
+		47198F9F2A94855B00349181 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
 		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 			children = (
 				47CB4A822A7941CD00E001D2 /* Extension */,
 				478CA0592A6EB21F000FA196 /* LocationHandler.swift */,
+				47198F9F2A94855B00349181 /* TokenManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
 				47E049B62A8FB3CE000A789D /* ReportLocationSettingView.swift in Sources */,
 				47E049A72A8B644B000A789D /* CustomToggleButton.swift in Sources */,
+				47198FA02A94855B00349181 /* TokenManager.swift in Sources */,
 				475B744C2A935E1D00C8BB97 /* HttpRouter.swift in Sources */,
 				47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
