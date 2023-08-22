@@ -22,12 +22,13 @@ class TabBarController: UITabBarController {
         print("🔥ConfigureAuth")
         // 유저 토큰이 존재하면
 //        if TokenManager.getUserAccessToken() != nil {
-//            print("🔥AccessToken = \(TokenManager.getUserAccessToken())")
+            print("🔥AccessToken = \(TokenManager.getUserAccessToken())")
             // ToDo - 액세스 토큰 유효 검사
-            configureViewControllers()
+//            configureViewControllers()
 //        } else {
             // 로그인 뷰 띄우기
-//            presentAuthView()
+            configureViewControllers() //MARK: 임시
+            presentAuthView()
 //        }
     }
     
@@ -35,9 +36,9 @@ class TabBarController: UITabBarController {
     private func presentAuthView() {
         // 유저 토큰이 존재하지 않다면
         DispatchQueue.main.async { [weak self] in
-//            let loginView = LoginViewController()
-//            loginView.modalPresentationStyle = .fullScreen
-//            self?.present(loginView, animated: true)
+            let loginView = LoginViewController()
+            loginView.modalPresentationStyle = .fullScreen
+            self?.present(loginView, animated: true)
         }
     }
     
