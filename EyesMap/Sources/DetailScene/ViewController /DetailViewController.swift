@@ -10,6 +10,7 @@ import SnapKit
 import NMapsMap
 import CoreLocation
 import FloatingPanel
+import YPImagePicker
 
 class DetailViewController: UIViewController {
     
@@ -26,6 +27,8 @@ class DetailViewController: UIViewController {
         UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
         UIImage(named: "block")?.withRenderingMode(.alwaysOriginal)
     ]
+    
+    private var selectedProfileImages: [UIImage] = []
     
 //MARK: - Properties
     private lazy var scrollView: UIScrollView = {
@@ -91,7 +94,6 @@ class DetailViewController: UIViewController {
         controller.layout = ReportFloatingPanelLayout()
         return controller
     }()
-    
     
     
 //MARK: - Life Cycles
@@ -205,7 +207,6 @@ class DetailViewController: UIViewController {
     }
 }
 
-
 //MARK: - NMFMapViewDelegate
 extension DetailViewController: NMFMapViewDelegate {
     // 지도 탭 시
@@ -280,18 +281,10 @@ extension DetailViewController: DeletedAlertControllerProtocol {
 
 //MARK: - RestoreAlertControllerProtocol
 extension DetailViewController: RestoreAlertControllerProtocol {
-    func uploadImage() {
-        let bv: UIView = {
-            $0.backgroundColor = .black.withAlphaComponent(0.4)
-            return $0
-        }(UIView())
-
-        view.addSubview(bv)
-        bv.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        self.presentFinishedView()
+    func uploadImage(images: [UIImage]) {
+        // 업로드 시
+        self.selectedProfileImages = images
+        print("selectedCount = \(self.selectedProfileImages.count)")
     }
 }
 
