@@ -19,6 +19,12 @@
 		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
 		37ED1DD22A93488A00636B6A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD12A93488A00636B6A /* TextField.swift */; };
 		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
+		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
+		37ED1DD22A93488A00636B6A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD12A93488A00636B6A /* TextField.swift */; };
+		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
+		47198FA22A94963900349181 /* ModifyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA12A94963900349181 /* ModifyProfileViewController.swift */; };
+		47198FA42A94987E00349181 /* ProfileSetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA32A94987E00349181 /* ProfileSetImageView.swift */; };
+
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -92,6 +98,8 @@
 		37ED1DD12A93488A00636B6A /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.debug.xcconfig"; sourceTree = "<group>"; };
 		47198F9F2A94855B00349181 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		47198FA12A94963900349181 /* ModifyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileViewController.swift; sourceTree = "<group>"; };
+		47198FA32A94987E00349181 /* ProfileSetImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetImageView.swift; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
 		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
@@ -506,6 +514,7 @@
 		47FD24C82A88A21500529342 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				47198FA32A94987E00349181 /* ProfileSetImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 			children = (
 				47FD24C62A86921900529342 /* ProfileViewController.swift */,
 				47FD24CC2A88A7DD00529342 /* ProfileCollectionViewController.swift */,
+				47198FA12A94963900349181 /* ModifyProfileViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -810,6 +820,7 @@
 				47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */,
 				371221A12A97309400AEA499 /* LocationDataViewController.swift in Sources */,
 				371221A92A975BDD00AEA499 /* RankingView.swift in Sources */,
+				47198FA42A94987E00349181 /* ProfileSetImageView.swift in Sources */,
 				475B743E2A93003C00C8BB97 /* ReportViewController.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,
 				475B74472A9359AC00C8BB97 /* AuthNetworkManager.swift in Sources */,
@@ -817,6 +828,7 @@
 				371221B02A977ABF00AEA499 /* TotalView.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
+				47198FA22A94963900349181 /* ModifyProfileViewController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
 				37ED1DD22A93488A00636B6A /* TextField.swift in Sources */,
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
