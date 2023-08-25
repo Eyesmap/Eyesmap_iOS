@@ -98,6 +98,7 @@ class Top3View: UIView {
                 name.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
                 name.setTitleColor(UIColor.black, for: .normal)
                 LocationDataViewController.jachiDetail.alpha = 1
+                LocationDataViewController.jachiDetail.titleLabel.text = title.text
             }
         }
     }
