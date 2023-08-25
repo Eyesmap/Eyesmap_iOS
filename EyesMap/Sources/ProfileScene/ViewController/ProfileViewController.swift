@@ -17,6 +17,14 @@ class ProfileViewController: UIViewController {
         $0.textColor = .black
         return $0
     }(UILabel())
+    
+    private let modifyButton: UIButton = {
+        $0.setTitle("수정하기", for: .normal)
+        $0.setTitleColor(.red, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        $0.addTarget(self, action: #selector(modifyButtonTap), for: .touchUpInside)
+        return $0
+    }(UIButton())
 
     private let imageLabel: UILabel = {
         $0.text = "이미지"
@@ -76,10 +84,10 @@ class ProfileViewController: UIViewController {
     }
     
     private lazy var resultTypeSegmentControl: BetterSegmentedControl = {
-        let icons = [UIImage(named: "blueBoard")!, UIImage(named: "selectedDanger")!]
+        let icons = [UIImage(named: "reportBtn")!, UIImage(named: "sympathyBtn")!]
         
         let imgSeg = IconSegment.segments(withIcons: icons,
-                                          iconSize: CGSize(width: 21, height: 21),
+                                          iconSize: CGSize(width: 55, height: 55),
                                           normalBackgroundColor: .clear,
                                           normalIconTintColor: .systemGray3,
                                           selectedBackgroundColor: .clear,
@@ -108,15 +116,12 @@ class ProfileViewController: UIViewController {
         setupPageViewController()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = false
-    }
-    
 //MARK: - Set UI
     private func setUI() {
         view.backgroundColor = .white
         
         view.addSubview(profileLabel)
+        view.addSubview(modifyButton)
         view.addSubview(imageLabel)
         view.addSubview(imageValueImageView)
         view.addSubview(imageButton)
@@ -131,6 +136,11 @@ class ProfileViewController: UIViewController {
         profileLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(15)
             make.leading.equalToSuperview().inset(20)
+        }
+        modifyButton.snp.makeConstraints { make in
+            make.centerY.equalTo(profileLabel.snp.centerY)
+            make.trailing.equalToSuperview().inset(25)
+            make.height.equalTo(15)
         }
         imageLabel.snp.makeConstraints { make in
             make.top.equalTo(profileLabel.snp.bottom).inset(-40)
@@ -229,7 +239,12 @@ class ProfileViewController: UIViewController {
     
     @objc func settingBtnTap() {
         let setVC = SettingViewController()
-        navigationController?.pushViewController(setVC, animated: true)
+        self.navigationController?.pushViewController(setVC, animated: true)
+    }
+    
+    @objc func modifyButtonTap() {
+        let modifyVC = ModifyProfileViewController()
+        self.navigationController?.pushViewController(modifyVC, animated: true)
     }
 }
 
