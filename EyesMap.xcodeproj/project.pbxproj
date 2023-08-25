@@ -8,9 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		2D6E67C41D2CE8963671545F /* Pods_EyesMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952C865199B62CCB80BD7609 /* Pods_EyesMapTests.framework */; };
-		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
+		371221A12A97309400AEA499 /* LocationDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221A02A97309400AEA499 /* LocationDataViewController.swift */; };
+		371221A72A97535100AEA499 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221A62A97535100AEA499 /* MapView.swift */; };
+		371221A92A975BDD00AEA499 /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221A82A975BDD00AEA499 /* RankingView.swift */; };
+		371221AE2A976E7B00AEA499 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221AD2A976E7B00AEA499 /* UIButton.swift */; };
+		371221B02A977ABF00AEA499 /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221AF2A977ABF00AEA499 /* TotalView.swift */; };
+		371221B22A979AC600AEA499 /* JachiDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B12A979AC600AEA499 /* JachiDetailView.swift */; };
+		371221B42A97B19900AEA499 /* Top3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B32A97B19900AEA499 /* Top3View.swift */; };
+		371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */; };
 		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
 		37ED1DD22A93488A00636B6A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD12A93488A00636B6A /* TextField.swift */; };
+		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -72,6 +80,14 @@
 
 /* Begin PBXFileReference section */
 		2D341D8A83E804F7ED90F79C /* Pods-EyesMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMapTests.debug.xcconfig"; path = "Target Support Files/Pods-EyesMapTests/Pods-EyesMapTests.debug.xcconfig"; sourceTree = "<group>"; };
+		371221A02A97309400AEA499 /* LocationDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataViewController.swift; sourceTree = "<group>"; };
+		371221A62A97535100AEA499 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		371221A82A975BDD00AEA499 /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
+		371221AD2A976E7B00AEA499 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		371221AF2A977ABF00AEA499 /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
+		371221B12A979AC600AEA499 /* JachiDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiDetailView.swift; sourceTree = "<group>"; };
+		371221B32A97B19900AEA499 /* Top3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top3View.swift; sourceTree = "<group>"; };
+		371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		37ED1DCF2A93486700636B6A /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		37ED1DD12A93488A00636B6A /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.debug.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +171,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3712219F2A97301600AEA499 /* LocationDataScene */ = {
+			isa = PBXGroup;
+			children = (
+				371221A32A97350F00AEA499 /* View */,
+				371221A22A97350100AEA499 /* ViiewController */,
+			);
+			path = LocationDataScene;
+			sourceTree = "<group>";
+		};
+		371221A22A97350100AEA499 /* ViiewController */ = {
+			isa = PBXGroup;
+			children = (
+				371221A02A97309400AEA499 /* LocationDataViewController.swift */,
+			);
+			path = ViiewController;
+			sourceTree = "<group>";
+		};
+		371221A32A97350F00AEA499 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				371221B72A9826F900AEA499 /* TableViewCell */,
+				371221A82A975BDD00AEA499 /* RankingView.swift */,
+				371221A62A97535100AEA499 /* MapView.swift */,
+				371221AF2A977ABF00AEA499 /* TotalView.swift */,
+				371221B12A979AC600AEA499 /* JachiDetailView.swift */,
+				371221B32A97B19900AEA499 /* Top3View.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		371221B72A9826F900AEA499 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		37ED1DCE2A93485800636B6A /* Secret */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +345,7 @@
 		478CA0572A6EB1C2000FA196 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3712219F2A97301600AEA499 /* LocationDataScene */,
 				47E0499E2A8A31C1000A789D /* Base */,
 				47FD24B82A85F91000529342 /* Common */,
 				47FE7A8F2A7C0BB800075B0C /* Model */,
@@ -322,6 +377,7 @@
 				47FD24BB2A86189900529342 /* DeleteRequestButton.swift */,
 				47FD24C32A864C6600529342 /* FloatPanelController.swift */,
 				37ED1DD12A93488A00636B6A /* TextField.swift */,
+				371221AD2A976E7B00AEA499 /* UIButton.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -740,6 +796,7 @@
 				475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */,
 				47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */,
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
+				371221B42A97B19900AEA499 /* Top3View.swift in Sources */,
 				475B744E2A935E3C00C8BB97 /* AuthRouter.swift in Sources */,
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
 				47FD24C02A86369100529342 /* ReportFloatingPanelLayout.swift in Sources */,
@@ -748,12 +805,16 @@
 				47FD24C42A864C6600529342 /* FloatPanelController.swift in Sources */,
 				478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */,
 				475B74402A93006400C8BB97 /* ReportImageColletionViewCell.swift in Sources */,
+				371221A72A97535100AEA499 /* MapView.swift in Sources */,
 				475B74442A93485600C8BB97 /* LoginViewController.swift in Sources */,
 				47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */,
+				371221A12A97309400AEA499 /* LocationDataViewController.swift in Sources */,
+				371221A92A975BDD00AEA499 /* RankingView.swift in Sources */,
 				475B743E2A93003C00C8BB97 /* ReportViewController.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,
 				475B74472A9359AC00C8BB97 /* AuthNetworkManager.swift in Sources */,
 				47FD24BC2A86189900529342 /* DeleteRequestButton.swift in Sources */,
+				371221B02A977ABF00AEA499 /* TotalView.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
@@ -764,11 +825,14 @@
 				47198FA02A94855B00349181 /* TokenManager.swift in Sources */,
 				475B744C2A935E1D00C8BB97 /* HttpRouter.swift in Sources */,
 				47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */,
+				371221AE2A976E7B00AEA499 /* UIButton.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,
 				47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */,
 				478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */,
 				475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */,
+				371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */,
+				371221B22A979AC600AEA499 /* JachiDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
