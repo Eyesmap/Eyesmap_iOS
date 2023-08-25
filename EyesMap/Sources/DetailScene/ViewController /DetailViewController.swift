@@ -204,6 +204,7 @@ class DetailViewController: UIViewController {
     
     @objc func dangerButtonTap() {
         print("위험해요 버튼 Tap")
+        detailComplaintView.isSelected.toggle()
     }
 }
 
