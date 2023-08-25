@@ -92,7 +92,7 @@ class RestoreAlertController: UIViewController {
         config.screens = [.library]
         config.showsPhotoFilters = false
         config.library.defaultMultipleSelection = true // 한장 선택 default (여러장 선택 O)
-        config.library.maxNumberOfItems = 5
+        config.library.maxNumberOfItems = 3
         config.library.preselectedItems = self.selectedImage
         config.wordings.libraryTitle = "앨범"
         config.wordings.cameraTitle = "카메라"

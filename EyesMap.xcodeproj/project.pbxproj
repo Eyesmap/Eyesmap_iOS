@@ -19,12 +19,8 @@
 		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
 		37ED1DD22A93488A00636B6A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD12A93488A00636B6A /* TextField.swift */; };
 		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
-		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
-		37ED1DD22A93488A00636B6A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD12A93488A00636B6A /* TextField.swift */; };
-		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
 		47198FA22A94963900349181 /* ModifyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA12A94963900349181 /* ModifyProfileViewController.swift */; };
 		47198FA42A94987E00349181 /* ProfileSetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA32A94987E00349181 /* ProfileSetImageView.swift */; };
-
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -353,11 +349,11 @@
 		478CA0572A6EB1C2000FA196 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				3712219F2A97301600AEA499 /* LocationDataScene */,
 				47E0499E2A8A31C1000A789D /* Base */,
 				47FD24B82A85F91000529342 /* Common */,
 				47FE7A8F2A7C0BB800075B0C /* Model */,
 				475B74412A93482500C8BB97 /* LoginScene */,
+				3712219F2A97301600AEA499 /* LocationDataScene */,
 				478CA0582A6EB1FD000FA196 /* HomeScene */,
 				47E049B02A8F7BA3000A789D /* ReportMapScene */,
 				475B743C2A92FFF600C8BB97 /* Report */,
