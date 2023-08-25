@@ -14,6 +14,7 @@ pod 'Alamofire'
 pod 'NMapsMap'
 pod 'FloatingPanel'
 pod 'BetterSegmentedControl', '~> 2.0'
+pod 'YPImagePicker'
 
   target 'EyesMapTests' do
     inherit! :search_paths
