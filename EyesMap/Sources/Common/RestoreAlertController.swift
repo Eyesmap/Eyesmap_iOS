@@ -218,6 +218,7 @@ class RestoreAlertController: UIViewController {
     
     @objc func uploadButtonTap() {
         // 이미지 버튼 Tap Delgate 연결해야함
+        self.dismiss(animated: true)
         self.delegate?.uploadImage(images: self.selectedProfileImages)
     }
 }
