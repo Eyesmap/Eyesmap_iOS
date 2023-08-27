@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreLocation
 import SnapKit
-import PhotosUI
+import YPImagePicker
 
 var checkBox_dis = false
 
@@ -253,6 +254,21 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         return view
     }()
     
+    private lazy var config: YPImagePickerConfiguration = {
+        var config = YPImagePickerConfiguration()
+        config.screens = [.library]
+        config.showsPhotoFilters = false
+        config.library.defaultMultipleSelection = true // 한장 선택 default (여러장 선택 O)
+        config.library.maxNumberOfItems = 5
+//        config.library.preselectedItems = self.selectedImages
+        config.wordings.libraryTitle = "앨범"
+        config.wordings.cameraTitle = "카메라"
+        config.wordings.cancel = "취소"
+        config.wordings.next = "완료"
+        config.colors.tintColor = .black
+        return config
+    }()
+    
     private let reportPosition: CLLocation
     private let reportAddress: String
 
@@ -343,11 +359,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
 //        }
         //------
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
         }
 
         contentView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview() // == make.edges.equalTo(0)
+            make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
             make.height.equalTo(1000)
         }
@@ -579,15 +596,37 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         CheckSubmitBtn()
     }
     @objc private func attachImage() {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        // 이미지 다시 선택 시 배열 초기화 작업
-        selectedImages.removeSubrange(0..<selectedImages.count)
-//        config.selection = .ordered
-        config.selectionLimit = 6
-        let imagePickerViewController = PHPickerViewController(configuration: config)
-        imagePickerViewController.delegate = self
-        present(imagePickerViewController, animated: true)
+        let picker = YPImagePicker(configuration: self.config)
+        picker.didFinishPicking { [ weak self, unowned picker] items, cancelled in
+            self?.selectedImages = []
+            
+            if cancelled {
+                // 취소 눌렀을때
+                picker.dismiss(animated: true)
+            } else {
+                // 사진 선택후
+                for item in items {
+                    switch item {
+                    case .photo(p: let photo):
+                        self?.selectedImages.append(photo.image)
+                        
+                        DispatchQueue.main.async {
+                            guard let imgCnt = self?.selectedImages.count else { return }
+                            self?.attachImageButton.setTitle("사진 첨부하기 \(imgCnt) / 6", for: .normal)
+                            self?.CheckSubmitBtn()
+                        }
+                        DispatchQueue.main.async {
+                            self?.collectionView.reloadData()
+                        }
+                    default:
+                        print("DEBUG: 사진을 선택하지 않음")
+                    }
+                }
+            }
+            
+            picker.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
     }
     
     @objc func Submit() {
@@ -661,46 +700,46 @@ extension ReportViewController : UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
-extension ReportViewController : PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        
-        
-        
-        if !results.isEmpty {
-            
-            results.forEach { result in
-                let itemProvider = result.itemProvider
-                if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                        guard let self = self else { return }
-                        if let image = image as? UIImage {
-                            self.selectedImages.append(image)
-                            DispatchQueue.main.async {
-                                //                                self.imagePickerView.image = image
-                                self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
-                                print(self.selectedImages.count)
-                                print(self.selectedImages)
-                                self.CheckSubmitBtn()
-                            }
-                            DispatchQueue.main.async {
-                                self.collectionView.reloadData()
-                            }
-                        }
-                        
-                        if let error = error {
-                            print("ERROR - UploadFeedViewController - PHPickerViewControllerDelegate - \(error.localizedDescription)")
-                        }
-                        
-                    }
-                }
-            }
-            
-        }
-        print("results:", results)
-        dismiss(animated: true)
-        
-    }
-}
+//extension ReportViewController : PHPickerViewControllerDelegate {
+//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//        
+//        
+//        
+//        if !results.isEmpty {
+//            
+//            results.forEach { result in
+//                let itemProvider = result.itemProvider
+//                if itemProvider.canLoadObject(ofClass: UIImage.self) {
+//                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+//                        guard let self = self else { return }
+//                        if let image = image as? UIImage {
+//                            self.selectedImages.append(image)
+//                            DispatchQueue.main.async {
+//                                //                                self.imagePickerView.image = image
+//                                self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
+//                                print(self.selectedImages.count)
+//                                print(self.selectedImages)
+//                                self.CheckSubmitBtn()
+//                            }
+//                            DispatchQueue.main.async {
+//                                self.collectionView.reloadData()
+//                            }
+//                        }
+//                        
+//                        if let error = error {
+//                            print("ERROR - UploadFeedViewController - PHPickerViewControllerDelegate - \(error.localizedDescription)")
+//                        }
+//                        
+//                    }
+//                }
+//            }
+//            
+//        }
+//        print("results:", results)
+//        dismiss(animated: true)
+//        
+//    }
+//}
 
 extension ReportViewController : UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
