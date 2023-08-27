@@ -100,12 +100,11 @@ extension ReportMapViewController: NMFMapViewDelegate {
 
     func mapViewIdle(_ mapView: NMFMapView) {
         updateMarkerPosition()
-        GeoCodingNetworkManager.shared.reverseGeocode(latitude: self.targetMarker.position.lat, longitude: self.targetMarker.position.lng) { location in
-            if location == "경기도 성남시 분당구 궁내동" {
-                self.locationSettingView.locationLabel.text = location
-            } else {
-                self.locationSettingView.locationLabel.text = location
-            }
+        let lat = targetLocation.coordinate.latitude
+        let lng = targetLocation.coordinate.longitude
+        
+        GeoCodingNetworkManager.shared.reverseGeocode(latitude: lat, longitude: lng) { location in
+            self.locationSettingView.locationLabel.text = location
         }
     }
     
