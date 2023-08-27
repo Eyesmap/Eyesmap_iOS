@@ -9,6 +9,7 @@ import UIKit
 import CoreLocation
 import SnapKit
 import YPImagePicker
+import FloatingPanel
 
 var checkBox_dis = false
 
@@ -267,6 +268,13 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         config.wordings.next = "완료"
         config.colors.tintColor = .black
         return config
+    }()
+    
+    private lazy var fpc: FloatingPanelController = {
+        let controller = FloatingPanelController(delegate: self)
+        controller.changePanelStyle()
+        controller.layout = ReportFloatingPanelLayout()
+        return controller
     }()
     
     private let reportPosition: CLLocation
@@ -631,6 +639,8 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     
     @objc func Submit() {
         print("submit")
+        //MARK: 임시 Float - API 확인 후 분기처리 예정
+        presentFinishedView()
     }
 
     func CheckSubmitBtn() {
@@ -673,6 +683,24 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
             detailTextView.textColor = .black
         }
     }
+    
+    func presentFinishedView() {
+        let bv: UIView = {
+            $0.backgroundColor = .black.withAlphaComponent(0.4)
+            return $0
+        }(UIView())
+
+        view.addSubview(bv)
+        bv.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let reportVC = FinishedFloatingController(type: .report)
+        reportVC.delegate = self
+        fpc.set(contentViewController: reportVC)
+        fpc.track(scrollView: reportVC.scrollView)
+        self.present(fpc, animated: true)
+    }
 }
 
 extension ReportViewController : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
@@ -700,49 +728,27 @@ extension ReportViewController : UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
-//extension ReportViewController : PHPickerViewControllerDelegate {
-//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-//        
-//        
-//        
-//        if !results.isEmpty {
-//            
-//            results.forEach { result in
-//                let itemProvider = result.itemProvider
-//                if itemProvider.canLoadObject(ofClass: UIImage.self) {
-//                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-//                        guard let self = self else { return }
-//                        if let image = image as? UIImage {
-//                            self.selectedImages.append(image)
-//                            DispatchQueue.main.async {
-//                                //                                self.imagePickerView.image = image
-//                                self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
-//                                print(self.selectedImages.count)
-//                                print(self.selectedImages)
-//                                self.CheckSubmitBtn()
-//                            }
-//                            DispatchQueue.main.async {
-//                                self.collectionView.reloadData()
-//                            }
-//                        }
-//                        
-//                        if let error = error {
-//                            print("ERROR - UploadFeedViewController - PHPickerViewControllerDelegate - \(error.localizedDescription)")
-//                        }
-//                        
-//                    }
-//                }
-//            }
-//            
-//        }
-//        print("results:", results)
-//        dismiss(animated: true)
-//        
-//    }
-//}
-
 extension ReportViewController : UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         CheckSubmitBtn()
+    }
+}
+
+extension ReportViewController: FloatingPanelControllerDelegate {
+    func floatingPanelDidChangePosition(_ fpc: FloatingPanelController) {
+        if fpc.state == .half {
+            
+        } else {
+            fpc.move(to: .half, animated: true)
+        }
+    }
+}
+
+extension ReportViewController: FinishedFloatingControllerDelegate {
+    func dismiss() {
+        if let iv = view.subviews.last {
+            iv.removeFromSuperview()
+        }
+//MARK:        self.dismiss(animated: true)
     }
 }

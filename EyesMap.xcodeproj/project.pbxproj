@@ -54,7 +54,7 @@
 		47FD24BC2A86189900529342 /* DeleteRequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24BB2A86189900529342 /* DeleteRequestButton.swift */; };
 		47FD24BE2A862D8500529342 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24BD2A862D8500529342 /* UIColor.swift */; };
 		47FD24C02A86369100529342 /* ReportFloatingPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24BF2A86369100529342 /* ReportFloatingPanelLayout.swift */; };
-		47FD24C22A8637A400529342 /* FinishedReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24C12A8637A400529342 /* FinishedReportController.swift */; };
+		47FD24C22A8637A400529342 /* FinishedFloatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24C12A8637A400529342 /* FinishedFloatingController.swift */; };
 		47FD24C42A864C6600529342 /* FloatPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24C32A864C6600529342 /* FloatPanelController.swift */; };
 		47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24C62A86921900529342 /* ProfileViewController.swift */; };
 		47FD24CD2A88A7DD00529342 /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24CC2A88A7DD00529342 /* ProfileCollectionViewController.swift */; };
@@ -133,7 +133,7 @@
 		47FD24BB2A86189900529342 /* DeleteRequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRequestButton.swift; sourceTree = "<group>"; };
 		47FD24BD2A862D8500529342 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		47FD24BF2A86369100529342 /* ReportFloatingPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportFloatingPanelLayout.swift; sourceTree = "<group>"; };
-		47FD24C12A8637A400529342 /* FinishedReportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedReportController.swift; sourceTree = "<group>"; };
+		47FD24C12A8637A400529342 /* FinishedFloatingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedFloatingController.swift; sourceTree = "<group>"; };
 		47FD24C32A864C6600529342 /* FloatPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatPanelController.swift; sourceTree = "<group>"; };
 		47FD24C62A86921900529342 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		47FD24CC2A88A7DD00529342 /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
@@ -492,7 +492,7 @@
 				47FD24B92A85F92400529342 /* DeleteAlertController.swift */,
 				475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */,
 				47FD24BF2A86369100529342 /* ReportFloatingPanelLayout.swift */,
-				47FD24C12A8637A400529342 /* FinishedReportController.swift */,
+				47FD24C12A8637A400529342 /* FinishedFloatingController.swift */,
 				47E049A62A8B644B000A789D /* CustomToggleButton.swift */,
 			);
 			path = Common;
@@ -807,7 +807,7 @@
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
 				47FD24C02A86369100529342 /* ReportFloatingPanelLayout.swift in Sources */,
 				475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */,
-				47FD24C22A8637A400529342 /* FinishedReportController.swift in Sources */,
+				47FD24C22A8637A400529342 /* FinishedFloatingController.swift in Sources */,
 				47FD24C42A864C6600529342 /* FloatPanelController.swift in Sources */,
 				478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */,
 				475B74402A93006400C8BB97 /* ReportImageColletionViewCell.swift in Sources */,
