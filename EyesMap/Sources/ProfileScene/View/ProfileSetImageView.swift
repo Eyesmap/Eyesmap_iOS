@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol ProfileSetImageViewDelegate: AnyObject {
-    func presentPipView()
+    func presentAlbum()
 }
 
 class ProfileSetImageView: UIView {
@@ -55,6 +55,6 @@ class ProfileSetImageView: UIView {
     
     //MARK: - Handler
     @objc func cameraButtonTap() {
-        self.delegate?.presentPipView()
+        self.delegate?.presentAlbum()
     }
 }

@@ -122,11 +122,8 @@ class DetailComplaintView: UIView {
         return $0
     }(UIView())
     
-    let dangerButton: UIButton = {
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.systemGray2,
-            .font: UIFont.boldSystemFont(ofSize: 13)]
-        let attributedString = NSAttributedString(string: "위험해요 101", attributes: textAttributes)
+    lazy var dangerButton: UIButton = {
+        let attributedString = getAttributeString(isSelected: self.isSelected, text: "위험해요 101")
         let combinedString = NSMutableAttributedString()
         combinedString.append(attributedString)
         $0.setAttributedTitle(combinedString, for: .normal)
@@ -221,16 +218,22 @@ class DetailComplaintView: UIView {
         }
     }
     
+//MARK: - Configure
     func configure() {
-        if isSelected {
-            dangerButton.isSelected = isSelected
-            let textAttributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.red,
-                .font: UIFont.boldSystemFont(ofSize: 13)]
-            let attributedString = NSAttributedString(string: "위험해요 101", attributes: textAttributes)
-            let combinedString = NSMutableAttributedString()
-            combinedString.append(attributedString)
-            dangerButton.setAttributedTitle(combinedString, for: .normal)
-        }
+        dangerButton.isSelected = isSelected
+        let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 101")
+        print(attributedString)
+        let combinedString = NSMutableAttributedString()
+        combinedString.append(attributedString)
+        dangerButton.setAttributedTitle(combinedString, for: .normal)
+    }
+    
+    private func getAttributeString(isSelected: Bool, text: String) -> NSAttributedString {
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: isSelected ? UIColor.red : UIColor.systemGray2,
+            .font: UIFont.boldSystemFont(ofSize: 13)]
+        let attributedString = NSAttributedString(string: text, attributes: textAttributes)
+        
+        return attributedString
     }
 }

@@ -10,6 +10,7 @@ import SnapKit
 import NMapsMap
 import CoreLocation
 import FloatingPanel
+import YPImagePicker
 
 class DetailViewController: UIViewController {
     
@@ -26,6 +27,8 @@ class DetailViewController: UIViewController {
         UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
         UIImage(named: "block")?.withRenderingMode(.alwaysOriginal)
     ]
+    
+    private var selectedProfileImages: [UIImage] = []
     
 //MARK: - Properties
     private lazy var scrollView: UIScrollView = {
@@ -91,7 +94,6 @@ class DetailViewController: UIViewController {
         controller.layout = ReportFloatingPanelLayout()
         return controller
     }()
-    
     
     
 //MARK: - Life Cycles
@@ -202,9 +204,9 @@ class DetailViewController: UIViewController {
     
     @objc func dangerButtonTap() {
         print("위험해요 버튼 Tap")
+        detailComplaintView.isSelected.toggle()
     }
 }
-
 
 //MARK: - NMFMapViewDelegate
 extension DetailViewController: NMFMapViewDelegate {
@@ -280,7 +282,12 @@ extension DetailViewController: DeletedAlertControllerProtocol {
 
 //MARK: - RestoreAlertControllerProtocol
 extension DetailViewController: RestoreAlertControllerProtocol {
-    func uploadImage() {
+    func uploadImage(images: [UIImage]) {
+        // 업로드 시
+        self.selectedProfileImages = images
+        print("selectedCount = \(self.selectedProfileImages.count)")
+        //MARK: 이미지를 업로드 시키는 API 추가 예정 - response code로 성공 분기 처리
+        
         let bv: UIView = {
             $0.backgroundColor = .black.withAlphaComponent(0.4)
             return $0
