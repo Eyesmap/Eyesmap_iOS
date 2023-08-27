@@ -50,7 +50,7 @@ class TabBarController: UITabBarController {
         let nav1 = templateNavigationController(UIImage(systemName: "house"), title: "홈", viewController: firstVC)
         
         // 두번째 탭
-        let secondVC = ReportViewController()
+        let secondVC = LocationDataViewController()
         let nav2 = templateNavigationController(UIImage(systemName: "filemenu.and.cursorarrow"), title: "LIVE", viewController: secondVC)
         
         // 세번째 탭

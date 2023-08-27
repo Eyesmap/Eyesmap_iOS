@@ -28,10 +28,10 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         return label
     }()
     
-    private let locationTextfield: UITextField = {
+    private lazy var locationTextfield: UITextField = {
         let input = UITextField()
         input.addLeftPadding()
-        input.text = "서울특별시 용산구 동자동 43-209"
+        input.text = self.reportAddress
         input.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
         
         input.layer.cornerRadius = 11
@@ -253,8 +253,23 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         return view
     }()
     
+    private let reportPosition: CLLocation
+    private let reportAddress: String
+
+//MARK: - Life Cycles
+    init(position: CLLocation, address: String) {
+        self.reportPosition = position
+        self.reportAddress = address
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "신고하기"
 //        imageCollectionView.delegate = self
 //        imageCollectionView.dataSource = self
 //        imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")

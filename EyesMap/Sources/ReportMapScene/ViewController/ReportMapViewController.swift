@@ -72,6 +72,8 @@ class ReportMapViewController: UIViewController {
             make.height.equalTo(230)
             make.leading.trailing.bottom.equalToSuperview()
         }
+        
+        locationSettingView.locationSettingButton.addTarget(self, action: #selector(locationSettingButtonTap), for: .touchUpInside)
     }
     
     private func configureNavBar() {
@@ -79,6 +81,10 @@ class ReportMapViewController: UIViewController {
         let xImage = UIImage(systemName: "xmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         let deleteBtn = UIBarButtonItem(image: xImage, style: .done, target: self, action: #selector(deleteBtnTap))
         navigationItem.leftBarButtonItem = deleteBtn
+        
+        self.navigationController?.navigationBar.tintColor = .black
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
 
 //MARK: - Camera
@@ -92,6 +98,13 @@ class ReportMapViewController: UIViewController {
 //MARK: - Handler
     @objc func deleteBtnTap() {
         self.dismiss(animated: true)
+    }
+    
+    @objc func locationSettingButtonTap() {
+        guard let address = self.locationSettingView.locationLabel.text else { return }
+        
+        let reportVC = ReportViewController(position: targetLocation, address: address)
+        self.navigationController?.pushViewController(reportVC, animated: true)
     }
 }
 
