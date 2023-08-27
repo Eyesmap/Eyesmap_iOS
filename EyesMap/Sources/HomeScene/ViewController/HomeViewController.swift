@@ -48,6 +48,16 @@ class HomeViewController: UIViewController {
         return $0
     }(UIView())
     
+    private let reportButton: UIButton = {
+        $0.backgroundColor = .black
+        $0.setTitle("신고하기", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 12)
+        $0.layer.cornerRadius = 14
+        $0.addTarget(self, action: #selector(reportButtonTap), for: .touchUpInside)
+        return $0
+    }(UIButton())
+    
     private lazy var complaintView: HomeComplaintView = {
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.2
@@ -82,8 +92,8 @@ class HomeViewController: UIViewController {
     // MapView Setting
     func configureMapView() {
         mapView.delegate = self
-        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(_:)))
-        mapView.addGestureRecognizer(longTapGesture)
+//        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(_:)))
+//        mapView.addGestureRecognizer(longTapGesture)
         
         
         view.addSubview(mapView)
@@ -97,6 +107,7 @@ class HomeViewController: UIViewController {
     
     func configureOtherView() {
         view.addSubview(complaintView)
+        view.addSubview(reportButton)
         view.addSubview(positionButton)
         
         complaintView.snp.makeConstraints { make in
@@ -104,7 +115,12 @@ class HomeViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(19)
             make.height.equalTo(200)
         }
-        
+        reportButton.snp.makeConstraints { make in
+            make.bottom.equalTo(complaintView.snp.top).inset(-20)
+            make.leading.equalToSuperview().inset(22)
+            make.height.equalTo(30)
+            make.width.equalTo(90)
+        }
         positionButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(complaintView.snp.top).inset(-33)
@@ -238,17 +254,17 @@ class HomeViewController: UIViewController {
     
     //MARK: - Handler
     // 길게 탭 했을 시
-    @objc func handleLongTap(_ gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            let point = gesture.location(in: mapView)
-            let latlng = mapView.projection.latlng(from: point)
-
-            let vc = ReportMapViewController(location: CLLocation(latitude: latlng.lat, longitude: latlng.lng))
-            let nav = UINavigationController(rootViewController: vc)
-            nav.modalPresentationStyle = .overFullScreen
-            self.present(nav, animated: true)
-        }
-    }
+//    @objc func handleLongTap(_ gesture: UILongPressGestureRecognizer) {
+//        if gesture.state == .began {
+//            let point = gesture.location(in: mapView)
+//            let latlng = mapView.projection.latlng(from: point)
+//
+//            let vc = ReportMapViewController(location: CLLocation(latitude: latlng.lat, longitude: latlng.lng))
+//            let nav = UINavigationController(rootViewController: vc)
+//            nav.modalPresentationStyle = .overFullScreen
+//            self.present(nav, animated: true)
+//        }
+//    }
     
     @objc func complaintViewTap(_ gesture: UIGestureRecognizer) {
         print("tap")
@@ -263,6 +279,17 @@ class HomeViewController: UIViewController {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
         cameraUpdate.animation = .easeIn
         mapView.moveCamera(cameraUpdate)
+    }
+    
+    @objc func reportButtonTap() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
+
+        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        self.present(nav, animated: true)
     }
 }
 
