@@ -260,7 +260,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         config.screens = [.library]
         config.showsPhotoFilters = false
         config.library.defaultMultipleSelection = true // 한장 선택 default (여러장 선택 O)
-        config.library.maxNumberOfItems = 5
+        config.library.maxNumberOfItems = 6
 //        config.library.preselectedItems = self.selectedImages
         config.wordings.libraryTitle = "앨범"
         config.wordings.cameraTitle = "카메라"
@@ -712,19 +712,18 @@ extension ReportViewController : UICollectionViewDataSource, UICollectionViewDel
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReportImageCollectionViewCell.identifier, for: indexPath) as? ReportImageCollectionViewCell else { return UICollectionViewCell() }
         
         cell.image = self.selectedImages[indexPath.item]
+        cell.deleteBtn.tag = indexPath.item
 
         cell.deleteBtn.addTarget(self, action: #selector(deleteBtnTap(sender:)), for: .touchUpInside)
         return cell
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        print(5)
-//        return CGSize(width: 100, height: 100)
-//    }
+
     @objc func deleteBtnTap(sender: UIButton) {
-        self.collectionView.deleteItems(at: [IndexPath.init(row: sender.tag, section: 0)])
-        self.selectedImages.remove(at: sender.tag)
-        self.collectionView.reloadData()
-        self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
+        if sender.tag < selectedImages.count {
+            self.selectedImages.remove(at: sender.tag)
+            self.collectionView.reloadData()
+            self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
+        }
     }
 }
 
@@ -748,7 +747,7 @@ extension ReportViewController: FinishedFloatingControllerDelegate {
     func dismiss() {
         if let iv = view.subviews.last {
             iv.removeFromSuperview()
+            self.dismiss(animated: true)
         }
-//MARK:        self.dismiss(animated: true)
     }
 }
