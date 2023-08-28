@@ -182,10 +182,20 @@ class DetailViewController: UIViewController {
     }
     
     func presentFinishedView() {
-        let reportVC = FinishedReportController()
-        reportVC.delegate = self
-        fpc.set(contentViewController: reportVC)
-        fpc.track(scrollView: reportVC.scrollView)
+        let bv: UIView = {
+            $0.backgroundColor = .black.withAlphaComponent(0.4)
+            return $0
+        }(UIView())
+
+        view.addSubview(bv)
+        bv.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let finishedVC = FinishedFloatingController(type: .delete)
+        finishedVC.delegate = self
+        fpc.set(contentViewController: finishedVC)
+        fpc.track(scrollView: finishedVC.scrollView)
         self.present(fpc, animated: true)
     }
     
@@ -265,15 +275,6 @@ extension DetailViewController: DeletedAlertControllerProtocol {
             presentRestoreAlertView()
             
         case .falseReport, .duplicate:
-            let bv: UIView = {
-                $0.backgroundColor = .black.withAlphaComponent(0.4)
-                return $0
-            }(UIView())
-
-            view.addSubview(bv)
-            bv.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
             
             self.presentFinishedView()
         }
@@ -287,23 +288,13 @@ extension DetailViewController: RestoreAlertControllerProtocol {
         self.selectedProfileImages = images
         print("selectedCount = \(self.selectedProfileImages.count)")
         //MARK: 이미지를 업로드 시키는 API 추가 예정 - response code로 성공 분기 처리
-        
-        let bv: UIView = {
-            $0.backgroundColor = .black.withAlphaComponent(0.4)
-            return $0
-        }(UIView())
 
-        view.addSubview(bv)
-        bv.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
         self.presentFinishedView()
     }
 }
 
 //MARK: - FinishedReportControllerDelegate
-extension DetailViewController: FinishedReportControllerDelegate {
+extension DetailViewController: FinishedFloatingControllerDelegate {
     func dismiss() {
         if let iv = view.subviews.last {
             iv.removeFromSuperview()

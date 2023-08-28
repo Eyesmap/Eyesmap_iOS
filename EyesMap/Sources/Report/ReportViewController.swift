@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import CoreLocation
 import SnapKit
-import PhotosUI
+import YPImagePicker
+import FloatingPanel
 
 var checkBox_dis = false
 
@@ -28,10 +30,10 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         return label
     }()
     
-    private let locationTextfield: UITextField = {
+    private lazy var locationTextfield: UITextField = {
         let input = UITextField()
         input.addLeftPadding()
-        input.text = "서울특별시 용산구 동자동 43-209"
+        input.text = self.reportAddress
         input.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
         
         input.layer.cornerRadius = 11
@@ -253,8 +255,45 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         return view
     }()
     
+    private lazy var config: YPImagePickerConfiguration = {
+        var config = YPImagePickerConfiguration()
+        config.screens = [.library]
+        config.showsPhotoFilters = false
+        config.library.defaultMultipleSelection = true // 한장 선택 default (여러장 선택 O)
+        config.library.maxNumberOfItems = 6
+//        config.library.preselectedItems = self.selectedImages
+        config.wordings.libraryTitle = "앨범"
+        config.wordings.cameraTitle = "카메라"
+        config.wordings.cancel = "취소"
+        config.wordings.next = "완료"
+        config.colors.tintColor = .black
+        return config
+    }()
+    
+    private lazy var fpc: FloatingPanelController = {
+        let controller = FloatingPanelController(delegate: self)
+        controller.changePanelStyle()
+        controller.layout = ReportFloatingPanelLayout()
+        return controller
+    }()
+    
+    private let reportPosition: CLLocation
+    private let reportAddress: String
+
+//MARK: - Life Cycles
+    init(position: CLLocation, address: String) {
+        self.reportPosition = position
+        self.reportAddress = address
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "신고하기"
 //        imageCollectionView.delegate = self
 //        imageCollectionView.dataSource = self
 //        imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
@@ -328,11 +367,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
 //        }
         //------
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
         }
 
         contentView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview() // == make.edges.equalTo(0)
+            make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
             make.height.equalTo(1000)
         }
@@ -564,19 +604,43 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         CheckSubmitBtn()
     }
     @objc private func attachImage() {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        // 이미지 다시 선택 시 배열 초기화 작업
-        selectedImages.removeSubrange(0..<selectedImages.count)
-//        config.selection = .ordered
-        config.selectionLimit = 6
-        let imagePickerViewController = PHPickerViewController(configuration: config)
-        imagePickerViewController.delegate = self
-        present(imagePickerViewController, animated: true)
+        let picker = YPImagePicker(configuration: self.config)
+        picker.didFinishPicking { [ weak self, unowned picker] items, cancelled in
+            self?.selectedImages = []
+            
+            if cancelled {
+                // 취소 눌렀을때
+                picker.dismiss(animated: true)
+            } else {
+                // 사진 선택후
+                for item in items {
+                    switch item {
+                    case .photo(p: let photo):
+                        self?.selectedImages.append(photo.image)
+                        
+                        DispatchQueue.main.async {
+                            guard let imgCnt = self?.selectedImages.count else { return }
+                            self?.attachImageButton.setTitle("사진 첨부하기 \(imgCnt) / 6", for: .normal)
+                            self?.CheckSubmitBtn()
+                        }
+                        DispatchQueue.main.async {
+                            self?.collectionView.reloadData()
+                        }
+                    default:
+                        print("DEBUG: 사진을 선택하지 않음")
+                    }
+                }
+            }
+            
+            picker.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
     }
     
     @objc func Submit() {
         print("submit")
+        //MARK: 임시 Float - API 확인 후 분기처리 예정
+        presentFinishedView()
     }
 
     func CheckSubmitBtn() {
@@ -619,6 +683,24 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
             detailTextView.textColor = .black
         }
     }
+    
+    func presentFinishedView() {
+        let bv: UIView = {
+            $0.backgroundColor = .black.withAlphaComponent(0.4)
+            return $0
+        }(UIView())
+
+        view.addSubview(bv)
+        bv.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let reportVC = FinishedFloatingController(type: .report)
+        reportVC.delegate = self
+        fpc.set(contentViewController: reportVC)
+        fpc.track(scrollView: reportVC.scrollView)
+        self.present(fpc, animated: true)
+    }
 }
 
 extension ReportViewController : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
@@ -630,65 +712,42 @@ extension ReportViewController : UICollectionViewDataSource, UICollectionViewDel
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReportImageCollectionViewCell.identifier, for: indexPath) as? ReportImageCollectionViewCell else { return UICollectionViewCell() }
         
         cell.image = self.selectedImages[indexPath.item]
+        cell.deleteBtn.tag = indexPath.item
 
         cell.deleteBtn.addTarget(self, action: #selector(deleteBtnTap(sender:)), for: .touchUpInside)
         return cell
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        print(5)
-//        return CGSize(width: 100, height: 100)
-//    }
-    @objc func deleteBtnTap(sender: UIButton) {
-        self.collectionView.deleteItems(at: [IndexPath.init(row: sender.tag, section: 0)])
-        self.selectedImages.remove(at: sender.tag)
-        self.collectionView.reloadData()
-        self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
-    }
-}
 
-extension ReportViewController : PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        
-        
-        
-        if !results.isEmpty {
-            
-            results.forEach { result in
-                let itemProvider = result.itemProvider
-                if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                        guard let self = self else { return }
-                        if let image = image as? UIImage {
-                            self.selectedImages.append(image)
-                            DispatchQueue.main.async {
-                                //                                self.imagePickerView.image = image
-                                self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
-                                print(self.selectedImages.count)
-                                print(self.selectedImages)
-                                self.CheckSubmitBtn()
-                            }
-                            DispatchQueue.main.async {
-                                self.collectionView.reloadData()
-                            }
-                        }
-                        
-                        if let error = error {
-                            print("ERROR - UploadFeedViewController - PHPickerViewControllerDelegate - \(error.localizedDescription)")
-                        }
-                        
-                    }
-                }
-            }
-            
+    @objc func deleteBtnTap(sender: UIButton) {
+        if sender.tag < selectedImages.count {
+            self.selectedImages.remove(at: sender.tag)
+            self.collectionView.reloadData()
+            self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
         }
-        print("results:", results)
-        dismiss(animated: true)
-        
     }
 }
 
 extension ReportViewController : UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         CheckSubmitBtn()
+    }
+}
+
+extension ReportViewController: FloatingPanelControllerDelegate {
+    func floatingPanelDidChangePosition(_ fpc: FloatingPanelController) {
+        if fpc.state == .half {
+            
+        } else {
+            fpc.move(to: .half, animated: true)
+        }
+    }
+}
+
+extension ReportViewController: FinishedFloatingControllerDelegate {
+    func dismiss() {
+        if let iv = view.subviews.last {
+            iv.removeFromSuperview()
+            self.dismiss(animated: true)
+        }
     }
 }
