@@ -54,7 +54,7 @@ class TabBarController: UITabBarController {
         let nav2 = templateNavigationController(UIImage(systemName: "filemenu.and.cursorarrow"), title: "LIVE", viewController: secondVC)
         
         // 세번째 탭
-        let thirdVC = UIViewController()
+        let thirdVC = HallOfFameViewController()
         let nav3 = templateNavigationController(UIImage(systemName: "trophy.fill"), title: "명예의 전당", viewController: thirdVC)
         
         let fourthVC = ProfileViewController()

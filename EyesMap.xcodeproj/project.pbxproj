@@ -21,6 +21,9 @@
 		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
 		47198FA22A94963900349181 /* ModifyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA12A94963900349181 /* ModifyProfileViewController.swift */; };
 		47198FA42A94987E00349181 /* ProfileSetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA32A94987E00349181 /* ProfileSetImageView.swift */; };
+		47198FA82A9C996600349181 /* HallOfFameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA72A9C996600349181 /* HallOfFameViewController.swift */; };
+		47198FAA2A9C9AC000349181 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA92A9C9AC000349181 /* UIView.swift */; };
+		47198FAD2A9C9C8800349181 /* MyFameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FAC2A9C9C8800349181 /* MyFameView.swift */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -96,6 +99,9 @@
 		47198F9F2A94855B00349181 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		47198FA12A94963900349181 /* ModifyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileViewController.swift; sourceTree = "<group>"; };
 		47198FA32A94987E00349181 /* ProfileSetImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetImageView.swift; sourceTree = "<group>"; };
+		47198FA72A9C996600349181 /* HallOfFameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallOfFameViewController.swift; sourceTree = "<group>"; };
+		47198FA92A9C9AC000349181 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		47198FAC2A9C9C8800349181 /* MyFameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFameView.swift; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
 		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
@@ -219,6 +225,31 @@
 				37ED1DCF2A93486700636B6A /* Secret.swift */,
 			);
 			path = Secret;
+			sourceTree = "<group>";
+		};
+		47198FA52A9C993A00349181 /* HallOfFameScene */ = {
+			isa = PBXGroup;
+			children = (
+				47198FAB2A9C9C1B00349181 /* View */,
+				47198FA62A9C995600349181 /* ViewController */,
+			);
+			path = HallOfFameScene;
+			sourceTree = "<group>";
+		};
+		47198FA62A9C995600349181 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				47198FA72A9C996600349181 /* HallOfFameViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		47198FAB2A9C9C1B00349181 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				47198FAC2A9C9C8800349181 /* MyFameView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		475B74312A90AD8200C8BB97 /* API */ = {
@@ -353,10 +384,11 @@
 				47FD24B82A85F91000529342 /* Common */,
 				47FE7A8F2A7C0BB800075B0C /* Model */,
 				475B74412A93482500C8BB97 /* LoginScene */,
-				3712219F2A97301600AEA499 /* LocationDataScene */,
 				478CA0582A6EB1FD000FA196 /* HomeScene */,
 				47E049B02A8F7BA3000A789D /* ReportMapScene */,
 				475B743C2A92FFF600C8BB97 /* Report */,
+				3712219F2A97301600AEA499 /* LocationDataScene */,
+				47198FA52A9C993A00349181 /* HallOfFameScene */,
 				47FD24AC2A84FAF000529342 /* DetailScene */,
 				47FD24C52A8691F600529342 /* ProfileScene */,
 				47E0499A2A8A2CBA000A789D /* SettingScene */,
@@ -382,6 +414,7 @@
 				47FD24C32A864C6600529342 /* FloatPanelController.swift */,
 				37ED1DD12A93488A00636B6A /* TextField.swift */,
 				371221AD2A976E7B00AEA499 /* UIButton.swift */,
+				47198FA92A9C9AC000349181 /* UIView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -810,8 +843,11 @@
 				47FD24C22A8637A400529342 /* FinishedFloatingController.swift in Sources */,
 				47FD24C42A864C6600529342 /* FloatPanelController.swift in Sources */,
 				478CA0242A6E600F000FA196 /* HomeViewController.swift in Sources */,
+				47198FA82A9C996600349181 /* HallOfFameViewController.swift in Sources */,
+				47198FAA2A9C9AC000349181 /* UIView.swift in Sources */,
 				475B74402A93006400C8BB97 /* ReportImageColletionViewCell.swift in Sources */,
 				371221A72A97535100AEA499 /* MapView.swift in Sources */,
+				47198FAD2A9C9C8800349181 /* MyFameView.swift in Sources */,
 				475B74442A93485600C8BB97 /* LoginViewController.swift in Sources */,
 				47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */,
 				371221A12A97309400AEA499 /* LocationDataViewController.swift in Sources */,

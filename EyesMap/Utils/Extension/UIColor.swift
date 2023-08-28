@@ -9,6 +9,8 @@ import UIKit
 
 extension UIColor {
     static let alertDeleteButton = UIColor.rgb(red: 221, green: 112, blue: 97)
+    static let fameBottomColor = UIColor.rgb(red: 241, green: 146, blue: 154)
+    static let fametopColor = UIColor.rgb(red: 240, green: 199, blue: 160)
 }
 
 // RGB값을 받아서 UIColor를 리턴하는 함수
