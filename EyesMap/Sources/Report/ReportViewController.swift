@@ -172,21 +172,21 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     private lazy var  attachImageButton: UIButton = {
         let button = UIButton()
         let galleryImageView = UIImageView(image: UIImage(named: "gallery-add"))
-        button.setTitle("사진 첨부하기 0/6", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.layer.borderColor = UIColor(red: 37/255, green: 38/255, blue: 42/255, alpha: 1).cgColor
+        button.layer.borderColor = UIColor(red: 37/255, green: 38/255, blue: 42/255, alpha: 0.2).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10
 
         button.addSubview(galleryImageView)
        
+        galleryImageView.layer.opacity = 0.5
         galleryImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-           galleryImageView.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 95),
+           galleryImageView.centerXAnchor.constraint(equalTo: button.centerXAnchor),
            galleryImageView.centerYAnchor.constraint(equalTo: button.centerYAnchor),
-           galleryImageView.widthAnchor.constraint(equalToConstant: 15),
-           galleryImageView.heightAnchor.constraint(equalToConstant: 15)
+           galleryImageView.widthAnchor.constraint(equalToConstant: 24),
+           galleryImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
         return button
     }()
@@ -230,8 +230,8 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
     //    layout.minimumLineSpacing = 8.0
-        layout.minimumInteritemSpacing = 8.0
-        layout.itemSize = CGSize(width: 100, height: 100)
+        layout.minimumInteritemSpacing = 6.0
+        layout.itemSize = CGSize(width: 109, height: 109)
         return layout
     }()
     
@@ -322,7 +322,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
             collectionView.leadingAnchor.constraint(equalTo: containerCollectionView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: containerCollectionView.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: containerCollectionView.topAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 100),
+            collectionView.heightAnchor.constraint(equalToConstant: 109),
         ])
 
 
@@ -374,12 +374,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         contentView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(1000)
+            make.height.equalTo(860)
         }
 
         reportLocationLabel.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().inset(20)
-            make.top.equalToSuperview().inset(20)
+            make.top.equalTo(contentView.snp.top).inset(20)
         }
         locationTextfield.snp.makeConstraints { (make) in
             make.top.equalTo(reportLocationLabel.snp.bottom).offset(26)
@@ -427,7 +427,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         }
         // 스크롤뷰 넣을 자리
         facilityState.snp.makeConstraints { (make) in
-            make.top.equalTo(reportCategory.snp.bottom).offset(116)
+            make.top.equalTo(reportCategory.snp.bottom).offset(76)
             make.leading.equalTo(reportLocationLabel.snp.leading)
         }
         checkBox3.snp.makeConstraints { (make) in
@@ -455,26 +455,26 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
             make.leading.equalTo(checkBox5.snp.trailing).offset(10)
         }
         setImageLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(facilityState.snp.bottom).offset(88)
+            make.top.equalTo(facilityState.snp.bottom).offset(77)
             make.leading.equalTo(facilityState.snp.leading)
         }
         
         attachImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(setImageLabel.snp.bottom).offset(26)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(337)
-            make.height.equalTo(46)
+            make.leading.equalTo(setImageLabel.snp.leading)
+            make.width.equalTo(109)
+            make.height.equalTo(109)
         }
         containerCollectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(attachImageButton.snp.bottom).offset(20)
-            make.leading.equalTo(attachImageButton)
-            make.trailing.equalTo(attachImageButton).offset(10)
-            make.height.equalTo(125)
+            make.top.equalTo(attachImageButton.snp.top)
+            make.leading.equalTo(attachImageButton.snp.trailing).offset(6)
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(attachImageButton.snp.bottom)
         }
         
         // 사진 첨부 버튼 넣을 자리
         reportDetailLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(setImageLabel.snp.bottom).offset(220)
+            make.top.equalTo(setImageLabel.snp.bottom).offset(161)
             make.leading.equalTo(setImageLabel.snp.leading)
         }
         
@@ -620,7 +620,17 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
                         
                         DispatchQueue.main.async {
                             guard let imgCnt = self?.selectedImages.count else { return }
-                            self?.attachImageButton.setTitle("사진 첨부하기 \(imgCnt) / 6", for: .normal)
+                            let colorText = "사진 첨부  \(imgCnt) / 5"
+                            if(imgCnt == 0) {
+                                self?.setImageLabel.text = colorText
+                            } else {
+                                let attributedString = NSMutableAttributedString(string: colorText)
+                                let range = (colorText as NSString).range(of: String(imgCnt))
+                                attributedString.addAttribute(.foregroundColor, value: UIColor(red: 221/255, green: 112/255, blue: 97/255, alpha: 1), range: range)
+                                self?.setImageLabel.attributedText = attributedString
+                                
+                            }
+                            
                             self?.CheckSubmitBtn()
                         }
                         DispatchQueue.main.async {
@@ -721,8 +731,19 @@ extension ReportViewController : UICollectionViewDataSource, UICollectionViewDel
     @objc func deleteBtnTap(sender: UIButton) {
         if sender.tag < selectedImages.count {
             self.selectedImages.remove(at: sender.tag)
+            let imgCnt = selectedImages.count
+            let colorText = "사진 첨부  \(imgCnt) / 5"
+            if(imgCnt == 0) {
+                setImageLabel.text = colorText
+            } else {
+                let attributedString = NSMutableAttributedString(string: colorText)
+                let range = (colorText as NSString).range(of: String(imgCnt))
+                attributedString.addAttribute(.foregroundColor, value: UIColor(red: 221/255, green: 112/255, blue: 97/255, alpha: 1), range: range)
+                setImageLabel.attributedText = attributedString
+                
+            }
+
             self.collectionView.reloadData()
-            self.attachImageButton.setTitle("사진 첨부하기 \(self.selectedImages.count) / 6", for: .normal)
         }
     }
 }
