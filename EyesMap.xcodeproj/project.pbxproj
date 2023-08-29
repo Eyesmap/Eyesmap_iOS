@@ -24,6 +24,10 @@
 		47198FA82A9C996600349181 /* HallOfFameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA72A9C996600349181 /* HallOfFameViewController.swift */; };
 		47198FAA2A9C9AC000349181 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FA92A9C9AC000349181 /* UIView.swift */; };
 		47198FAD2A9C9C8800349181 /* MyFameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FAC2A9C9C8800349181 /* MyFameView.swift */; };
+		47198FB02A9DEFB400349181 /* ReportNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FAF2A9DEFB400349181 /* ReportNetworkManager.swift */; };
+		47198FB22A9DEFDF00349181 /* ReportRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB12A9DEFDF00349181 /* ReportRouter.swift */; };
+		47198FB52A9DF81900349181 /* ProfileNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB42A9DF81900349181 /* ProfileNetworkManager.swift */; };
+		47198FB72A9DF83500349181 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB62A9DF83500349181 /* ProfileRouter.swift */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -102,6 +106,10 @@
 		47198FA72A9C996600349181 /* HallOfFameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallOfFameViewController.swift; sourceTree = "<group>"; };
 		47198FA92A9C9AC000349181 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		47198FAC2A9C9C8800349181 /* MyFameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFameView.swift; sourceTree = "<group>"; };
+		47198FAF2A9DEFB400349181 /* ReportNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportNetworkManager.swift; sourceTree = "<group>"; };
+		47198FB12A9DEFDF00349181 /* ReportRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRouter.swift; sourceTree = "<group>"; };
+		47198FB42A9DF81900349181 /* ProfileNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkManager.swift; sourceTree = "<group>"; };
+		47198FB62A9DF83500349181 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
 		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
@@ -252,12 +260,30 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		47198FAE2A9DEF5A00349181 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				47198FAF2A9DEFB400349181 /* ReportNetworkManager.swift */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		47198FB32A9DF7FE00349181 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				47198FB42A9DF81900349181 /* ProfileNetworkManager.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		475B74312A90AD8200C8BB97 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				475B74322A90AD8900C8BB97 /* GeoCoding */,
 				475B74482A935B8100C8BB97 /* HTTP */,
 				475B74452A93598B00C8BB97 /* Auth */,
-				475B74322A90AD8900C8BB97 /* GeoCoding */,
+				47198FAE2A9DEF5A00349181 /* Report */,
+				47198FB32A9DF7FE00349181 /* Profile */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -308,6 +334,8 @@
 			children = (
 				475B744B2A935E1D00C8BB97 /* HttpRouter.swift */,
 				475B744D2A935E3C00C8BB97 /* AuthRouter.swift */,
+				47198FB12A9DEFDF00349181 /* ReportRouter.swift */,
+				47198FB62A9DF83500349181 /* ProfileRouter.swift */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -858,6 +886,8 @@
 				475B74472A9359AC00C8BB97 /* AuthNetworkManager.swift in Sources */,
 				47FD24BC2A86189900529342 /* DeleteRequestButton.swift in Sources */,
 				371221B02A977ABF00AEA499 /* TotalView.swift in Sources */,
+				47198FB02A9DEFB400349181 /* ReportNetworkManager.swift in Sources */,
+				47198FB72A9DF83500349181 /* ProfileRouter.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
 				47198FA22A94963900349181 /* ModifyProfileViewController.swift in Sources */,
@@ -871,9 +901,11 @@
 				47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */,
 				371221AE2A976E7B00AEA499 /* UIButton.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
+				47198FB22A9DEFDF00349181 /* ReportRouter.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,
 				47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */,
 				478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */,
+				47198FB52A9DF81900349181 /* ProfileNetworkManager.swift in Sources */,
 				475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */,
 				371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */,
 				371221B22A979AC600AEA499 /* JachiDetailView.swift in Sources */,

@@ -14,7 +14,7 @@ import YPImagePicker
 
 class DetailViewController: UIViewController {
     
-    private var complaint: ComplaintModel {
+    private var complaint: ComplaintLocation {
         didSet {
             configureMapView()
         }
@@ -97,7 +97,7 @@ class DetailViewController: UIViewController {
     
     
 //MARK: - Life Cycles
-    init(complaint: ComplaintModel) {
+    init(complaint: ComplaintLocation) {
         self.complaint = complaint
         super.init(nibName: nil, bundle: nil)
     }
@@ -174,11 +174,11 @@ class DetailViewController: UIViewController {
         mapView.delegate = self
         
         let marker = NMFMarker()
-        print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
-        marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
+        print("lat: \(complaint.gpsY), lng: \(complaint.gpsX)")
+        marker.position = NMGLatLng(lat: complaint.gpsY, lng: complaint.gpsX)
         marker.mapView = mapView
         marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
-        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)))
+        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.gpsY, lng: complaint.gpsX)))
     }
     
     func presentFinishedView() {
