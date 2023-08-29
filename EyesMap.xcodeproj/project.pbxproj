@@ -28,6 +28,7 @@
 		47198FB22A9DEFDF00349181 /* ReportRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB12A9DEFDF00349181 /* ReportRouter.swift */; };
 		47198FB52A9DF81900349181 /* ProfileNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB42A9DF81900349181 /* ProfileNetworkManager.swift */; };
 		47198FB72A9DF83500349181 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB62A9DF83500349181 /* ProfileRouter.swift */; };
+		47198FB92A9E297300349181 /* ProfileEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB82A9E297300349181 /* ProfileEmptyView.swift */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -110,6 +111,7 @@
 		47198FB12A9DEFDF00349181 /* ReportRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRouter.swift; sourceTree = "<group>"; };
 		47198FB42A9DF81900349181 /* ProfileNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkManager.swift; sourceTree = "<group>"; };
 		47198FB62A9DF83500349181 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		47198FB82A9E297300349181 /* ProfileEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEmptyView.swift; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
 		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 			isa = PBXGroup;
 			children = (
 				47198FA32A94987E00349181 /* ProfileSetImageView.swift */,
+				47198FB82A9E297300349181 /* ProfileEmptyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -904,6 +907,7 @@
 				47198FB22A9DEFDF00349181 /* ReportRouter.swift in Sources */,
 				47CB4A842A7941DE00E001D2 /* Double.swift in Sources */,
 				47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */,
+				47198FB92A9E297300349181 /* ProfileEmptyView.swift in Sources */,
 				478CA05A2A6EB21F000FA196 /* LocationHandler.swift in Sources */,
 				47198FB52A9DF81900349181 /* ProfileNetworkManager.swift in Sources */,
 				475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */,
