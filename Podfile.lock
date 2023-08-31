@@ -17,6 +17,9 @@ PODS:
   - NMapsMap (3.17.0):
     - NMapsGeometry
   - PryntTrimmerView (4.0.2)
+  - SDWebImage (5.15.5):
+    - SDWebImage/Core (= 5.15.5)
+  - SDWebImage/Core (5.15.5)
   - SnapKit (5.6.0)
   - SteviaLayout (4.7.3)
   - YPImagePicker (5.2.1):
@@ -31,6 +34,7 @@ DEPENDENCIES:
   - KakaoSDKCommon
   - KakaoSDKUser
   - NMapsMap
+  - SDWebImage (~> 5.0)
   - SnapKit (~> 5.6.0)
   - YPImagePicker
 
@@ -45,6 +49,7 @@ SPEC REPOS:
     - NMapsGeometry
     - NMapsMap
     - PryntTrimmerView
+    - SDWebImage
     - SnapKit
     - SteviaLayout
     - YPImagePicker
@@ -59,10 +64,11 @@ SPEC CHECKSUMS:
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
+  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: b040291d80331322bcc9a68d3ed83be9f8fe35ce
+PODFILE CHECKSUM: 8cecff4685ddfb68cde9c91063cf38ecfc1cd857
 
 COCOAPODS: 1.11.3

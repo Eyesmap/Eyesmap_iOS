@@ -14,7 +14,7 @@ import YPImagePicker
 
 class DetailViewController: UIViewController {
     
-    private var complaint: ComplaintModel {
+    private var complaint: ComplaintLocation {
         didSet {
             configureMapView()
         }
@@ -46,7 +46,7 @@ class DetailViewController: UIViewController {
     
     private let mapView = NMFMapView()
     
-    private let detailComplaintView: DetailComplaintView = {
+    private lazy var detailComplaintView: DetailComplaintView = {
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.2
         $0.layer.shadowOffset = CGSize(width: 0, height: 2) 
@@ -97,9 +97,10 @@ class DetailViewController: UIViewController {
     
     
 //MARK: - Life Cycles
-    init(complaint: ComplaintModel) {
+    init(complaint: ComplaintLocation, tapedComplaintModel: TapedComplaintResultData) {
         self.complaint = complaint
         super.init(nibName: nil, bundle: nil)
+        detailComplaintView.tapedComplaintModel = tapedComplaintModel
     }
     
     required init?(coder: NSCoder) {
@@ -110,6 +111,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setUIandConstraints()
         configureMapView()
+        getDetailComplaint()
     }
 
     
@@ -174,11 +176,11 @@ class DetailViewController: UIViewController {
         mapView.delegate = self
         
         let marker = NMFMarker()
-        print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
-        marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
+        print("lat: \(complaint.gpsY), lng: \(complaint.gpsX)")
+        marker.position = NMGLatLng(lat: complaint.gpsY, lng: complaint.gpsX)
         marker.mapView = mapView
         marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
-        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)))
+        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.gpsY, lng: complaint.gpsX)))
     }
     
     func presentFinishedView() {
@@ -215,6 +217,21 @@ class DetailViewController: UIViewController {
     @objc func dangerButtonTap() {
         print("위험해요 버튼 Tap")
         detailComplaintView.isSelected.toggle()
+    }
+    
+//MARK: - API
+    func getDetailComplaint() {
+        ReportNetworkManager.shared.getDetailComplaintRequest(reportId: complaint.reportId) { [weak self] (error, model) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                detailComplaintView.detailModel = model.result
+            }
+        }
     }
 }
 
