@@ -7,12 +7,16 @@
 
 import UIKit
 import SnapKit
+import YPImagePicker
 
 protocol RestoreAlertControllerProtocol: AnyObject {
-    func uploadImage()
+    func uploadImage(images: [UIImage])
 }
 
 class RestoreAlertController: UIViewController {
+    
+    var selectedProfileImages: [UIImage] = []
+    var selectedImage: [YPMediaItem] = []
     
     //MARK: - Properties
     private let backgroudView: UIView = {
@@ -79,8 +83,24 @@ class RestoreAlertController: UIViewController {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
         $0.isSelected = false
+        $0.addTarget(self, action: #selector(uploadButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
+    
+    private lazy var config: YPImagePickerConfiguration = {
+        var config = YPImagePickerConfiguration()
+        config.screens = [.library]
+        config.showsPhotoFilters = false
+        config.library.defaultMultipleSelection = true // 한장 선택 default (여러장 선택 O)
+        config.library.maxNumberOfItems = 3
+        config.library.preselectedItems = self.selectedImage
+        config.wordings.libraryTitle = "앨범"
+        config.wordings.cameraTitle = "카메라"
+        config.wordings.cancel = "취소"
+        config.wordings.next = "완료"
+        config.colors.tintColor = .black
+        return config
+    }()
     
     weak var delegate: RestoreAlertControllerProtocol?
     
@@ -160,12 +180,45 @@ class RestoreAlertController: UIViewController {
         
     }
     
+    //MARK: - Functions
+    func presentAlbum() {
+        let picker = YPImagePicker(configuration: self.config)
+        picker.didFinishPicking { [ weak self, unowned picker] items, cancelled in
+            self?.selectedProfileImages = []
+            
+            if cancelled {
+                // 취소 눌렀을때
+                picker.dismiss(animated: true)
+            } else {
+                // 사진 선택후
+                for item in items {
+                    switch item {
+                    case .photo(p: let photo):
+                        self?.selectedProfileImages.append(photo.image)
+                    default:
+                        print("DEBUG: 사진을 선택하지 않음")
+                    }
+                }
+            }
+            self?.selectedImage = items
+            
+            picker.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
+    }
+    
     //MARK: - Selector
     @objc func dismissTap() {
         self.dismiss(animated: true)
     }
     
     @objc func imageButtonTap() {
-        print("zz")
+        self.presentAlbum()
+    }
+    
+    @objc func uploadButtonTap() {
+        // 이미지 버튼 Tap Delgate 연결해야함
+        self.dismiss(animated: true)
+        self.delegate?.uploadImage(images: self.selectedProfileImages)
     }
 }

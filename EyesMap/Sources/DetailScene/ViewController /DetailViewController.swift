@@ -10,10 +10,11 @@ import SnapKit
 import NMapsMap
 import CoreLocation
 import FloatingPanel
+import YPImagePicker
 
 class DetailViewController: UIViewController {
     
-    private var complaint: ComplaintModel {
+    private var complaint: ComplaintLocation {
         didSet {
             configureMapView()
         }
@@ -26,6 +27,8 @@ class DetailViewController: UIViewController {
         UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
         UIImage(named: "block")?.withRenderingMode(.alwaysOriginal)
     ]
+    
+    private var selectedProfileImages: [UIImage] = []
     
 //MARK: - Properties
     private lazy var scrollView: UIScrollView = {
@@ -43,7 +46,7 @@ class DetailViewController: UIViewController {
     
     private let mapView = NMFMapView()
     
-    private let detailComplaintView: DetailComplaintView = {
+    private lazy var detailComplaintView: DetailComplaintView = {
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.2
         $0.layer.shadowOffset = CGSize(width: 0, height: 2) 
@@ -93,11 +96,11 @@ class DetailViewController: UIViewController {
     }()
     
     
-    
 //MARK: - Life Cycles
-    init(complaint: ComplaintModel) {
+    init(complaint: ComplaintLocation, tapedComplaintModel: TapedComplaintResultData) {
         self.complaint = complaint
         super.init(nibName: nil, bundle: nil)
+        detailComplaintView.tapedComplaintModel = tapedComplaintModel
     }
     
     required init?(coder: NSCoder) {
@@ -108,6 +111,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setUIandConstraints()
         configureMapView()
+        getDetailComplaint()
     }
 
     
@@ -172,18 +176,28 @@ class DetailViewController: UIViewController {
         mapView.delegate = self
         
         let marker = NMFMarker()
-        print("lat: \(complaint.latitude), lng: \(complaint.longitude)")
-        marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
+        print("lat: \(complaint.gpsY), lng: \(complaint.gpsX)")
+        marker.position = NMGLatLng(lat: complaint.gpsY, lng: complaint.gpsX)
         marker.mapView = mapView
         marker.iconImage = NMFOverlayImage(image: UIImage(named: "selectedMark")!)
-        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)))
+        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: complaint.gpsY, lng: complaint.gpsX)))
     }
     
     func presentFinishedView() {
-        let reportVC = FinishedReportController()
-        reportVC.delegate = self
-        fpc.set(contentViewController: reportVC)
-        fpc.track(scrollView: reportVC.scrollView)
+        let bv: UIView = {
+            $0.backgroundColor = .black.withAlphaComponent(0.4)
+            return $0
+        }(UIView())
+
+        view.addSubview(bv)
+        bv.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let finishedVC = FinishedFloatingController(type: .delete)
+        finishedVC.delegate = self
+        fpc.set(contentViewController: finishedVC)
+        fpc.track(scrollView: finishedVC.scrollView)
         self.present(fpc, animated: true)
     }
     
@@ -202,9 +216,24 @@ class DetailViewController: UIViewController {
     
     @objc func dangerButtonTap() {
         print("위험해요 버튼 Tap")
+        detailComplaintView.isSelected.toggle()
+    }
+    
+//MARK: - API
+    func getDetailComplaint() {
+        ReportNetworkManager.shared.getDetailComplaintRequest(reportId: complaint.reportId) { [weak self] (error, model) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                detailComplaintView.detailModel = model.result
+            }
+        }
     }
 }
-
 
 //MARK: - NMFMapViewDelegate
 extension DetailViewController: NMFMapViewDelegate {
@@ -263,15 +292,6 @@ extension DetailViewController: DeletedAlertControllerProtocol {
             presentRestoreAlertView()
             
         case .falseReport, .duplicate:
-            let bv: UIView = {
-                $0.backgroundColor = .black.withAlphaComponent(0.4)
-                return $0
-            }(UIView())
-
-            view.addSubview(bv)
-            bv.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
             
             self.presentFinishedView()
         }
@@ -280,23 +300,18 @@ extension DetailViewController: DeletedAlertControllerProtocol {
 
 //MARK: - RestoreAlertControllerProtocol
 extension DetailViewController: RestoreAlertControllerProtocol {
-    func uploadImage() {
-        let bv: UIView = {
-            $0.backgroundColor = .black.withAlphaComponent(0.4)
-            return $0
-        }(UIView())
+    func uploadImage(images: [UIImage]) {
+        // 업로드 시
+        self.selectedProfileImages = images
+        print("selectedCount = \(self.selectedProfileImages.count)")
+        //MARK: 이미지를 업로드 시키는 API 추가 예정 - response code로 성공 분기 처리
 
-        view.addSubview(bv)
-        bv.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
         self.presentFinishedView()
     }
 }
 
 //MARK: - FinishedReportControllerDelegate
-extension DetailViewController: FinishedReportControllerDelegate {
+extension DetailViewController: FinishedFloatingControllerDelegate {
     func dismiss() {
         if let iv = view.subviews.last {
             iv.removeFromSuperview()

@@ -135,7 +135,7 @@ class ModifyProfileViewController: UIViewController {
 }
 
 extension ModifyProfileViewController: ProfileSetImageViewDelegate {
-    func presentPipView() {
+    func presentAlbum() {
         let picker = YPImagePicker(configuration: self.config)
         picker.didFinishPicking { [ weak self, unowned picker] items, _ in
             if let photo = items.singlePhoto {

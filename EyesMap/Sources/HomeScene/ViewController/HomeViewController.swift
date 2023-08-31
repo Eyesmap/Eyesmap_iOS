@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import NMapsMap
 import CoreLocation
-//import CoreMotion
 
 class HomeViewController: UIViewController {
 
@@ -17,10 +16,15 @@ class HomeViewController: UIViewController {
     private let locationManager = LocationHandler.shared.locationManager
     private var userLocation: CLLocation? // 현 위치
     private var userHeading: CLHeading? // 바라보는 방향
-    private var complaints = [ComplaintModel]() // API 연결 민원들 추가 값
+    private var complaints = [ComplaintLocation]() { // API 연결 민원들 추가 값
+        didSet {
+            self.configureMarking(complaints: complaints)
+        }
+    }
     private var markers = [NMFMarker]()
     
-    private var selectedComplaint: ComplaintModel? = nil
+    private var tapedComplaint: TapedComplaintResultData? = nil
+    private var selectedComplaint: ComplaintLocation? = nil
     private var selectedMarker: NMFMarker? = nil
     
     
@@ -47,6 +51,16 @@ class HomeViewController: UIViewController {
         }
         return $0
     }(UIView())
+    
+    private let reportButton: UIButton = {
+        $0.backgroundColor = .black
+        $0.setTitle("신고하기", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 12)
+        $0.layer.cornerRadius = 14
+        $0.addTarget(self, action: #selector(reportButtonTap), for: .touchUpInside)
+        return $0
+    }(UIButton())
     
     private lazy var complaintView: HomeComplaintView = {
         $0.layer.shadowColor = UIColor.black.cgColor
@@ -82,21 +96,19 @@ class HomeViewController: UIViewController {
     // MapView Setting
     func configureMapView() {
         mapView.delegate = self
-        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(_:)))
-        mapView.addGestureRecognizer(longTapGesture)
-        
         
         view.addSubview(mapView)
-                
-                mapView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
+        
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         currentLocationCameraUpdate()
         configureMarking(complaints: complaints)
     }
     
     func configureOtherView() {
         view.addSubview(complaintView)
+        view.addSubview(reportButton)
         view.addSubview(positionButton)
         
         complaintView.snp.makeConstraints { make in
@@ -104,7 +116,12 @@ class HomeViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(19)
             make.height.equalTo(200)
         }
-        
+        reportButton.snp.makeConstraints { make in
+            make.bottom.equalTo(complaintView.snp.top).inset(-20)
+            make.leading.equalToSuperview().inset(22)
+            make.height.equalTo(30)
+            make.width.equalTo(90)
+        }
         positionButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(complaintView.snp.top).inset(-33)
@@ -136,20 +153,26 @@ class HomeViewController: UIViewController {
     }
     
     // 마커 표시 & 이벤트 처리
-    func configureMarking(complaints: [ComplaintModel]) {
+    func configureMarking(complaints: [ComplaintLocation]) {
         
         for complaint in complaints {
             let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: complaint.latitude, lng: complaint.longitude)
+            marker.position = NMGLatLng(lat: complaint.gpsY, lng: complaint.gpsX)
             marker.mapView = mapView
             marker.anchor = CGPoint(x: 0.5, y: 1)
             marker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
-                guard let self = self else { return false }
+                guard let self = self,
+                      let userLocation = userLocation else { return false }
                 
                 // 마커 선택 시
                 if let marker = overlay as? NMFMarker {
+                    let model = TapedComplaintRequestModel(reportId: complaint.reportId,
+                                                           userGpsX: userLocation.coordinate.longitude,
+                                                           userGpsY: userLocation.coordinate.latitude)
+                    self.tapedComplaint(model: model)
+                    
                     // 이미 선택된 마커 초기화
                     if let selectedMarker = selectedMarker {
                         selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
@@ -174,10 +197,10 @@ class HomeViewController: UIViewController {
               let userHeading = userHeading?.trueHeading else { return }
         
         for complaint in complaints {
-            let complaintLocaion = CLLocation(latitude: complaint.latitude, longitude: complaint.longitude)
+            let complaintLocaion = CLLocation(latitude: complaint.gpsX, longitude: complaint.gpsY)
             let distance = userLocation.distance(from: complaintLocaion)
             
-            if distance <= 30.0 {
+            if distance <= 15.0 {
                 print("DEBUG: 거리 들어옴")
                 let bearing = calculateBearing(location: userLocation, destination: complaintLocaion)
                 let headingDifference = abs(calculateHeadingDifference(userHeading, bearing))
@@ -219,41 +242,11 @@ class HomeViewController: UIViewController {
         return radiansBearing.toDegrees()
     }
     
-    // API 이후 Response 값
-    func getComplaints() {
-        complaints = [
-            ComplaintModel(latitude: 37.612836, longitude: 126.834498),
-            ComplaintModel(latitude: 37.634592, longitude: 126.832650),
-            ComplaintModel(latitude: 37.62146193038201, longitude: 126.83230989248261)
-        ]
-        
-        markers = [
-            NMFMarker(position: NMGLatLng(lat: 37.612836, lng: 126.834498), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
-            NMFMarker(position: NMGLatLng(lat: 37.634592, lng: 126.832650), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!)),
-            NMFMarker(position: NMGLatLng(lat: 37.62146193038201, lng: 126.83230989248261), iconImage: NMFOverlayImage(image: UIImage(systemName: "house")!))
-
-        ]
-        
-    }
-    
     //MARK: - Handler
-    // 길게 탭 했을 시
-    @objc func handleLongTap(_ gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            let point = gesture.location(in: mapView)
-            let latlng = mapView.projection.latlng(from: point)
-
-            let vc = ReportMapViewController(location: CLLocation(latitude: latlng.lat, longitude: latlng.lng))
-            let nav = UINavigationController(rootViewController: vc)
-            nav.modalPresentationStyle = .overFullScreen
-            self.present(nav, animated: true)
-        }
-    }
-    
     @objc func complaintViewTap(_ gesture: UIGestureRecognizer) {
-        print("tap")
-        guard let complaint = selectedComplaint else { return }
-        let detailVC = DetailViewController(complaint: complaint)
+        guard let selectedComplaint = selectedComplaint,
+              let tapedComplaint = tapedComplaint else { return }
+        let detailVC = DetailViewController(complaint: selectedComplaint, tapedComplaintModel: tapedComplaint)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -264,6 +257,48 @@ class HomeViewController: UIViewController {
         cameraUpdate.animation = .easeIn
         mapView.moveCamera(cameraUpdate)
     }
+    
+    @objc func reportButtonTap() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
+
+        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        self.present(nav, animated: true)
+    }
+    
+    //MARK: - API
+    // API 이후 Response 값
+    func getComplaints() {
+        ReportNetworkManager.shared.getComplaintsRequest { [weak self] (error, model) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self?.complaints = model.result
+            }
+        }
+    }
+    
+    func tapedComplaint(model: TapedComplaintRequestModel) {
+        ReportNetworkManager.shared.tapedComplaintRequest(parameters: model) { [weak self] (error, model) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self.complaintView.model = model.result
+                self.tapedComplaint = model.result
+            }
+        }
+    }
+    
+    
 }
 
 //MARK: - CLLocationManagerDelegate

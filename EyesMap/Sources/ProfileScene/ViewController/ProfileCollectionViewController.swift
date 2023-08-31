@@ -17,7 +17,14 @@ class ProfileCollectionViewController: UIViewController {
     }
     
     private let resultType: ResultType
+    private var reportModel: [UIImage] = [UIImage(named: "block")!,
+                                          UIImage(named: "block")!,
+                                          UIImage(named: "block")!,
+                                          UIImage(named: "block")!]
     
+    private var sympathyModel: [UIImage] = []//[UIImage(named: "block")!,
+                                            //UIImage(named: "block")!,
+                                            //UIImage(named: "block")!]
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -33,6 +40,11 @@ class ProfileCollectionViewController: UIViewController {
         cv.decelerationRate = .fast
         return cv
     }()
+    
+    private let emptyView: ProfileEmptyView = {
+        $0.alpha = 0
+        return $0
+    }(ProfileEmptyView())
     
     // MARK: - Life Cycles
     init(resultType: ResultType) {
@@ -66,6 +78,31 @@ class ProfileCollectionViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        switch resultType {
+        case .report:
+            if reportModel.isEmpty {
+                emptyView.alpha = 1
+                view.addSubview(emptyView)
+                
+                emptyView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+            } else {
+                emptyView.alpha = 0
+            }
+        case .sympathy:
+            if sympathyModel.isEmpty {
+                emptyView.alpha = 1
+                view.addSubview(emptyView)
+                
+                emptyView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+            } else {
+                emptyView.alpha = 0
+            }
+        }
     }
 }
 
@@ -74,15 +111,22 @@ extension ProfileCollectionViewController: UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch resultType {
         case .report:
-            return 4
+            return reportModel.count
         case .sympathy:
-            return 3
+            return sympathyModel.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.detailImageView.image = UIImage(named: "block")?.withRenderingMode(.alwaysOriginal)
+        switch resultType {
+        case .report:
+            let model = reportModel[indexPath.row]
+            cell.image = model
+        case .sympathy:
+            let model = sympathyModel[indexPath.row]
+            cell.image = model
+        }
         
         return cell
     }

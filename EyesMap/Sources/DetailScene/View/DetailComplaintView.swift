@@ -16,6 +16,20 @@ class DetailComplaintView: UIView {
         }
     }
     
+    var detailModel: DetailComplaintResultData? {
+        didSet {
+            print("detailModel configured")
+            configureDetailModel()
+        }
+    }
+    
+    var tapedComplaintModel: TapedComplaintResultData? {
+        didSet {
+            configureTapedComplaintModel()
+            print("tapedComplaintModel configured")
+        }
+    }
+    
 //MARK: - Properties
     private let titleLabel: UILabel = {
         $0.text = "인도 도로블럭 파손"
@@ -31,9 +45,9 @@ class DetailComplaintView: UIView {
         return $0
     }(UILabel())
     
-    private lazy var reporterLabel: UILabel = {
+    private lazy var addressLabel: UILabel = {
         // attributedString으로 변경 예정
-        $0.text = "김민경 님의 신고"
+        $0.text = "경기도 고양시 덕양구 행신동"
         $0.font = UIFont.systemFont(ofSize: 13)
         return $0
     }(UILabel())
@@ -122,11 +136,8 @@ class DetailComplaintView: UIView {
         return $0
     }(UIView())
     
-    let dangerButton: UIButton = {
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.systemGray2,
-            .font: UIFont.boldSystemFont(ofSize: 13)]
-        let attributedString = NSAttributedString(string: "위험해요 101", attributes: textAttributes)
+    lazy var dangerButton: UIButton = {
+        let attributedString = getAttributeString(isSelected: self.isSelected, text: "위험해요 101")
         let combinedString = NSMutableAttributedString()
         combinedString.append(attributedString)
         $0.setAttributedTitle(combinedString, for: .normal)
@@ -159,7 +170,7 @@ class DetailComplaintView: UIView {
         
         addSubview(titleLabel)
         addSubview(tagLabel)
-        addSubview(reporterLabel)
+        addSubview(addressLabel)
         addSubview(timeStampLabel)
         addSubview(complaintImageView)
         addSubview(distanceLabel)
@@ -177,12 +188,12 @@ class DetailComplaintView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).inset(-3)
             make.leading.equalToSuperview().inset(24)
         }
-        reporterLabel.snp.makeConstraints { make in
+        addressLabel.snp.makeConstraints { make in
             make.top.equalTo(tagLabel.snp.bottom).inset(-10)
             make.leading.equalToSuperview().inset(24)
         }
         timeStampLabel.snp.makeConstraints { make in
-            make.top.equalTo(reporterLabel.snp.bottom).inset(-2)
+            make.top.equalTo(addressLabel.snp.bottom).inset(-2)
             make.leading.equalToSuperview().inset(24)
         }
         complaintImageView.snp.makeConstraints { make in
@@ -221,16 +232,51 @@ class DetailComplaintView: UIView {
         }
     }
     
-    func configure() {
-        if isSelected {
-            dangerButton.isSelected = isSelected
-            let textAttributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.red,
-                .font: UIFont.boldSystemFont(ofSize: 13)]
-            let attributedString = NSAttributedString(string: "위험해요 101", attributes: textAttributes)
-            let combinedString = NSMutableAttributedString()
-            combinedString.append(attributedString)
-            dangerButton.setAttributedTitle(combinedString, for: .normal)
-        }
+//MARK: - Configure
+    private func configure() {
+        dangerButton.isSelected = isSelected
+        let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 101")
+        print(attributedString)
+        let combinedString = NSMutableAttributedString()
+        combinedString.append(attributedString)
+        dangerButton.setAttributedTitle(combinedString, for: .normal)
+    }
+    
+    private func configureDetailModel() {
+        guard let model = detailModel else { return }
+        
+        addressLabel.text = model.address
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        guard let reportDate = formatter.date(from: model.reportDate) else { return }
+        
+        timeStampLabel.text = "\(reportDate)"
+    }
+    
+    private func configureTapedComplaintModel() {
+        guard let tapedComplaintModel = tapedComplaintModel else { return }
+        
+        titleLabel.text = tapedComplaintModel.title
+        tagLabel.text = tapedComplaintModel.sort
+        
+        guard let url = URL(string:"\(tapedComplaintModel.imageUrls[0])") else { return }
+        complaintImageView.sd_setImage(with:url, completed: nil)
+        
+        distanceLabel.text = "\(tapedComplaintModel.distance) M"
+        let attributedString = getAttributeString(isSelected: self.isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
+        let combinedString = NSMutableAttributedString()
+        combinedString.append(attributedString)
+        dangerButton.setAttributedTitle(combinedString, for: .normal)
+        
+    }
+    
+    private func getAttributeString(isSelected: Bool, text: String) -> NSAttributedString {
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: isSelected ? UIColor.rgb(red: 221, green: 112, blue: 97) : UIColor.systemGray2,
+            .font: UIFont.boldSystemFont(ofSize: 13)]
+        let attributedString = NSAttributedString(string: text, attributes: textAttributes)
+        
+        return attributedString
     }
 }

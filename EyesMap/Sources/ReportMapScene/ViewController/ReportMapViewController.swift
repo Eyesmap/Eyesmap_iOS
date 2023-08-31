@@ -72,6 +72,8 @@ class ReportMapViewController: UIViewController {
             make.height.equalTo(230)
             make.leading.trailing.bottom.equalToSuperview()
         }
+        
+        locationSettingView.locationSettingButton.addTarget(self, action: #selector(locationSettingButtonTap), for: .touchUpInside)
     }
     
     private func configureNavBar() {
@@ -79,6 +81,10 @@ class ReportMapViewController: UIViewController {
         let xImage = UIImage(systemName: "xmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         let deleteBtn = UIBarButtonItem(image: xImage, style: .done, target: self, action: #selector(deleteBtnTap))
         navigationItem.leftBarButtonItem = deleteBtn
+        
+        self.navigationController?.navigationBar.tintColor = .black
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
 
 //MARK: - Camera
@@ -93,6 +99,13 @@ class ReportMapViewController: UIViewController {
     @objc func deleteBtnTap() {
         self.dismiss(animated: true)
     }
+    
+    @objc func locationSettingButtonTap() {
+        guard let address = self.locationSettingView.locationLabel.text else { return }
+        
+        let reportVC = ReportViewController(position: targetLocation, address: address)
+        self.navigationController?.pushViewController(reportVC, animated: true)
+    }
 }
 
 //MARK: - NMFMapViewDelegate
@@ -100,12 +113,11 @@ extension ReportMapViewController: NMFMapViewDelegate {
 
     func mapViewIdle(_ mapView: NMFMapView) {
         updateMarkerPosition()
-        GeoCodingNetworkManager.shared.reverseGeocode(latitude: self.targetMarker.position.lat, longitude: self.targetMarker.position.lng) { location in
-            if location == "경기도 성남시 분당구 궁내동" {
-                self.locationSettingView.locationLabel.text = location
-            } else {
-                self.locationSettingView.locationLabel.text = location
-            }
+        let lat = targetLocation.coordinate.latitude
+        let lng = targetLocation.coordinate.longitude
+        
+        GeoCodingNetworkManager.shared.reverseGeocode(latitude: lat, longitude: lng) { location in
+            self.locationSettingView.locationLabel.text = location
         }
     }
     

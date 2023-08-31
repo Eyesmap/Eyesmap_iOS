@@ -60,7 +60,7 @@ class ReportImageCollectionViewCell: UICollectionViewCell {
         addSubview(deleteBtn)
         
         imageView.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.leading.trailing.bottom.equalTo(self)
         }
         deleteBtn.snp.makeConstraints { (make) in
             make.top.equalTo(imageView.snp.top).inset(10)
