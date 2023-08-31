@@ -15,6 +15,7 @@ pod 'NMapsMap'
 pod 'FloatingPanel'
 pod 'BetterSegmentedControl', '~> 2.0'
 pod 'YPImagePicker'
+pod 'SDWebImage', '~> 5.0'
 
   target 'EyesMapTests' do
     inherit! :search_paths

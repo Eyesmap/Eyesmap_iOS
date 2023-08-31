@@ -7,8 +7,16 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 class HomeComplaintView: UIView {
+    
+    var model: TapedComplaintResultData? {
+        didSet {
+            configure()
+        }
+    }
+    
 //MARK: - Properties
     private lazy var titleLabel: UILabel = {
         $0.text = "인도 도로블럭 파손"
@@ -27,7 +35,7 @@ class HomeComplaintView: UIView {
     private lazy var complaintImageView: UIImageView = {
         $0.image = UIImage(named: "block")
         $0.layer.cornerRadius = 13
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleToFill
         $0.clipsToBounds = true
         return $0
     }(UIImageView())
@@ -96,27 +104,28 @@ class HomeComplaintView: UIView {
         return $0
     }(UIStackView())
     
-    private let reportDangerStackView: UIStackView = {
-        let statusImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.image = UIImage(named: "reportDanger")
-            imageView.snp.makeConstraints { make in
-                make.height.width.equalTo(19)
-            }
-            return imageView
-        }()
-        
-        let statusLabel: UILabel = {
-            let label = UILabel()
-            label.text = "101"
-            label.font = UIFont.systemFont(ofSize: 13)
-            label.textColor = .black
-            return label
-        }()
+    private let statusImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "reportDanger")
+        imageView.snp.makeConstraints { make in
+            make.height.width.equalTo(19)
+        }
+        return imageView
+    }()
+    
+    private let statusCntLabel: UILabel = {
+        let label = UILabel()
+        label.text = "101"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .black
+        return label
+    }()
+    
+    private lazy var reportDangerStackView: UIStackView = {
         $0.axis = .horizontal
         $0.spacing = 10
         $0.addArrangedSubview(statusImageView)
-        $0.addArrangedSubview(statusLabel)
+        $0.addArrangedSubview(statusCntLabel)
         
         return $0
     }(UIStackView())
@@ -152,7 +161,7 @@ class HomeComplaintView: UIView {
             make.leading.equalToSuperview().inset(24)
         }
         tagLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-5)
+            make.top.equalTo(titleLabel.snp.bottom).inset(-7.5)
             make.leading.equalToSuperview().inset(24)
         }
         complaintImageView.snp.makeConstraints { make in
@@ -161,7 +170,7 @@ class HomeComplaintView: UIView {
             make.width.height.equalTo(80)
         }
         distanceStackView.snp.makeConstraints { make in
-            make.top.equalTo(tagLabel.snp.bottom).inset(-23)
+            make.top.equalTo(tagLabel.snp.bottom).inset(-34)
             make.leading.equalToSuperview().inset(24)
         }
         statusStackView.snp.makeConstraints { make in
@@ -174,11 +183,26 @@ class HomeComplaintView: UIView {
         }
         statusLabel.snp.makeConstraints { make in
             make.centerY.equalTo(statusStackView.snp.centerY)
-            make.centerX.equalTo(distanceLabel.snp.centerX)
+            make.leading.equalTo(distanceLabel.snp.leading)
         }
         reportDangerStackView.snp.makeConstraints { make in
             make.trailing.bottom.equalToSuperview().inset(21)
             
         }
+    }
+    
+    private func configure() {
+        guard let model = model else { return }
+        
+        titleLabel.text = model.title
+        tagLabel.text = model.sort
+        
+        guard let url = URL(string:"\(model.imageUrls[0])") else { return }
+        complaintImageView.sd_setImage(with:url, completed: nil)
+        
+        distanceLabel.text = "\(model.distance) M"
+        statusCntLabel.text = "\(model.dangerousCnt)"
+        
+        //MARK: FIXME 상태에 따라 enum으로 변경 예정
     }
 }

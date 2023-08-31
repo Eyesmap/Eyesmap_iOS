@@ -16,9 +16,14 @@ class HomeViewController: UIViewController {
     private let locationManager = LocationHandler.shared.locationManager
     private var userLocation: CLLocation? // 현 위치
     private var userHeading: CLHeading? // 바라보는 방향
-    private var complaints = [ComplaintLocation]() // API 연결 민원들 추가 값
+    private var complaints = [ComplaintLocation]() { // API 연결 민원들 추가 값
+        didSet {
+            self.configureMarking(complaints: complaints)
+        }
+    }
     private var markers = [NMFMarker]()
     
+    private var tapedComplaint: TapedComplaintResultData? = nil
     private var selectedComplaint: ComplaintLocation? = nil
     private var selectedMarker: NMFMarker? = nil
     
@@ -158,10 +163,16 @@ class HomeViewController: UIViewController {
             marker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
-                guard let self = self else { return false }
+                guard let self = self,
+                      let userLocation = userLocation else { return false }
                 
                 // 마커 선택 시
                 if let marker = overlay as? NMFMarker {
+                    let model = TapedComplaintRequestModel(reportId: complaint.reportId,
+                                                           userGpsX: userLocation.coordinate.longitude,
+                                                           userGpsY: userLocation.coordinate.latitude)
+                    self.tapedComplaint(model: model)
+                    
                     // 이미 선택된 마커 초기화
                     if let selectedMarker = selectedMarker {
                         selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)
@@ -231,24 +242,11 @@ class HomeViewController: UIViewController {
         return radiansBearing.toDegrees()
     }
     
-    // API 이후 Response 값
-    func getComplaints() {
-        ReportNetworkManager.shared.getComplaintsRequest { [weak self] (error, model) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            if let model = model {
-                self?.complaints = model.result
-            }
-        }
-    }
-    
     //MARK: - Handler
     @objc func complaintViewTap(_ gesture: UIGestureRecognizer) {
-        print("tap")
-        guard let complaint = selectedComplaint else { return }
-        let detailVC = DetailViewController(complaint: complaint)
+        guard let selectedComplaint = selectedComplaint,
+              let tapedComplaint = tapedComplaint else { return }
+        let detailVC = DetailViewController(complaint: selectedComplaint, tapedComplaintModel: tapedComplaint)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -270,6 +268,37 @@ class HomeViewController: UIViewController {
         nav.modalPresentationStyle = .overFullScreen
         self.present(nav, animated: true)
     }
+    
+    //MARK: - API
+    // API 이후 Response 값
+    func getComplaints() {
+        ReportNetworkManager.shared.getComplaintsRequest { [weak self] (error, model) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self?.complaints = model.result
+            }
+        }
+    }
+    
+    func tapedComplaint(model: TapedComplaintRequestModel) {
+        ReportNetworkManager.shared.tapedComplaintRequest(parameters: model) { [weak self] (error, model) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self.complaintView.model = model.result
+                self.tapedComplaint = model.result
+            }
+        }
+    }
+    
+    
 }
 
 //MARK: - CLLocationManagerDelegate
