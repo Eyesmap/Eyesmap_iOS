@@ -62,7 +62,7 @@ class DetailComplaintView: UIView {
     private lazy var complaintImageView: UIImageView = {
         $0.image = UIImage(named: "block")
         $0.layer.cornerRadius = 13
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleToFill
         $0.clipsToBounds = true
         return $0
     }(UIImageView())

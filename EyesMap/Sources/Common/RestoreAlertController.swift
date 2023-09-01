@@ -15,7 +15,21 @@ protocol RestoreAlertControllerProtocol: AnyObject {
 
 class RestoreAlertController: UIViewController {
     
-    var selectedProfileImages: [UIImage] = []
+    var imageSelected: Bool = false {
+        didSet {
+            configure(bool: imageSelected)
+        }
+    }
+    
+    var selectedProfileImages: [UIImage] = [] {
+        didSet {
+            if selectedProfileImages.isEmpty {
+                imageSelected = false
+            } else {
+                imageSelected = true
+            }
+        }
+    }
     var selectedImage: [YPMediaItem] = []
     
     //MARK: - Properties
@@ -59,17 +73,16 @@ class RestoreAlertController: UIViewController {
         return $0
     }(UILabel())
     
-    private let phoneImageButton: UIButton = {
-        $0.setImage(UIImage(named: "uploadImage"), for: .normal)
-        $0.addTarget(self, action: #selector(imageButtonTap), for: .touchUpInside)
+    private let phoneImageView: UIImageView = {
+        $0.image = UIImage(named: "uploadImage")
         return $0
-    }(UIButton())
+    }(UIImageView())
     
-    private let uploadButton: UIButton = {
+    private let selectImageButton: UIButton = {
         let textAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.black,
             .font: UIFont.boldSystemFont(ofSize: 12)]
-        let attributedString = NSAttributedString(string: "사진 올리기", attributes: textAttributes)
+        let attributedString = NSAttributedString(string: "사진 선택하기", attributes: textAttributes)
         let combinedString = NSMutableAttributedString()
         combinedString.append(attributedString)
         $0.titleLabel?.numberOfLines = 0
@@ -82,7 +95,34 @@ class RestoreAlertController: UIViewController {
         $0.backgroundColor = UIColor.white
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
-        $0.isSelected = false
+        $0.addTarget(self, action: #selector(imageButtonTap), for: .touchUpInside)
+        return $0
+    }(UIButton())
+    
+    private let selectedButtonStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.alpha = 0
+        $0.distribution = .fillEqually
+        return $0
+    }(UIStackView())
+    
+    private let modifyButton: UIButton = {
+        $0.backgroundColor = .systemGray3
+        $0.setTitle("사진 수정", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        $0.layer.cornerRadius = 20
+        $0.addTarget(self, action: #selector(imageButtonTap), for: .touchUpInside)
+        return $0
+    }(UIButton())
+    
+    private let uploadButton: UIButton = {
+        $0.backgroundColor = .systemGray3
+        $0.setTitle("확인", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        $0.layer.cornerRadius = 20
         $0.addTarget(self, action: #selector(uploadButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
@@ -148,8 +188,7 @@ class RestoreAlertController: UIViewController {
         backgroudView.addSubview(containerView)
         containerView.addSubview(dismissButton)
         containerView.addSubview(titleLabel)
-        containerView.addSubview(phoneImageButton)
-        containerView.addSubview(uploadButton)
+        containerView.addSubview(phoneImageView)
         
         
         backgroudView.snp.makeConstraints { make in
@@ -165,17 +204,35 @@ class RestoreAlertController: UIViewController {
             make.width.height.equalTo(24)
         }
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(19)
+            make.top.equalToSuperview().inset(8)
             make.left.equalToSuperview().inset(20)
         }
-        phoneImageButton.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-30)
+        phoneImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).inset(-15)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(135)
+            make.height.equalTo(124)
+            make.width.equalTo(123)
         }
-        uploadButton.snp.makeConstraints { make in
-            make.top.equalTo(phoneImageButton.snp.bottom).inset(-30)
+        
+        // 사진이 선택 되지 않았을 때
+        containerView.addSubview(selectImageButton)
+        
+        selectImageButton.snp.makeConstraints { make in
+            make.top.equalTo(phoneImageView.snp.bottom).inset(-25)
             make.leading.trailing.bottom.equalToSuperview().inset(20)
+            make.height.equalTo(40)
+        }
+        
+        // 사진이 선택 되었을 때
+        containerView.addSubview(selectedButtonStackView)
+        
+        selectedButtonStackView.addArrangedSubview(modifyButton)
+        selectedButtonStackView.addArrangedSubview(uploadButton)
+        
+        selectedButtonStackView.snp.makeConstraints { make in
+            make.top.equalTo(phoneImageView.snp.bottom).inset(-25)
+            make.leading.trailing.bottom.equalToSuperview().inset(20)
+            make.height.equalTo(40)
         }
         
     }
@@ -220,5 +277,29 @@ class RestoreAlertController: UIViewController {
         // 이미지 버튼 Tap Delgate 연결해야함
         self.dismiss(animated: true)
         self.delegate?.uploadImage(images: self.selectedProfileImages)
+        self.selectedProfileImages = []
+    }
+    
+    private func configure(bool: Bool) {
+        // 이미지가 선택 되었을 때
+        if bool {
+            titleLabel.text = "\(selectedProfileImages.count) 개의 사진을 업로드 할까요?"
+            phoneImageView.image = UIImage(named: "phoneSelectedImage")
+            phoneImageView.snp.makeConstraints { make in
+                make.height.equalTo(155)
+                make.width.equalTo(65)
+            }
+            selectImageButton.alpha = 0
+            selectedButtonStackView.alpha = 1
+        } else {
+            titleLabel.text = "복구 완료된 사진을 올려주세요"
+            phoneImageView.image = UIImage(named: "uploadImage")
+            phoneImageView.snp.makeConstraints { make in
+                make.height.equalTo(124)
+                make.width.equalTo(105)
+            }
+            selectImageButton.alpha = 1
+            selectedButtonStackView.alpha = 0
+        }
     }
 }

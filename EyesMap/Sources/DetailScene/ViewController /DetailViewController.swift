@@ -23,6 +23,7 @@ class DetailViewController: UIViewController {
     private var detailImageList: [UIImage] = [] {
         didSet {
             imageCollectionView.reloadData()
+            reportImageNumLabel.text = "신고 사진 \(detailImageList.count)개"
         }
     }
     
@@ -62,7 +63,6 @@ class DetailViewController: UIViewController {
     }(UIButton())
     
     private lazy var reportImageNumLabel: UILabel = {
-        $0.text = "신고 사진 5개"
         $0.font = UIFont.systemFont(ofSize: 15)
         $0.textColor = .black
         return $0
@@ -93,6 +93,7 @@ class DetailViewController: UIViewController {
         return controller
     }()
     
+    private lazy var restoreAlertController = RestoreAlertController()
     
 //MARK: - Life Cycles
     init(complaint: ComplaintLocation, tapedComplaintModel: TapedComplaintResultData) {
@@ -204,9 +205,8 @@ class DetailViewController: UIViewController {
     }
     
     func presentRestoreAlertView() {
-        let restoreAlert = RestoreAlertController()
-        restoreAlert.delegate = self
-        self.present(restoreAlert, animated: true)
+        restoreAlertController.delegate = self
+        self.present(restoreAlertController, animated: true)
     }
     
 //MARK: - Handler
@@ -305,6 +305,7 @@ extension DetailViewController: RestoreAlertControllerProtocol {
     func uploadImage(images: [UIImage]) {
         // 업로드 시
         self.selectedProfileImages = images
+        
         print("selectedCount = \(self.selectedProfileImages.count)")
         //MARK: 이미지를 업로드 시키는 API 추가 예정 - response code로 성공 분기 처리
 
