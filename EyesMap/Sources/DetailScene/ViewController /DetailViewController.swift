@@ -20,13 +20,11 @@ class DetailViewController: UIViewController {
         }
     }
     
-    var detailImageList = [
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal)
-    ]
+    private var detailImageList: [UIImage] = [] {
+        didSet {
+            imageCollectionView.reloadData()
+        }
+    }
     
     private var selectedProfileImages: [UIImage] = []
     
@@ -101,6 +99,10 @@ class DetailViewController: UIViewController {
         self.complaint = complaint
         super.init(nibName: nil, bundle: nil)
         detailComplaintView.tapedComplaintModel = tapedComplaintModel
+        ImageConverter.convertURLArrayToImages(tapedComplaintModel.imageUrls) { [weak self] images in
+            guard let self = self else { return }
+            self.detailImageList = images
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -264,7 +266,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
-        guard let image = detailImageList[indexPath.row] else { return UICollectionViewCell() }
+        let image = detailImageList[indexPath.row]
         
         cell.configure(image: image)
         
