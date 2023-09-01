@@ -52,6 +52,7 @@ class ReportNetworkManager {
         }
     }
     
+    // 상세 신고 조회
     func getDetailComplaintRequest(reportId: String, completion: @escaping (Error?, DetailComplaintResultModel?) -> Void) {
         let router = reportRouter.getDetailComplaint(reportId)
         
@@ -113,6 +114,5 @@ struct DetailComplaintResultModel: Decodable {
 
 struct DetailComplaintResultData: Decodable {
     let address: String
-    let contents: String
     let reportDate: String
 }

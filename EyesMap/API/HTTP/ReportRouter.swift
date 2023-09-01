@@ -31,7 +31,7 @@ extension ReportRouter: HttpRouter {
         case .tapedComplaint:
             return "/api/report/fetch/mark"
         case .getDetailComplaint(let reportId):
-            return "api/report/fetch/detail?reportId=\(reportId)"
+            return "/api/report/fetch/detail?reportId=\(reportId)"
         }
     }
     

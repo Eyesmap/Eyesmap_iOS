@@ -32,28 +32,25 @@ class DetailComplaintView: UIView {
     
 //MARK: - Properties
     private let titleLabel: UILabel = {
-        $0.text = "인도 도로블럭 파손"
-        $0.font = UIFont.boldSystemFont(ofSize: 18)
+        $0.font = UIFont.boldSystemFont(ofSize: 19)
         $0.textColor = .black
         return $0
     }(UILabel())
     
     private let tagLabel: UILabel = {
-        $0.text = "#안전 신고"
-        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.textColor = .darkGray
         return $0
     }(UILabel())
     
     private lazy var addressLabel: UILabel = {
         // attributedString으로 변경 예정
-        $0.text = "경기도 고양시 덕양구 행신동"
         $0.font = UIFont.systemFont(ofSize: 13)
+        $0.textColor = UIColor.rgb(red: 85, green: 131, blue: 236)
         return $0
     }(UILabel())
     
     private lazy var timeStampLabel: UILabel = {
-        $0.text = "2023.08.10"
         $0.font = UIFont.systemFont(ofSize: 13)
         $0.textColor = .darkGray
         return $0
@@ -68,14 +65,12 @@ class DetailComplaintView: UIView {
     }(UIImageView())
     
     private lazy var distanceLabel: UILabel = {
-        $0.text = "50"
         $0.font = UIFont.boldSystemFont(ofSize: 15)
         $0.textColor = .black
         return $0
     }(UILabel())
     
     private lazy var statusLabel: UILabel = {
-        $0.text = "나쁨"
         $0.font = UIFont.boldSystemFont(ofSize: 15)
         $0.textColor = .black
         return $0
@@ -228,7 +223,7 @@ class DetailComplaintView: UIView {
             make.top.equalTo(divideLine.snp.bottom).inset(-16)
             make.trailing.equalToSuperview().inset(17)
             make.height.equalTo(22)
-            make.width.equalTo(120)
+            make.width.greaterThanOrEqualTo(100)
         }
     }
     
@@ -248,17 +243,39 @@ class DetailComplaintView: UIView {
         addressLabel.text = model.address
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        guard let reportDate = formatter.date(from: model.reportDate) else { return }
-        
-        timeStampLabel.text = "\(reportDate)"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        if let reportDate = formatter.date(from: model.reportDate) {
+            formatter.dateFormat = "yyyy.MM.dd"
+            let formattedDate = formatter.string(from: reportDate)
+            timeStampLabel.text = "\(formattedDate)"
+        } else {
+            print("날짜 변환 실패")
+        }
     }
     
     private func configureTapedComplaintModel() {
         guard let tapedComplaintModel = tapedComplaintModel else { return }
         
         titleLabel.text = tapedComplaintModel.title
-        tagLabel.text = tapedComplaintModel.sort
+        if tapedComplaintModel.sort == SortType.dottedBlock.rawValue {
+            tagLabel.text = "#점자블록"
+        }
+        if tapedComplaintModel.sort == SortType.acousticGuidenceSystem.rawValue {
+            tagLabel.text = "#음향유도장치"
+        }
+        if tapedComplaintModel.sort == SortType.brailleInfoBoard.rawValue {
+            tagLabel.text = "점자안내판"
+        }
+        
+        if tapedComplaintModel.damagedStatus == DamageStatusType.normal.rawValue {
+            statusLabel.text = "보통"
+        }
+        if tapedComplaintModel.damagedStatus == DamageStatusType.bad.rawValue {
+            statusLabel.text = "나쁨"
+        }
+        if tapedComplaintModel.damagedStatus == DamageStatusType.severe.rawValue {
+            statusLabel.text = "심각"
+        }
         
         guard let url = URL(string:"\(tapedComplaintModel.imageUrls[0])") else { return }
         complaintImageView.sd_setImage(with:url, completed: nil)

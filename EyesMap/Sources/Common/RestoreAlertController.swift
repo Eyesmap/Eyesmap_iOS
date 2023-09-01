@@ -89,7 +89,7 @@ class RestoreAlertController: UIViewController {
         $0.titleLabel?.textAlignment = .left
         $0.setAttributedTitle(combinedString, for: .normal)
         
-        $0.setImage(UIImage(named: "blueBoard"), for: .normal)
+        $0.setImage(UIImage(named: "gallery-add"), for: .normal)
         $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 33)
         $0.layer.cornerRadius = 20
         $0.backgroundColor = UIColor.white
