@@ -13,6 +13,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAuth()
+        self.delegate = self
     }
     
 
@@ -21,15 +22,15 @@ class TabBarController: UITabBarController {
     func configureAuth() {
         print("🔥ConfigureAuth")
         // 유저 토큰이 존재하면
-//        if TokenManager.getUserAccessToken() != nil {
+        if TokenManager.getUserAccessToken() != nil {
             print("🔥AccessToken = \(TokenManager.getUserAccessToken())")
             // ToDo - 액세스 토큰 유효 검사
-//            configureViewControllers()
-//        } else {
+            configureViewControllers()
+        } else {
             // 로그인 뷰 띄우기
-            configureViewControllers() //MARK: 임시
-            presentAuthView()
-//        }
+            configureViewControllers()
+//            presentAuthView() //MARK: 임시
+        }
     }
     
     //MARK: - 로그인 뷰 띄우기
@@ -93,5 +94,38 @@ class TabBarController: UITabBarController {
             tabBar.layer.masksToBounds = false
             tabBar.isTranslucent = false
         }
+    }
+}
+
+extension TabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if let topViewController = (viewController as? UINavigationController)?.topViewController as? LocationDataViewController {
+            if let userToken = UserDefaults.standard.string(forKey: "UserToken") {
+                return true
+            } else {
+                presentAuthView()
+                return false
+            }
+        }
+        
+        if let topViewController = (viewController as? UINavigationController)?.topViewController as? HallOfFameViewController {
+            if let userToken = UserDefaults.standard.string(forKey: "UserToken") {
+                return true
+            } else {
+                presentAuthView()
+                return false
+            }
+        }
+        
+        if let topViewController = (viewController as? UINavigationController)?.topViewController as? ProfileViewController {
+            if let userToken = UserDefaults.standard.string(forKey: "UserToken") {
+                return true
+            } else {
+                presentAuthView()
+                return false
+            }
+        }
+        print("ViewController Type: \(type(of: viewController))")
+        return true
     }
 }
