@@ -10,6 +10,18 @@ import SnapKit
 import NMapsMap
 import CoreLocation
 
+enum SortType: String, CaseIterable {
+    case dottedBlock = "DOTTED_BLOCK"
+    case acousticGuidenceSystem = "ACOUSTIC_GUIDENCE_SYSTEM"
+    case brailleInfoBoard = "BRAILLE_INFO_BOARD"
+}
+
+enum DamageStatusType: String, CaseIterable {
+    case normal = "NORMAL"
+    case bad = "BAD"
+    case severe = "SEVERE"
+}
+
 class HomeViewController: UIViewController {
 
 //MARK: - Properties

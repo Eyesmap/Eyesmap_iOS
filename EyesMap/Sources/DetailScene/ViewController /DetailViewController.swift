@@ -20,13 +20,12 @@ class DetailViewController: UIViewController {
         }
     }
     
-    var detailImageList = [
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal),
-        UIImage(named: "block")?.withRenderingMode(.alwaysOriginal)
-    ]
+    private var detailImageList: [UIImage] = [] {
+        didSet {
+            imageCollectionView.reloadData()
+            reportImageNumLabel.text = "신고 사진 \(detailImageList.count)개"
+        }
+    }
     
     private var selectedProfileImages: [UIImage] = []
     
@@ -64,7 +63,6 @@ class DetailViewController: UIViewController {
     }(UIButton())
     
     private lazy var reportImageNumLabel: UILabel = {
-        $0.text = "신고 사진 5개"
         $0.font = UIFont.systemFont(ofSize: 15)
         $0.textColor = .black
         return $0
@@ -95,12 +93,17 @@ class DetailViewController: UIViewController {
         return controller
     }()
     
+    private lazy var restoreAlertController = RestoreAlertController()
     
 //MARK: - Life Cycles
     init(complaint: ComplaintLocation, tapedComplaintModel: TapedComplaintResultData) {
         self.complaint = complaint
         super.init(nibName: nil, bundle: nil)
         detailComplaintView.tapedComplaintModel = tapedComplaintModel
+        ImageConverter.convertURLArrayToImages(tapedComplaintModel.imageUrls) { [weak self] images in
+            guard let self = self else { return }
+            self.detailImageList = images
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -202,9 +205,8 @@ class DetailViewController: UIViewController {
     }
     
     func presentRestoreAlertView() {
-        let restoreAlert = RestoreAlertController()
-        restoreAlert.delegate = self
-        self.present(restoreAlert, animated: true)
+        restoreAlertController.delegate = self
+        self.present(restoreAlertController, animated: true)
     }
     
 //MARK: - Handler
@@ -215,8 +217,15 @@ class DetailViewController: UIViewController {
     }
     
     @objc func dangerButtonTap() {
-        print("위험해요 버튼 Tap")
-        detailComplaintView.isSelected.toggle()
+        ReportNetworkManager.shared.DangerRequest(reportId: complaint.reportId) { [weak self] (error, model) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self?.detailComplaintView.isSelected.toggle()
+            }
+        }
     }
     
 //MARK: - API
@@ -264,9 +273,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
-        guard let image = detailImageList[indexPath.row] else { return UICollectionViewCell() }
+        let image = detailImageList[indexPath.row]
         
-        cell.configure(image: image)
+        cell.image = image
         
         return cell
     }
@@ -303,6 +312,7 @@ extension DetailViewController: RestoreAlertControllerProtocol {
     func uploadImage(images: [UIImage]) {
         // 업로드 시
         self.selectedProfileImages = images
+        
         print("selectedCount = \(self.selectedProfileImages.count)")
         //MARK: 이미지를 업로드 시키는 API 추가 예정 - response code로 성공 분기 처리
 

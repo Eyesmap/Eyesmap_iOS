@@ -12,7 +12,7 @@ import YPImagePicker
 class ModifyProfileViewController: UIViewController {
     // MARK: - Properties
     private let profileImageView: UIImageView = {
-        $0.image = UIImage(named: "block")
+        $0.image = UIImage(named: "defaultProfile")
         $0.layer.cornerRadius = 55
         $0.clipsToBounds = true
         return $0
@@ -67,6 +67,15 @@ class ModifyProfileViewController: UIViewController {
     private var textfieldString = ""
     
     // MARK: - Life Cycles
+    init(image: UIImage) {
+        super.init(nibName: nil, bundle: nil)
+        profileImageView.image = image
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()

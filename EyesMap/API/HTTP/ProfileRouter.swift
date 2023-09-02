@@ -9,7 +9,9 @@ import Foundation
 import Alamofire
 
 enum ProfileRouter {
-
+    case getProfile
+    case getReportList
+    case getSympathyList
 }
 
 extension ProfileRouter: HttpRouter {
@@ -24,21 +26,30 @@ extension ProfileRouter: HttpRouter {
     
     var path: String {
         switch self {
-            
+        case .getProfile:
+            return "/api/account/info"
+        case .getReportList:
+            return "/api/account/report/list"
+        case .getSympathyList:
+            return "/api/account/dangerouscnt/list"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-    
+        case .getProfile:
+            return .get
+        case .getReportList:
+            return .get
+        case .getSympathyList:
+            return .get
         }
     }
     
     var headers: HTTPHeaders? {
-        switch self {
-        
-        }
-        
+        guard let accessToken = TokenManager.getUserAccessToken() else { return HTTPHeaders() }
+        return ["Content-Type" : "application/json",
+                "Authorization" : "\(accessToken)"]
     }
     
     var parameters: Parameters? {
