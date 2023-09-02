@@ -47,7 +47,9 @@ extension ProfileRouter: HttpRouter {
     }
     
     var headers: HTTPHeaders? {
-        return ["Content-Type" : "application/json"]
+        guard let accessToken = TokenManager.getUserAccessToken() else { return HTTPHeaders() }
+        return ["Content-Type" : "application/json",
+                "Authorization" : "\(accessToken)"]
     }
     
     var parameters: Parameters? {

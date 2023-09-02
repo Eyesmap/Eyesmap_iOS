@@ -14,9 +14,7 @@ class ProfileViewController: UIViewController {
     
     var profileModel: GetProfileResultData? {
         didSet {
-            guard let url = URL(string:"\(profileModel?.profileImageUrl)") else { return }
-            imageValueImageView.sd_setImage(with:url, completed: nil)
-            nickNameValueLabel.text = profileModel?.nickname
+            configure()
         }
     }
     
@@ -255,6 +253,15 @@ class ProfileViewController: UIViewController {
                 self?.profileModel = model.result
             }
         }
+    }
+    
+//MARK: - Configure
+    private func configure() {
+        guard let profileModel = profileModel else { return }
+        
+        let url = URL(string:"\(profileModel.profileImageUrl)")
+        imageValueImageView.sd_setImage(with:url, completed: nil)
+        nickNameValueLabel.text = profileModel.nickname
     }
     
 //MARK: - Handler

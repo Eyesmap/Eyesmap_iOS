@@ -42,8 +42,10 @@ class ProfileNetworkManager {
         .responseDecodable(of: GetUserListResultModel.self) { response in
             switch response.result {
             case .success(let result):
+                print("프로필 신고 result = \(result)")
                 completion(nil, result.result)
             case .failure(let error):
+                print("프로필 신고 error = \(error)")
                 completion(error, nil)
             }
         }
