@@ -43,6 +43,8 @@ class ProfileViewController: UIViewController {
     
     private let imageValueImageView: UIImageView = {
         $0.image = UIImage(named: "defaultProfile")
+        $0.layer.cornerRadius = 46 / 2
+        $0.clipsToBounds = true
         return $0
     }(UIImageView())
     
@@ -275,7 +277,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func modifyButtonTap() {
-        let modifyVC = ModifyProfileViewController()
+        let modifyVC = ModifyProfileViewController(image: imageValueImageView.image!)
         self.navigationController?.pushViewController(modifyVC, animated: true)
     }
 }

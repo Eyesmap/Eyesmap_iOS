@@ -67,6 +67,15 @@ class ModifyProfileViewController: UIViewController {
     private var textfieldString = ""
     
     // MARK: - Life Cycles
+    init(image: UIImage) {
+        super.init(nibName: nil, bundle: nil)
+        profileImageView.image = image
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
