@@ -25,6 +25,7 @@ class ReportNetworkManager {
         .responseDecodable(of: GetComplaintsResultModel.self) { response in
             switch response.result {
             case .success(let result):
+                print(result)
                 completion(nil, result)
             case .failure(let error):
                 completion(error, nil)
@@ -65,6 +66,30 @@ class ReportNetworkManager {
             case .success(let result):
                 completion(nil, result)
             case .failure(let error):
+                completion(error, nil)
+            }
+        }
+    }
+    
+    // 신고하기
+    func DangerRequest(reportId: String, completion: @escaping (Error?, MessageResultModel?) -> Void) {
+        let router = reportRouter.danger
+        
+        let param = ["reportId": reportId]
+        
+        AF.request(router.url,
+                   method: router.method,
+                   parameters: param,
+                   encoder: JSONParameterEncoder.default,
+                   headers: router.headers)
+        .validate(statusCode: 200..<500)
+        .responseDecodable(of: MessageResultModel.self) { response in
+            switch response.result {
+            case .success(let result):
+                print("신고하기 result = \(result)")
+                completion(nil, result)
+            case .failure(let error):
+                print("신고하기 error = \(error)")
                 completion(error, nil)
             }
         }

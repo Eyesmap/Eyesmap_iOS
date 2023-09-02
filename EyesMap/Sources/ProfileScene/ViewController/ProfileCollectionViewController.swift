@@ -19,11 +19,21 @@ class ProfileCollectionViewController: UIViewController {
     private let resultType: ResultType
     private var reportModel: [GetReportListResult] = [] {
         didSet {
+            if reportModel.count == 0 {
+                emptyView.alpha = 1
+            } else {
+                emptyView.alpha = 0
+            }
             collectionView.reloadData()
         }
     }
     private var sympathyModel: [GetReportListResult] = [] {
         didSet {
+            if sympathyModel.count == 0 {
+                emptyView.alpha = 1
+            } else {
+                emptyView.alpha = 0
+            }
             collectionView.reloadData()
         }
     }
@@ -83,29 +93,10 @@ class ProfileCollectionViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        switch resultType {
-        case .report:
-            if reportModel.isEmpty {
-                emptyView.alpha = 1
-                view.addSubview(emptyView)
-                
-                emptyView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
-            } else {
-                emptyView.alpha = 0
-            }
-        case .sympathy:
-            if sympathyModel.isEmpty {
-                emptyView.alpha = 1
-                view.addSubview(emptyView)
-                
-                emptyView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
-            } else {
-                emptyView.alpha = 0
-            }
+        view.addSubview(emptyView)
+        
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     

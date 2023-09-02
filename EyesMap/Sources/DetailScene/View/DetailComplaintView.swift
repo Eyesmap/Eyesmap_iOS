@@ -232,11 +232,17 @@ class DetailComplaintView: UIView {
         guard let tapedComplaintModel = tapedComplaintModel else { return }
         
         dangerButton.isSelected = isSelected
-        let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
-        print(attributedString)
-        let combinedString = NSMutableAttributedString()
-        combinedString.append(attributedString)
-        dangerButton.setAttributedTitle(combinedString, for: .normal)
+        if isSelected {
+            let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt + 1)")
+            let combinedString = NSMutableAttributedString()
+            combinedString.append(attributedString)
+            dangerButton.setAttributedTitle(combinedString, for: .normal)
+        } else {
+            let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
+            let combinedString = NSMutableAttributedString()
+            combinedString.append(attributedString)
+            dangerButton.setAttributedTitle(combinedString, for: .normal)
+        }
     }
     
     private func configureDetailModel() {

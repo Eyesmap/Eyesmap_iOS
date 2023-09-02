@@ -217,8 +217,15 @@ class DetailViewController: UIViewController {
     }
     
     @objc func dangerButtonTap() {
-        print("위험해요 버튼 Tap")
-        detailComplaintView.isSelected.toggle()
+        ReportNetworkManager.shared.DangerRequest(reportId: complaint.reportId) { [weak self] (error, model) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self?.detailComplaintView.isSelected.toggle()
+            }
+        }
     }
     
 //MARK: - API

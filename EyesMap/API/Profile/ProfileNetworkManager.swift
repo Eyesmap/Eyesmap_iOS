@@ -25,8 +25,10 @@ class ProfileNetworkManager {
         .responseDecodable(of: GetProfileResultModel.self) { response in
             switch response.result {
             case .success(let result):
+                print("프로필 result = \(result)")
                 completion(nil, result)
             case .failure(let error):
+                print("프로필 error = \(error )")
                 completion(error, nil)
             }
         }
@@ -42,10 +44,10 @@ class ProfileNetworkManager {
         .responseDecodable(of: GetUserListResultModel.self) { response in
             switch response.result {
             case .success(let result):
-                print("프로필 신고 result = \(result)")
+                print("신고 내역 result = \(result)")
                 completion(nil, result.result)
             case .failure(let error):
-                print("프로필 신고 error = \(error)")
+                print("신고 내역 error = \(error)")
                 completion(error, nil)
             }
         }
@@ -62,7 +64,9 @@ class ProfileNetworkManager {
             switch response.result {
             case .success(let result):
                 completion(nil, result.result)
+                print("공감 내역 result = \(result)")
             case .failure(let error):
+                print("공감 내역 error = \(error)")
                 completion(error, nil)
             }
         }
