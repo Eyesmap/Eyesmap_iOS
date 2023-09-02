@@ -115,4 +115,5 @@ struct DetailComplaintResultModel: Decodable {
 struct DetailComplaintResultData: Decodable {
     let address: String
     let reportDate: String
+    let dangerBtnClicked: Bool
 }

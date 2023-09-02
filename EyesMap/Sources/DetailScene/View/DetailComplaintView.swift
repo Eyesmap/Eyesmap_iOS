@@ -132,7 +132,7 @@ class DetailComplaintView: UIView {
     }(UIView())
     
     lazy var dangerButton: UIButton = {
-        let attributedString = getAttributeString(isSelected: self.isSelected, text: "위험해요 101")
+        let attributedString = getAttributeString(isSelected: self.isSelected, text: "위험해요 0")
         let combinedString = NSMutableAttributedString()
         combinedString.append(attributedString)
         $0.setAttributedTitle(combinedString, for: .normal)
@@ -229,8 +229,10 @@ class DetailComplaintView: UIView {
     
 //MARK: - Configure
     private func configure() {
+        guard let tapedComplaintModel = tapedComplaintModel else { return }
+        
         dangerButton.isSelected = isSelected
-        let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 101")
+        let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
         print(attributedString)
         let combinedString = NSMutableAttributedString()
         combinedString.append(attributedString)
@@ -241,9 +243,10 @@ class DetailComplaintView: UIView {
         guard let model = detailModel else { return }
         
         addressLabel.text = model.address
+        isSelected = model.dangerBtnClicked
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         if let reportDate = formatter.date(from: model.reportDate) {
             formatter.dateFormat = "yyyy.MM.dd"
             let formattedDate = formatter.string(from: reportDate)
