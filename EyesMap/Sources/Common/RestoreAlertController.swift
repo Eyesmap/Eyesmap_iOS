@@ -118,9 +118,9 @@ class RestoreAlertController: UIViewController {
     }(UIButton())
     
     private let uploadButton: UIButton = {
-        $0.backgroundColor = .systemGray3
+        $0.backgroundColor = .black
         $0.setTitle("확인", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         $0.layer.cornerRadius = 20
         $0.addTarget(self, action: #selector(uploadButtonTap), for: .touchUpInside)

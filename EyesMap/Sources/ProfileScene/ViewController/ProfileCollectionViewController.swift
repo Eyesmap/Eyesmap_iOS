@@ -17,14 +17,16 @@ class ProfileCollectionViewController: UIViewController {
     }
     
     private let resultType: ResultType
-    private var reportModel: [UIImage] = [UIImage(named: "block")!,
-                                          UIImage(named: "block")!,
-                                          UIImage(named: "block")!,
-                                          UIImage(named: "block")!]
-    
-    private var sympathyModel: [UIImage] = []//[UIImage(named: "block")!,
-                                            //UIImage(named: "block")!,
-                                            //UIImage(named: "block")!]
+    private var reportModel: [GetReportListResult] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    private var sympathyModel: [GetReportListResult] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -60,6 +62,8 @@ class ProfileCollectionViewController: UIViewController {
         super.viewDidLoad()
         collectionViewSetting()
         setUI()
+        getReportRequest()
+        getSympathyRequest()
         
     }
     
@@ -104,6 +108,31 @@ class ProfileCollectionViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: - API
+    private func getReportRequest() {
+        ProfileNetworkManager.shared.getReportListRequest { [weak self] (error, model) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self?.reportModel = model.reportList
+            }
+        }
+    }
+    
+    private func getSympathyRequest() {
+        ProfileNetworkManager.shared.getSympathyListRequest { [weak self] (error, model) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self?.sympathyModel = model.reportList
+            }
+        }
+    }
 }
 
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -122,13 +151,26 @@ extension ProfileCollectionViewController: UICollectionViewDelegate, UICollectio
         switch resultType {
         case .report:
             let model = reportModel[indexPath.row]
-            cell.image = model
+            cell.imageUrl = model.imageUrl
         case .sympathy:
             let model = sympathyModel[indexPath.row]
-            cell.image = model
+            cell.imageUrl = model.imageUrl
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return }
+        
+        switch resultType {
+        case .report:
+            let model = reportModel[indexPath.row]
+            
+        case .sympathy:
+            let model = sympathyModel[indexPath.row]
+            
+        }
     }
     
 }

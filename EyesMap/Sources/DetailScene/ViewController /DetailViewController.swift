@@ -268,7 +268,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         let image = detailImageList[indexPath.row]
         
-        cell.configure(image: image)
+        cell.image = image
         
         return cell
     }

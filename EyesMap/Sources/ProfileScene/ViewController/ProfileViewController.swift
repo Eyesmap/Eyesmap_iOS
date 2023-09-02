@@ -8,8 +8,18 @@
 import UIKit
 import SnapKit
 import BetterSegmentedControl
+import SDWebImage
 
 class ProfileViewController: UIViewController {
+    
+    var profileModel: GetProfileResultData? {
+        didSet {
+            guard let url = URL(string:"\(profileModel?.profileImageUrl)") else { return }
+            imageValueImageView.sd_setImage(with:url, completed: nil)
+            nickNameValueLabel.text = profileModel?.nickname
+        }
+    }
+    
 // MARK: - Properties
     private let profileLabel: UILabel = {
         $0.text = "프로필"
@@ -34,12 +44,13 @@ class ProfileViewController: UIViewController {
     }(UILabel())
     
     private let imageValueImageView: UIImageView = {
-        $0.image = UIImage(named: "mark")
+        $0.image = UIImage(named: "defaultProfile")
         return $0
     }(UIImageView())
     
     private let imageButton: UIButton = {
         $0.setImage(UIImage(systemName: "chevron.right")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal), for: .normal)
+        $0.addTarget(self, action: #selector(modifyButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -56,7 +67,6 @@ class ProfileViewController: UIViewController {
     }(UILabel())
     
     private let nickNameValueLabel: UILabel = {
-        $0.text = "01012345678"
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: 14)
         return $0
@@ -64,6 +74,7 @@ class ProfileViewController: UIViewController {
     
     private let nickNameButton: UIButton = {
         $0.setImage(UIImage(systemName: "chevron.right")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal), for: .normal)
+        $0.addTarget(self, action: #selector(modifyButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -112,6 +123,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        getProfileRequest()
         configureNavBar()
         setupPageViewController()
     }
@@ -229,6 +241,19 @@ class ProfileViewController: UIViewController {
         pageViewController.dataSource = self
         if let firstVC = viewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
+        }
+    }
+    
+//MARK: - API
+    private func getProfileRequest() {
+        ProfileNetworkManager.shared.getProfileRequest { [weak self] (error, model) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                self?.profileModel = model.result
+            }
         }
     }
     
