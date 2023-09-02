@@ -122,7 +122,7 @@ class LoginViewController: UIViewController {
                 guard let self = self,
                       let userId = user?.id else { return }
                 
-                self.kakaoLoginRequest(userId: Int(userId)) { [weak self] model in
+                self.kakaoLoginRequest(userId: Int(userId)) { [weak self] in
                     self?.dismissLoginView()
                 }
             }
@@ -148,7 +148,7 @@ class LoginViewController: UIViewController {
                 guard let self = self,
                       let userId = user?.id else { return }
                 
-                self.kakaoLoginRequest(userId: Int(userId)) { [weak self] model in
+                self.kakaoLoginRequest(userId: Int(userId)) { [weak self] in
                     self?.dismissLoginView()
                 }
             }
@@ -156,14 +156,14 @@ class LoginViewController: UIViewController {
     }
     
 //MARK: - Network
-    func kakaoLoginRequest(userId: Int, completion: @escaping (LoginResultModel) -> Void) {
+    func kakaoLoginRequest(userId: Int, completion: @escaping () -> Void) {
         AuthNetworkManager.shared.loginRequest(userId: userId) { model in
             let accessToken = model.result.accessToken
             let refreshToken = model.result.refreshToken
-            
-            print("accessToken = \(accessToken)")
-            print("refreshToken = \(refreshToken)")
-            completion(model)
+            TokenManager.saveUserAccessToken(accessToken: accessToken)
+            TokenManager.saveUserRefreshToken(refreshToken: refreshToken)
+            print("DEBUG: 로그인 성공 & 토큰 저장 성공")
+            completion()
         }
     }
     

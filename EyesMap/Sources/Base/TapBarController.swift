@@ -100,7 +100,7 @@ class TabBarController: UITabBarController {
 extension TabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if let topViewController = (viewController as? UINavigationController)?.topViewController as? LocationDataViewController {
-            if let userToken = UserDefaults.standard.string(forKey: "UserToken") {
+            if TokenManager.getUserAccessToken() != nil {
                 return true
             } else {
                 presentAuthView()
@@ -109,7 +109,7 @@ extension TabBarController: UITabBarControllerDelegate {
         }
         
         if let topViewController = (viewController as? UINavigationController)?.topViewController as? HallOfFameViewController {
-            if let userToken = UserDefaults.standard.string(forKey: "UserToken") {
+            if TokenManager.getUserAccessToken() != nil {
                 return true
             } else {
                 presentAuthView()
@@ -118,14 +118,13 @@ extension TabBarController: UITabBarControllerDelegate {
         }
         
         if let topViewController = (viewController as? UINavigationController)?.topViewController as? ProfileViewController {
-            if let userToken = UserDefaults.standard.string(forKey: "UserToken") {
+            if TokenManager.getUserAccessToken() != nil {
                 return true
             } else {
                 presentAuthView()
                 return false
             }
         }
-        print("ViewController Type: \(type(of: viewController))")
         return true
     }
 }
