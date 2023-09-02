@@ -35,7 +35,7 @@ class AuthNetworkManager {
     }
     
     // 로그아웃
-    func logoutRequest(userId: Int, completion: @escaping (LogoutResultModel) -> Void) {
+    func logoutRequest(completion: @escaping () -> Void) {
         let router = authRouter.logout
         
         AF.request(router.url,
@@ -45,7 +45,8 @@ class AuthNetworkManager {
         .responseDecodable(of: LogoutResultModel.self) { response in
             switch response.result {
             case .success(let result):
-                completion(result)
+                print(result.message)
+                completion()
             case .failure(let error):
                 print(error.localizedDescription)
                 print(response.error ?? "")

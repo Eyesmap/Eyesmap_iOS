@@ -74,6 +74,7 @@ class SettingViewController: UIViewController {
         $0.setTitle("로그아웃", for: .normal)
         $0.setTitleColor(.red, for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        $0.addTarget(self, action: #selector(logOutButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -155,6 +156,17 @@ class SettingViewController: UIViewController {
     
 
 // MARK: - Handler
+    @objc private func logOutButtonTap() {
+        AuthNetworkManager.shared.logoutRequest { [weak self] in
+            guard let tabBarVC = self?.navigationController?.presentingViewController as? TabBarController,
+                  let homeNavVC = tabBarVC.viewControllers?.first as? UINavigationController,
+                  let homeVC = homeNavVC.viewControllers.first as? HomeViewController else { return }
+            
+            self?.navigationController?.setViewControllers([homeVC], animated: true)
+            TokenManager.resetUserToken()
+        }
+    }
+    
 }
 
 //MARK: - CustomToggleButtonDelegate
