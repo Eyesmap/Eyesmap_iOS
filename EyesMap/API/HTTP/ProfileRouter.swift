@@ -40,9 +40,9 @@ extension ProfileRouter: HttpRouter {
         case .getProfile:
             return .get
         case .getReportList:
-            return .get
+            return .post
         case .getSympathyList:
-            return .get
+            return .post
         }
     }
     

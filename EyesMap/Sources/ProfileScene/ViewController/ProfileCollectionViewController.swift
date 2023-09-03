@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreLocation
 
 class ProfileCollectionViewController: UIViewController {
     // MARK: - Properties
@@ -17,6 +18,8 @@ class ProfileCollectionViewController: UIViewController {
     }
     
     private let resultType: ResultType
+    private let locationManager = LocationHandler.shared.locationManager
+    
     private var reportModel: [GetReportListResult] = [] {
         didSet {
             if reportModel.count == 0 {
@@ -102,7 +105,10 @@ class ProfileCollectionViewController: UIViewController {
     
     //MARK: - API
     private func getReportRequest() {
-        ProfileNetworkManager.shared.getReportListRequest { [weak self] (error, model) in
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        
+        ProfileNetworkManager.shared.getReportListRequest(userGpsX: currentUserlong, userGpsY: currentUserLat) { [weak self] (error, model) in
             if let error = error {
                 print(error.localizedDescription)
             }
@@ -114,7 +120,10 @@ class ProfileCollectionViewController: UIViewController {
     }
     
     private func getSympathyRequest() {
-        ProfileNetworkManager.shared.getSympathyListRequest { [weak self] (error, model) in
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        
+        ProfileNetworkManager.shared.getSympathyListRequest(userGpsX: currentUserlong, userGpsY: currentUserLat) { [weak self] (error, model) in
             if let error = error {
                 print(error.localizedDescription)
             }
@@ -142,25 +151,34 @@ extension ProfileCollectionViewController: UICollectionViewDelegate, UICollectio
         switch resultType {
         case .report:
             let model = reportModel[indexPath.row]
-            cell.imageUrl = model.imageUrl
+            cell.imageUrl = model.imageName[0]
         case .sympathy:
             let model = sympathyModel[indexPath.row]
-            cell.imageUrl = model.imageUrl
+            cell.imageUrl = model.imageName[0]
         }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return }
-        
         switch resultType {
         case .report:
             let model = reportModel[indexPath.row]
             
+            let complaint = ComplaintLocation(reportId: model.reportId, gpsX: model.gpsX, gpsY: model.gpsY)
+            let tapedComplaint = TapedComplaintResultData(reportId: model.reportId, sort: model.sort, damagedStatus: model.damagedStatus,
+                                                          title: model.title, imageUrls: model.imageName, dangerousCnt: model.dangerousCnt, distance: model.distance)
+            let detailVC = DetailViewController(complaint: complaint, tapedComplaintModel: tapedComplaint)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+            
         case .sympathy:
             let model = sympathyModel[indexPath.row]
             
+            let complaint = ComplaintLocation(reportId: model.reportId, gpsX: model.gpsX, gpsY: model.gpsY)
+            let tapedComplaint = TapedComplaintResultData(reportId: model.reportId, sort: model.sort, damagedStatus: model.damagedStatus,
+                                                          title: model.title, imageUrls: model.imageName, dangerousCnt: model.dangerousCnt, distance: model.distance)
+            let detailVC = DetailViewController(complaint: complaint, tapedComplaintModel: tapedComplaint)
+            self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
     
