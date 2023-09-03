@@ -12,6 +12,7 @@ enum ReportRouter {
     case getComplaints
     case tapedComplaint
     case getDetailComplaint(_ reportId: String)
+    case danger
 }
 
 extension ReportRouter: HttpRouter {
@@ -31,7 +32,9 @@ extension ReportRouter: HttpRouter {
         case .tapedComplaint:
             return "/api/report/fetch/mark"
         case .getDetailComplaint(let reportId):
-            return "api/report/fetch/detail?reportId=\(reportId)"
+            return "/api/report/fetch/detail?reportId=\(reportId)"
+        case .danger:
+            return "/api/report/dangerouscnt/create"
         }
     }
     
@@ -43,11 +46,24 @@ extension ReportRouter: HttpRouter {
             return .post
         case .getDetailComplaint:
             return .get
+        case .danger:
+            return .post
         }
     }
     
     var headers: HTTPHeaders? {
-        return ["Content-Type" : "application/json"]
+        guard let accessToken = TokenManager.getUserAccessToken() else { return HTTPHeaders() }
+        switch self {
+        case .getComplaints:
+            return ["Content-Type" : "application/json"]
+        case .tapedComplaint:
+            return ["Content-Type" : "application/json"]
+        case .getDetailComplaint(_):
+            return ["Content-Type" : "application/json"]
+        case .danger:
+            return ["Content-Type" : "application/json",
+                    "Authorization" : "\(accessToken)"]
+        }
     }
     
     var parameters: Parameters? {

@@ -29,6 +29,7 @@
 		47198FB52A9DF81900349181 /* ProfileNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB42A9DF81900349181 /* ProfileNetworkManager.swift */; };
 		47198FB72A9DF83500349181 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB62A9DF83500349181 /* ProfileRouter.swift */; };
 		47198FB92A9E297300349181 /* ProfileEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198FB82A9E297300349181 /* ProfileEmptyView.swift */; };
+		4757469D2AA1860900A262B1 /* ImageConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4757469C2AA1860900A262B1 /* ImageConverter.swift */; };
 		475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */; };
 		475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */; };
 		475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */; };
@@ -112,6 +113,7 @@
 		47198FB42A9DF81900349181 /* ProfileNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkManager.swift; sourceTree = "<group>"; };
 		47198FB62A9DF83500349181 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		47198FB82A9E297300349181 /* ProfileEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEmptyView.swift; sourceTree = "<group>"; };
+		4757469C2AA1860900A262B1 /* ImageConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConverter.swift; sourceTree = "<group>"; };
 		475B742F2A90A5E200C8BB97 /* GeoCodingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingModel.swift; sourceTree = "<group>"; };
 		475B74332A90ADB900C8BB97 /* GeoCodingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingNetworkManager.swift; sourceTree = "<group>"; };
 		475B74352A90CA0900C8BB97 /* RestoreAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAlertController.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				47CB4A822A7941CD00E001D2 /* Extension */,
 				478CA0592A6EB21F000FA196 /* LocationHandler.swift */,
 				47198F9F2A94855B00349181 /* TokenManager.swift */,
+				4757469C2AA1860900A262B1 /* ImageConverter.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -870,6 +873,7 @@
 				475B744E2A935E3C00C8BB97 /* AuthRouter.swift in Sources */,
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
 				47FD24C02A86369100529342 /* ReportFloatingPanelLayout.swift in Sources */,
+				4757469D2AA1860900A262B1 /* ImageConverter.swift in Sources */,
 				475B74302A90A5E200C8BB97 /* GeoCodingModel.swift in Sources */,
 				47FD24C22A8637A400529342 /* FinishedFloatingController.swift in Sources */,
 				47FD24C42A864C6600529342 /* FloatPanelController.swift in Sources */,

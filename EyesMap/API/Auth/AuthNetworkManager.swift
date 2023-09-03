@@ -35,17 +35,18 @@ class AuthNetworkManager {
     }
     
     // 로그아웃
-    func logoutRequest(userId: Int, completion: @escaping (LogoutResultModel) -> Void) {
+    func logoutRequest(completion: @escaping () -> Void) {
         let router = authRouter.logout
         
         AF.request(router.url,
                    method: router.method,
                    headers: router.headers)
         .validate(statusCode: 200..<500)
-        .responseDecodable(of: LogoutResultModel.self) { response in
+        .responseDecodable(of: MessageResultModel.self) { response in
             switch response.result {
             case .success(let result):
-                completion(result)
+                print(result.message)
+                completion()
             case .failure(let error):
                 print(error.localizedDescription)
                 print(response.error ?? "")
@@ -68,6 +69,6 @@ struct LoginToken: Decodable {
     let refreshToken: String
 }
 
-struct LogoutResultModel: Decodable {
+struct MessageResultModel: Decodable {
     let message: String
 }

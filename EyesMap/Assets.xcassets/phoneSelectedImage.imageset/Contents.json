@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "gallery-add.png",
+      "filename" : "phoneSelectedImage.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "gallery-add 2.png",
+      "filename" : "phoneSelectedImage2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "gallery-add 1.png",
+      "filename" : "phoneSelectedImage3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

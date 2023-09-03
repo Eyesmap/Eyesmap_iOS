@@ -7,14 +7,21 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 class ImageCollectionViewCell: UICollectionViewCell {
     //MARK: - Identifier
     static let identifier = "ImageCollectionViewCell"
     
+    var imageUrl: String? {
+        didSet {
+            configure()
+        }
+    }
+    
     var image: UIImage? {
         didSet {
-            detailImageView.image = image
+            configureImage()
         }
     }
     
@@ -49,7 +56,16 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(image: UIImage) {
-        self.image = image
+    func configure() {
+        guard let imageUrl = imageUrl else { return }
+        
+        let url = URL(string: "\(imageUrl)")
+        detailImageView.sd_setImage(with: url)
+    }
+    
+    func configureImage() {
+        guard let image = image else { return }
+        
+        detailImageView.image = image
     }
 }

@@ -26,7 +26,6 @@ class HomeComplaintView: UIView {
     }(UILabel())
     
     private lazy var tagLabel: UILabel = {
-        $0.text = "#안전 신고"
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textColor = .darkGray
         return $0
@@ -41,14 +40,12 @@ class HomeComplaintView: UIView {
     }(UIImageView())
     
     private lazy var distanceLabel: UILabel = {
-        $0.text = "50"
         $0.font = UIFont.boldSystemFont(ofSize: 15)
         $0.textColor = .black
         return $0
     }(UILabel())
     
     private lazy var statusLabel: UILabel = {
-        $0.text = "나쁨"
         $0.font = UIFont.boldSystemFont(ofSize: 15)
         $0.textColor = .black
         return $0
@@ -115,7 +112,6 @@ class HomeComplaintView: UIView {
     
     private let statusCntLabel: UILabel = {
         let label = UILabel()
-        label.text = "101"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .black
         return label
@@ -195,7 +191,26 @@ class HomeComplaintView: UIView {
         guard let model = model else { return }
         
         titleLabel.text = model.title
-        tagLabel.text = model.sort
+        if model.sort == SortType.dottedBlock.rawValue {
+            tagLabel.text = "#점자블록"
+        }
+        if model.sort == SortType.acousticGuidenceSystem.rawValue {
+            tagLabel.text = "#음향유도장치"
+        }
+        if model.sort == SortType.brailleInfoBoard.rawValue {
+            tagLabel.text = "점자안내판"
+        }
+        
+        if model.damagedStatus == DamageStatusType.normal.rawValue {
+            statusLabel.text = "보통"
+        }
+        if model.damagedStatus == DamageStatusType.bad.rawValue {
+            statusLabel.text = "나쁨"
+        }
+        if model.damagedStatus == DamageStatusType.severe.rawValue {
+            statusLabel.text = "심각"
+        }
+        
         
         guard let url = URL(string:"\(model.imageUrls[0])") else { return }
         complaintImageView.sd_setImage(with:url, completed: nil)
