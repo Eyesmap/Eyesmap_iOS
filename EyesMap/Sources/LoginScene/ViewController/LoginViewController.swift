@@ -11,6 +11,10 @@ import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
 
+protocol LoginViewControllerDelegate: AnyObject {
+    func dismissLoginView()
+}
+
 class LoginViewController: UIViewController {
 //MARK: - Properties
     private let dismissButton: UIButton = {
@@ -45,6 +49,8 @@ class LoginViewController: UIViewController {
         $0.addTarget(self, action: #selector(kakaoTap), for: .touchUpInside)
         return $0
     }(UIButton())
+    
+    weak var delegate: LoginViewControllerDelegate?
     
 //MARK: - Life Cycles
     override func viewDidLoad() {
@@ -123,7 +129,9 @@ class LoginViewController: UIViewController {
                       let userId = user?.id else { return }
                 
                 self.kakaoLoginRequest(userId: Int(userId)) { [weak self] in
+                    self?.delegate?.dismissLoginView()
                     self?.dismissLoginView()
+                    
                 }
             }
         }
@@ -149,6 +157,7 @@ class LoginViewController: UIViewController {
                       let userId = user?.id else { return }
                 
                 self.kakaoLoginRequest(userId: Int(userId)) { [weak self] in
+                    self?.delegate?.dismissLoginView()
                     self?.dismissLoginView()
                 }
             }

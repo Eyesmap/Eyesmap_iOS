@@ -25,9 +25,10 @@ class ReportNetworkManager {
         .responseDecodable(of: GetComplaintsResultModel.self) { response in
             switch response.result {
             case .success(let result):
-                print(result)
+                print("DEBUG: 신고 조회 result - \(result)")
                 completion(nil, result)
             case .failure(let error):
+                print("DEBUG: 신고 조회 error - \(error)")
                 completion(error, nil)
             }
         }
@@ -72,7 +73,7 @@ class ReportNetworkManager {
     }
     
     // 신고하기
-    func DangerRequest(reportId: String, completion: @escaping (Error?, MessageResultModel?) -> Void) {
+    func DangerRequest(reportId: String, completion: @escaping (Error?, DangerResultModel?) -> Void) {
         let router = reportRouter.danger
         
         let param = ["reportId": reportId]
@@ -83,7 +84,7 @@ class ReportNetworkManager {
                    encoder: JSONParameterEncoder.default,
                    headers: router.headers)
         .validate(statusCode: 200..<500)
-        .responseDecodable(of: MessageResultModel.self) { response in
+        .responseDecodable(of: DangerResultModel.self) { response in
             switch response.result {
             case .success(let result):
                 print("신고하기 result = \(result)")
@@ -93,6 +94,85 @@ class ReportNetworkManager {
                 completion(error, nil)
             }
         }
+    }
+    
+    // 신고 삭제
+    func deleteComplaintRequest(reportId: String, type: DeleteType.RawValue, completion: @escaping (Error?, MessageResultModel?) -> Void) {
+        let router = reportRouter.deleteComplaint
+        
+        let param = ["reportId": reportId,
+                     "deleteReason": type]
+        
+        AF.request(router.url,
+                   method: router.method,
+                   parameters: param,
+                   encoder: JSONParameterEncoder.default,
+                   headers: router.headers)
+        .validate(statusCode: 200..<500)
+        .responseDecodable(of: MessageResultModel.self) { response in
+            switch response.result {
+            case .success(let result):
+                print("신고 삭제 result = \(result)")
+                completion(nil, result)
+            case .failure(let error):
+                print("신고 삭제 error = \(error)")
+                completion(error, nil)
+            }
+        }
+    }
+    
+    // 신고 복구
+    func restoreComplaintRequest(images: [UIImage], reportId: String, completion: @escaping(Bool) -> Void) {
+        let router = reportRouter.restoreComplaint
+        var requestData: Data?
+        
+        //multipart formdata
+        AF.upload(multipartFormData: { [weak self] multipartFormData in
+            guard let self = self else { return }
+            
+            // 복구 사진 append
+            for i in 0 ..< images.count {
+                if let image = images[i].pngData() {
+                    multipartFormData.append(image, withName: "images", fileName: self.getImageName(name: "restore"), mimeType: "image/jpeg")
+                }
+            }
+            
+            
+            // request가 있다면 append
+            let pram = ["reportId": reportId]
+            
+            do {
+                let requestPayload = try JSONSerialization.data(withJSONObject: pram, options: [])
+                requestData = requestPayload
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            guard let requestData = requestData else { return }
+            multipartFormData.append(requestData, withName: "createRestoreReportRequest", mimeType: "application/json")
+            
+        }, to: router.url, method: router.method, headers: router.headers)
+        .responseDecodable(of: ResoreComplaintResultModel.self) { response in
+            switch response.result {
+            case .success(let data):
+                print("신고 복구 result = \(data)")
+                completion(true)
+            case .failure(let error):
+                print("신고 복구 error = \(error)")
+                completion(false)
+            }
+        }
+        
+    }
+    
+    // 이미지 이름 생성
+    func getImageName(name: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        let now = formatter.string(from: Date())
+        
+        let imageName = "EyesMap_\(name)_\(now).jpeg"
+        return imageName
     }
 }
 
@@ -131,7 +211,7 @@ struct TapedComplaintResultData: Decodable {
     let distance: Double
 }
 
-//MARK: - 신고 상세 조회
+//MARK: - 상세 신고 조회
 struct DetailComplaintResultModel: Decodable {
     let message: String
     let result: DetailComplaintResultData
@@ -141,4 +221,34 @@ struct DetailComplaintResultData: Decodable {
     let address: String
     let reportDate: String
     let dangerBtnClicked: Bool
+    let dangerousCnt: Int
+}
+
+//MARK: - 위험해요 요청
+struct DangerResultModel: Decodable {
+    let message: String
+    let result: DangerResultData
+}
+
+struct DangerResultData: Decodable {
+    let dangerousCnt: Int
+    let dangerBtnClicked: Bool
+}
+
+//MARK: - 시설물 복구
+struct ResoreComplaintResultModel: Decodable {
+    let message: String
+    let result: ResoreComplaintResultData
+}
+
+struct ResoreComplaintResultData: Decodable {
+    let address: String
+    let gpsX: Double
+    let gpsY: Double
+    let title: String
+    let contents: String
+    let damagedStatus: String
+    let sort: String
+    let imageUrls: [String]
+    let accountId: Int
 }

@@ -12,7 +12,7 @@ class DetailComplaintView: UIView {
     
     var isSelected: Bool = false {
         didSet {
-            configure()
+            dangerButton.isSelected = isSelected
         }
     }
     
@@ -27,6 +27,13 @@ class DetailComplaintView: UIView {
         didSet {
             configureTapedComplaintModel()
             print("tapedComplaintModel configured")
+        }
+    }
+    
+    var cnt: Int? {
+        didSet {
+            configureCnt()
+            
         }
     }
     
@@ -228,28 +235,22 @@ class DetailComplaintView: UIView {
     }
     
 //MARK: - Configure
-    private func configure() {
-        guard let tapedComplaintModel = tapedComplaintModel else { return }
+    private func configureCnt() {
+        guard let cnt = cnt else { return }
         
-        dangerButton.isSelected = isSelected
-        if isSelected {
-            let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt + 1)")
-            let combinedString = NSMutableAttributedString()
-            combinedString.append(attributedString)
-            dangerButton.setAttributedTitle(combinedString, for: .normal)
-        } else {
-            let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
-            let combinedString = NSMutableAttributedString()
-            combinedString.append(attributedString)
-            dangerButton.setAttributedTitle(combinedString, for: .normal)
-        }
+        let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(cnt)")
+        let combinedString = NSMutableAttributedString()
+        combinedString.append(attributedString)
+        dangerButton.setAttributedTitle(combinedString, for: .normal)
     }
     
     private func configureDetailModel() {
         guard let model = detailModel else { return }
+        print("DEBUG: detailModel 들어옴")
         
         addressLabel.text = model.address
         isSelected = model.dangerBtnClicked
+        cnt = model.dangerousCnt
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -290,10 +291,7 @@ class DetailComplaintView: UIView {
         complaintImageView.sd_setImage(with:url, completed: nil)
         
         distanceLabel.text = "\(tapedComplaintModel.distance) M"
-        let attributedString = getAttributeString(isSelected: self.isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
-        let combinedString = NSMutableAttributedString()
-        combinedString.append(attributedString)
-        dangerButton.setAttributedTitle(combinedString, for: .normal)
+//        cnt = tapedComplaintModel.dangerousCnt
         
     }
     

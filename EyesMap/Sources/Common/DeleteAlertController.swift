@@ -12,10 +12,10 @@ protocol DeletedAlertControllerProtocol: AnyObject {
     func deleted(type: DeleteType)
 }
 
-enum DeleteType: CaseIterable {
-    case restore
-    case falseReport
-    case duplicate
+enum DeleteType: String, CaseIterable {
+    case restore = "RESTORE"
+    case falseReport = "FALSE_REPORT"
+    case duplicate = "DUPLICATE"
 }
 
 class DeletedAlertController: UIViewController {
