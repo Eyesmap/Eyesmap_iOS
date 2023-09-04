@@ -34,6 +34,7 @@ class ProfileNetworkManager {
         }
     }
     
+    // 신고 내역 조회
     func getReportListRequest(userGpsX: Double, userGpsY: Double, completion: @escaping (Error?, GetUserListResultData?) -> Void) {
         let router = profileRouter.getReportList
         
@@ -58,6 +59,7 @@ class ProfileNetworkManager {
         }
     }
     
+    // 공감 내역 조회
     func getSympathyListRequest(userGpsX: Double, userGpsY: Double, completion: @escaping (Error?, GetUserListResultData?) -> Void) {
         let router = profileRouter.getSympathyList
         
@@ -82,6 +84,58 @@ class ProfileNetworkManager {
         }
     }
     
+    // 기본 이미지 변경(프로필 삭제)
+    func deleteProfileImageRequest(completion: @escaping () -> Void) {
+        let router = profileRouter.deleteProfileImage
+        
+        AF.request(router.url,
+                   method: router.method,
+                   headers: router.headers)
+        .validate(statusCode: 200..<500)
+        .responseDecodable(of: MessageResultModel.self) { response in
+            switch response.result {
+            case .success(let result):
+                print("기본 이미지 변경 성공 = \(result)")
+                completion()
+            case .failure(let error):
+                print("기본 이미지 변경 error = \(error )")
+            }
+        }
+    }
+    
+    // 프로필 사진 변경
+    func uploadProfileImageRequest(image: UIImage, completion: @escaping() -> Void) {
+        let router = profileRouter.uploadProfileImage
+        
+        AF.upload(multipartFormData: { [weak self] multipartFormData in
+            guard let self = self else { return }
+            
+            // 복구 사진 append
+            if let image = image.pngData() {
+                multipartFormData.append(image, withName: "image", fileName: self.getImageName(name: "profile"), mimeType: "image/jpeg")
+            }
+        }, to: router.url, method: router.method, headers: router.headers)
+        .responseDecodable(of: ResoreComplaintResultModel.self) { response in
+            switch response.result {
+            case .success(let data):
+                print("신고 복구 result = \(data)")
+                completion()
+            case .failure(let error):
+                print("신고 복구 error = \(error)")
+                completion()
+            }
+        }
+    }
+    
+    // 이미지 이름 생성
+    func getImageName(name: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        let now = formatter.string(from: Date())
+        
+        let imageName = "EyesMap_\(name)_\(now).jpeg"
+        return imageName
+    }
 }
 
 //MARK: - 개인 프로필 조회
