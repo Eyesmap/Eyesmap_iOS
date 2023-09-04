@@ -42,11 +42,13 @@ extension AuthRouter: HttpRouter {
     }
     
     var headers: HTTPHeaders? {
+        guard let accessToken = TokenManager.getUserAccessToken() else { return HTTPHeaders() }
         switch self {
         case .login:
             return ["Content-Type" : "application/json"]
         case .logout:
-            return ["Content-Type" : "application/json"]
+            return ["Content-Type" : "application/json",
+                    "Authorization" : "\(accessToken)"]
         }
         
     }

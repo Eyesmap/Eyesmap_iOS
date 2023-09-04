@@ -111,7 +111,7 @@ class ProfileCollectionViewController: UIViewController {
     }
     
     //MARK: - API
-    private func getReportRequest() {
+    func getReportRequest() {
         guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
         guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
         
@@ -126,7 +126,7 @@ class ProfileCollectionViewController: UIViewController {
         }
     }
     
-    private func getSympathyRequest() {
+    func getSympathyRequest() {
         guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
         guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
         

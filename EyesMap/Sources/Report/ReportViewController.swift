@@ -51,7 +51,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         return label
     }()
     
-    private let TitleTextfield: UITextField = {
+    private let titleTextfield: UITextField = {
         let input = UITextField()
         input.addLeftPadding()
         
@@ -300,7 +300,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
 
         detailTextView.delegate = self
         locationTextfield.delegate = self
-        TitleTextfield.delegate = self
+        titleTextfield.delegate = self
         view.addSubview(scrollView)
         
         
@@ -335,7 +335,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
         contentView.addSubview(reportLocationLabel)
         contentView.addSubview(locationTextfield)
         contentView.addSubview(reportTitleLabel)
-        contentView.addSubview(TitleTextfield)
+        contentView.addSubview(titleTextfield)
         contentView.addSubview(reportCategory)
         contentView.addSubview(facilityState)
         contentView.addSubview(checkBox1)
@@ -391,14 +391,14 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
             make.top.equalTo(locationTextfield.snp.bottom).offset(42)
             make.leading.equalTo(reportLocationLabel.snp.leading)
         }
-        TitleTextfield.snp.makeConstraints { (make) in
+        titleTextfield.snp.makeConstraints { (make) in
             make.top.equalTo(reportTitleLabel.snp.bottom).offset(26)
             make.leading.equalTo(reportLocationLabel.snp.leading)
             make.height.equalTo(46)
             make.width.equalTo(335)
         }
         reportCategory.snp.makeConstraints { (make) in
-            make.top.equalTo(TitleTextfield.snp.bottom).offset(42)
+            make.top.equalTo(titleTextfield.snp.bottom).offset(42)
             make.leading.equalTo(reportLocationLabel.snp.leading)
         }
         checkBox1.snp.makeConstraints { (make) in
@@ -650,6 +650,16 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     @objc func Submit() {
         print("submit")
         //MARK: 임시 Float - API 확인 후 분기처리 예정
+//        let model = CreateComplaintRequestModel(address: reportAddress,
+//                                                gpsX: reportPosition.coordinate.longitude,
+//                                                gpsY: reportPosition.coordinate.latitude,
+//                                                title: titleTextfield.text ?? "",
+//                                                contents: detailTextView.text ?? "",
+//                                                damagedStatus: <#T##String#>, // DamagedStatusType
+//                                                sort: <#T##String#>) // SortType
+        
+//        ReportNetworkManager.shared.createComplaintRequest(images: <#T##[UIImage]#>, parameters: <#T##CreateComplaintRequestModel#>, completion: <#T##(Bool) -> Void#>)
+        
         presentFinishedView()
     }
 
@@ -664,7 +674,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
             submitBtn.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
             return
         }
-        if locationTextfield.text!.count == 0 || TitleTextfield.text!.count == 0 {
+        if locationTextfield.text!.count == 0 || titleTextfield.text!.count == 0 {
             submitBtn.isEnabled = false
             submitBtn.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
             return
@@ -674,7 +684,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
             submitBtn.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
             return
         }
-        print(TitleTextfield.text!.count)
+        print(titleTextfield.text!.count)
         submitBtn.backgroundColor = UIColor(red: 37/255, green: 38/255, blue: 42/255, alpha: 1)
         submitBtn.isEnabled = true
         

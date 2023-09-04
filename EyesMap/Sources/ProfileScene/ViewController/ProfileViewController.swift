@@ -277,7 +277,9 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func modifyButtonTap() {
-        let modifyVC = ModifyProfileViewController(image: imageValueImageView.image!)
+        guard let image = imageValueImageView.image else { return }
+        let modifyVC = ModifyProfileViewController(image: image)
+        modifyVC.delegate = self
         self.navigationController?.pushViewController(modifyVC, animated: true)
     }
 }
@@ -308,5 +310,15 @@ extension ProfileViewController: UIPageViewControllerDelegate, UIPageViewControl
         guard let currentVC = pageViewController.viewControllers?.first as? ProfileCollectionViewController,
               let currentIndex = viewControllers.firstIndex(of: currentVC) else { return }
         currentPage = currentIndex
+    }
+}
+
+//MARK: - ModifyProfileViewControllerDelegate
+extension ProfileViewController: ModifyProfileViewControllerDelegate {
+    // 프로필 수정 뷰에서 나오면
+    func dismissView() {
+        getProfileRequest()
+        reportResultController.getReportRequest()
+        sympathyResultController.getSympathyRequest()
     }
 }
