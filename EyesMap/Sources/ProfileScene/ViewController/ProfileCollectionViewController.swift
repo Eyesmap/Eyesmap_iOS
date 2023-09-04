@@ -101,6 +101,13 @@ class ProfileCollectionViewController: UIViewController {
         emptyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        // 초기 값
+        if reportModel.count == 0 || sympathyModel.count == 0 {
+            emptyView.alpha = 1
+        } else {
+            emptyView.alpha = 0
+        }
     }
     
     //MARK: - API
