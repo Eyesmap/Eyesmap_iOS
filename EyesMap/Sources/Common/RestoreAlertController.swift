@@ -32,6 +32,8 @@ class RestoreAlertController: UIViewController {
     }
     var selectedImage: [YPMediaItem] = []
     
+    let reportId: String
+    
     //MARK: - Properties
     private let backgroudView: UIView = {
         $0.backgroundColor = .black.withAlphaComponent(0.4)
@@ -145,7 +147,8 @@ class RestoreAlertController: UIViewController {
     weak var delegate: RestoreAlertControllerProtocol?
     
     //MARK: - Life Cycles
-    init() {
+    init(reportId: String) {
+        self.reportId = reportId
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .overFullScreen
         modalTransitionStyle = .crossDissolve
@@ -275,9 +278,17 @@ class RestoreAlertController: UIViewController {
     
     @objc func uploadButtonTap() {
         // 이미지 버튼 Tap Delgate 연결해야함
-        self.dismiss(animated: true)
-        self.delegate?.uploadImage(images: self.selectedProfileImages)
-        self.selectedProfileImages = []
+        ReportNetworkManager.shared.restoreComplaintRequest(images: self.selectedProfileImages, reportId: self.reportId) { b in
+            // 서버 통신 성공
+            if b {
+                self.dismiss(animated: true)
+                self.delegate?.uploadImage(images: self.selectedProfileImages)
+                self.selectedProfileImages = []
+            } else {
+            // 실패
+                
+            }
+        }
     }
     
     private func configure(bool: Bool) {

@@ -34,11 +34,16 @@ class ProfileNetworkManager {
         }
     }
     
-    func getReportListRequest(completion: @escaping (Error?, GetUserListResultData?) -> Void) {
+    func getReportListRequest(userGpsX: Double, userGpsY: Double, completion: @escaping (Error?, GetUserListResultData?) -> Void) {
         let router = profileRouter.getReportList
+        
+        let param = ["userGpsX": userGpsX,
+                     "userGpsY": userGpsY]
         
         AF.request(router.url,
                    method: router.method,
+                   parameters: param,
+                   encoder: JSONParameterEncoder.default,
                    headers: router.headers)
         .validate(statusCode: 200..<500)
         .responseDecodable(of: GetUserListResultModel.self) { response in
@@ -53,11 +58,16 @@ class ProfileNetworkManager {
         }
     }
     
-    func getSympathyListRequest(completion: @escaping (Error?, GetUserListResultData?) -> Void) {
+    func getSympathyListRequest(userGpsX: Double, userGpsY: Double, completion: @escaping (Error?, GetUserListResultData?) -> Void) {
         let router = profileRouter.getSympathyList
+        
+        let param = ["userGpsX": userGpsX,
+                     "userGpsY": userGpsY]
         
         AF.request(router.url,
                    method: router.method,
+                   parameters: param,
+                   encoder: JSONParameterEncoder.default,
                    headers: router.headers)
         .validate(statusCode: 200..<500)
         .responseDecodable(of: GetUserListResultModel.self) { response in
@@ -98,7 +108,17 @@ struct GetUserListResultData: Decodable {
 
 struct GetReportListResult: Decodable {
     let reportId: String
-    let imageUrl: String
+    let imageName: [String]
+    let gpsX: Double
+    let gpsY: Double
+    let sort: String
+    let damagedStatus: String
+    let dangerousCnt: Int
+    let address: String
+    let reportDate: String
+    let dangerBtnClicked: Bool
+    let distance: Double
+    let title: String
 }
 
 //MARK: - 

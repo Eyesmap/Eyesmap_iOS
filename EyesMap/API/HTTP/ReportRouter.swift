@@ -13,6 +13,9 @@ enum ReportRouter {
     case tapedComplaint
     case getDetailComplaint(_ reportId: String)
     case danger
+    case deleteComplaint
+    case restoreComplaint
+    case createComplaint
 }
 
 extension ReportRouter: HttpRouter {
@@ -34,7 +37,13 @@ extension ReportRouter: HttpRouter {
         case .getDetailComplaint(let reportId):
             return "/api/report/fetch/detail?reportId=\(reportId)"
         case .danger:
-            return "/api/report/dangerouscnt/create"
+            return "/api/report/dangerouscnt"
+        case .deleteComplaint:
+            return "/api/report/delete"
+        case .restoreComplaint:
+            return "/api/report/create/restoration"
+        case .createComplaint:
+            return "/api/report/create/damage"
         }
     }
     
@@ -48,6 +57,12 @@ extension ReportRouter: HttpRouter {
             return .get
         case .danger:
             return .post
+        case .deleteComplaint:
+            return .delete
+        case .restoreComplaint:
+            return .post
+        case .createComplaint:
+            return .post
         }
     }
     
@@ -58,9 +73,23 @@ extension ReportRouter: HttpRouter {
             return ["Content-Type" : "application/json"]
         case .tapedComplaint:
             return ["Content-Type" : "application/json"]
-        case .getDetailComplaint(_):
-            return ["Content-Type" : "application/json"]
+        case .getDetailComplaint:
+            if TokenManager.getUserAccessToken() != nil {
+                return ["Content-Type" : "application/json",
+                        "Authorization" : "\(accessToken)"]
+            } else {
+                return ["Content-Type" : "application/json"]
+            }
         case .danger:
+            return ["Content-Type" : "application/json",
+                    "Authorization" : "\(accessToken)"]
+        case .deleteComplaint:
+            return ["Content-Type" : "application/json",
+                    "Authorization" : "\(accessToken)"]
+        case .restoreComplaint:
+            return ["Content-Type" : "application/json",
+                    "Authorization" : "\(accessToken)"]
+        case .createComplaint:
             return ["Content-Type" : "application/json",
                     "Authorization" : "\(accessToken)"]
         }
