@@ -17,8 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         let navigationController = TabBarController()
-//        window?.rootViewController = LocationDataViewController()
-        window?.rootViewController = navigationController
+        window?.rootViewController = LocationDataViewController()
+//        window?.rootViewController = navigationController
 
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .light // 라이트 모드 고정

@@ -1,8 +1,8 @@
 import UIKit
 import SnapKit
 
-class RankingTableViewCell: UITableViewCell {
-    static let identifier = "RankingTableViewCell"
+class JachiTableViewCell: UITableViewCell {
+    static let identifier = "JachiTableViewCell"
     
     //MARK: - Properties
     public let ranking: UILabel = {
@@ -24,7 +24,7 @@ class RankingTableViewCell: UITableViewCell {
         label.textColor = UIColor(red: 90/255, green: 89/255, blue: 90/255, alpha: 1)
         return label
     }()
-    public var gu_id: String = "hi"
+    
     
     
     //MARK: - init
@@ -34,10 +34,10 @@ class RankingTableViewCell: UITableViewCell {
         name.translatesAutoresizingMaskIntoConstraints = false
         cnt.translatesAutoresizingMaskIntoConstraints = false
         self.selectionStyle = .none
-        
 
         setUI()
         
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:))))
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -49,11 +49,7 @@ class RankingTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    override func prepareForReuse() {
-        // 셀이 사라질 때 기본값으로 돌려주기(재상ㅇ 때)
-        name.text = ""
-        
-    }
+    
     
     // MARK: - settUI
     func setUI() {
@@ -77,5 +73,17 @@ class RankingTableViewCell: UITableViewCell {
     
     
     
+    // MARK: objc
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        for jachi in MapView.jachiArray {
+            // 자치구 배열에 있는 객체의 text와 title이 같을 때
+            if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == name.text) {
+                jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
+                jachi.setTitleColor(UIColor.black, for: .normal)
+                LocationDataViewController.jachiDetail.alpha = 1
+                LocationDataViewController.jachiDetail.titleLabel.text = name.text
 
+            }
+        }
+    }
 }
