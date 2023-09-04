@@ -405,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				47CB4A822A7941CD00E001D2 /* Extension */,
+				47E365212AA5D4000047C9E4 /* DistanceFormatter.swift */,
 				478CA0592A6EB21F000FA196 /* LocationHandler.swift */,
 				47198F9F2A94855B00349181 /* TokenManager.swift */,
 				4757469C2AA1860900A262B1 /* ImageConverter.swift */,
@@ -450,7 +451,6 @@
 				37ED1DD12A93488A00636B6A /* TextField.swift */,
 				371221AD2A976E7B00AEA499 /* UIButton.swift */,
 				47198FA92A9C9AC000349181 /* UIView.swift */,
-				47E365212AA5D4000047C9E4 /* DistanceFormatter.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
