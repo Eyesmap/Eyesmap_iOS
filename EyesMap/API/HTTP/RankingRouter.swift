@@ -26,9 +26,9 @@ extension RankingRouter: HttpRouter {
     var path: String {
         switch self {
         case .getLocationReport:
-            return "api/dataanl/gu/ranking/list"
+            return "/api/dataanl/gu/ranking/list"
         case .getJachiReport:
-            return "api/dataanl/fetch/count/"
+            return "/api/dataanl/fetch/count/"
         }
     }
     
@@ -42,7 +42,9 @@ extension RankingRouter: HttpRouter {
     }
     
     var headers: HTTPHeaders? {
-        return ["Content-Type" : "application/json"]
+        guard let accessToken = TokenManager.getUserAccessToken() else { return HTTPHeaders() }
+        return ["Content-Type" : "application/json",
+                "Authorization" : "\(accessToken)"]
     }
     
     var parameters: Parameters? {

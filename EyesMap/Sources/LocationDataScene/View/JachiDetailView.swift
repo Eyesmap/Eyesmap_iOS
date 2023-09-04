@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class JachiDetailView: UIView {
 
@@ -46,7 +47,8 @@ class JachiDetailView: UIView {
         return label
     }()
     
-    
+    var jachiTop3DataArray: [JachiTop3Data?] = []
+    var jachiTheOthersDataArray: [JachiTheOthersData?] = []
     
     //MARK: - Life Cycles
     override init(frame: CGRect) {
@@ -135,8 +137,8 @@ extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "JachiTableViewCell", for: indexPath) as? JachiTableViewCell else { return UITableViewCell()}
         
         if indexPath.section == 0 {
-            cell.name.text = "\(String(LocationDataViewController.jachiTop3DataArray[indexPath.row]!.title))"
-            cell.cnt.text = "\(String(LocationDataViewController.jachiTop3DataArray[indexPath.row]!.count))"
+            cell.name.text = "\(String(jachiTop3DataArray[indexPath.row]!.title))"
+            cell.cnt.text = "\(String(jachiTop3DataArray[indexPath.row]!.count))"
         }
 
         
@@ -144,9 +146,9 @@ extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return LocationDataViewController.jachiTop3DataArray.count
+            return jachiTop3DataArray.count
         } else {
-            return LocationDataViewController.jachiTheOthersDataArray.count
+            return jachiTheOthersDataArray.count
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -59,6 +59,7 @@
 		47E049A92A8B83E4000A789D /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E049A82A8B83E4000A789D /* TermView.swift */; };
 		47E049B32A8F7BBA000A789D /* ReportMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E049B22A8F7BBA000A789D /* ReportMapViewController.swift */; };
 		47E049B62A8FB3CE000A789D /* ReportLocationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E049B52A8FB3CE000A789D /* ReportLocationSettingView.swift */; };
+		47E365222AA5D4000047C9E4 /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E365212AA5D4000047C9E4 /* DistanceFormatter.swift */; };
 		47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24A22A80CB3400529342 /* HomeComplaintView.swift */; };
 		47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24AD2A84FB0A00529342 /* DetailViewController.swift */; };
 		47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */; };
@@ -151,6 +152,7 @@
 		47E049A82A8B83E4000A789D /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
 		47E049B22A8F7BBA000A789D /* ReportMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMapViewController.swift; sourceTree = "<group>"; };
 		47E049B52A8FB3CE000A789D /* ReportLocationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportLocationSettingView.swift; sourceTree = "<group>"; };
+		47E365212AA5D4000047C9E4 /* DistanceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceFormatter.swift; sourceTree = "<group>"; };
 		47FD24A22A80CB3400529342 /* HomeComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComplaintView.swift; sourceTree = "<group>"; };
 		47FD24AD2A84FB0A00529342 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				47CB4A822A7941CD00E001D2 /* Extension */,
+				47E365212AA5D4000047C9E4 /* DistanceFormatter.swift */,
 				478CA0592A6EB21F000FA196 /* LocationHandler.swift */,
 				47198F9F2A94855B00349181 /* TokenManager.swift */,
 				4757469C2AA1860900A262B1 /* ImageConverter.swift */,
@@ -908,6 +911,7 @@
 				47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */,
 				371221A12A97309400AEA499 /* LocationDataViewController.swift in Sources */,
 				371221A92A975BDD00AEA499 /* RankingView.swift in Sources */,
+				47E365222AA5D4000047C9E4 /* DistanceFormatter.swift in Sources */,
 				47198FA42A94987E00349181 /* ProfileSetImageView.swift in Sources */,
 				475B743E2A93003C00C8BB97 /* ReportViewController.swift in Sources */,
 				478CA0202A6E600F000FA196 /* AppDelegate.swift in Sources */,

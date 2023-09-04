@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 import YPImagePicker
 
+protocol ModifyProfileViewControllerDelegate: AnyObject {
+    func dismissView()
+}
+
 class ModifyProfileViewController: UIViewController {
     // MARK: - Properties
     private let profileImageView: UIImageView = {
@@ -63,6 +67,7 @@ class ModifyProfileViewController: UIViewController {
         return config
     }()
     
+    weak var delegate: ModifyProfileViewControllerDelegate?
     private var selectedProfileImage: UIImage?
     private var textfieldString = ""
     
@@ -122,7 +127,7 @@ class ModifyProfileViewController: UIViewController {
         title = "프로필 수정하기"
         
         self.navigationController?.navigationBar.backgroundColor = .clear
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backButtonTap))
         self.navigationItem.backBarButtonItem = backBarButtonItem
         
         let completeButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(completeButtonTap))
@@ -130,10 +135,25 @@ class ModifyProfileViewController: UIViewController {
     }
     
     // MARK: - Handler
+    @objc func backButtonTap() {
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.dismissView()
+    }
     
     @objc func completeButtonTap() {
-        print("프로필 수정하기 Tap")
-        self.navigationController?.popViewController(animated: true)
+        // 기본 프로필일 때 기본프로필로 변경
+        if profileImageView.image == UIImage(named: "defaultProfile") {
+            ProfileNetworkManager.shared.deleteProfileImageRequest { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+                self?.delegate?.dismissView()
+            }
+        } else {
+            guard let selectedProfileImage = selectedProfileImage else { return }
+            ProfileNetworkManager.shared.uploadProfileImageRequest(image: selectedProfileImage) { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+                self?.delegate?.dismissView()
+            }
+        }
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -145,14 +165,30 @@ class ModifyProfileViewController: UIViewController {
 
 extension ModifyProfileViewController: ProfileSetImageViewDelegate {
     func presentAlbum() {
-        let picker = YPImagePicker(configuration: self.config)
-        picker.didFinishPicking { [ weak self, unowned picker] items, _ in
-            if let photo = items.singlePhoto {
-                self?.selectedProfileImage = photo.image
-                self?.profileImageView.image = photo.image
+        let actionSheet = UIAlertController(title: "프로필 사진 편집", message: nil, preferredStyle: .actionSheet)
+        
+        let selectPhoto = UIAlertAction(title: "앨범에서 사진 선택", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            
+            let picker = YPImagePicker(configuration: self.config)
+            picker.didFinishPicking { [ weak self, unowned picker] items, _ in
+                if let photo = items.singlePhoto {
+                    self?.selectedProfileImage = photo.image
+                    self?.profileImageView.image = photo.image
+                }
+                picker.dismiss(animated: true, completion: nil)
             }
-            picker.dismiss(animated: true, completion: nil)
+            self.present(picker, animated: true, completion: nil)
         }
-        present(picker, animated: true, completion: nil)
+        let defaultPhoto = UIAlertAction(title: "기본 이미지로 변경", style: .default) { [weak self] _ in
+            self?.profileImageView.image = UIImage(named: "defaultProfile")
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        actionSheet.addAction(selectPhoto)
+        actionSheet.addAction(defaultPhoto)
+        actionSheet.addAction(cancel)
+        
+        present(actionSheet, animated: true)
     }
 }

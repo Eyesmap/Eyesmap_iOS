@@ -11,13 +11,13 @@ import Alamofire
 class LocationReportRankingManger {
     //MARK: - shared
     static let shared = LocationReportRankingManger()
-    let reportRouter = ReportRouter.self
+    let rankingRouter = RankingRouter.self
     
     //MARK: - Functons
     
     // 지역별 신고순 api
     func getLocationReport(completion: @escaping (Error?, LocationReportRanking?) -> Void) {
-        let router = RankingRouter.getLocationReport
+        let router = rankingRouter.getLocationReport
         
         AF.request(router.url, method: router.method, headers: router.headers)
             .validate(statusCode: 200..<500)
@@ -42,8 +42,8 @@ struct LocationReportRanking : Decodable {
 }
 
 struct ResultData : Decodable {
-    let top3Location : [Top3Data?]
-    let theOthers : [TheOthersData?]
+    let top3Location : [Top3Data]
+    let theOthers : [TheOthersData]
 }
 
 struct Top3Data : Decodable {

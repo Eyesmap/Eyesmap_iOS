@@ -44,19 +44,9 @@ class LocationDataViewController: UIViewController {
 
         
         self.seoulMap.isUserInteractionEnabled = true
-        LocationReportRankingManger.shared.getLocationReport { (error, locationReport) in
-            if let error = error {
-                // 오류가 발생한 경우 처리
-                print("오류 발생: \(error.localizedDescription)")
-            } else if let locationReport = locationReport {
-                // 보고서를 성공적으로 가져온 경우 처리
-                print("보고서: \(locationReport)")
-                self.rankingModel = locationReport.result
-            }
-        }
-
         setUI()
         seoulMap.addTarget()
+        getLocationReportRequest()
     }
     
 
@@ -106,6 +96,7 @@ class LocationDataViewController: UIViewController {
         }
     }
     
+    //MARK: - Configure
     private func configure() {
         guard let rankingModel = rankingModel else {return}
                 
@@ -136,8 +127,22 @@ class LocationDataViewController: UIViewController {
         
         reportRanking.tableView.reloadData()
     }
+
+    //MARK: - API
+    private func getLocationReportRequest() {
+        LocationReportRankingManger.shared.getLocationReport { (error, locationReport) in
+            if let error = error {
+                // 오류가 발생한 경우 처리
+                print("오류 발생: \(error.localizedDescription)")
+            } else if let locationReport = locationReport {
+                // 보고서를 성공적으로 가져온 경우 처리
+                print("보고서: \(locationReport)")
+                self.rankingModel = locationReport.result
+            }
+        }
+    }
     
-    private func jachiRequest(_ s:String) {
+    private func getJachiRequest(_ s:String) {
         JachiReportRankingManger.shared.getJachiReport(s: s) { [weak self] (error, locationReport) in
             
             if let error = error {
@@ -148,12 +153,7 @@ class LocationDataViewController: UIViewController {
             if let locationReport = locationReport {
                 // 성공적으로 가져온 경우 처리
                 print("보고서: \(locationReport)")
-                print("하이하이하이루")
                 self?.jachiReportRankingModel = locationReport
-//                self.rankingModel = locationReport.result
-//                DispatchQueue.main.async {
-//                   LocationDataViewController.jachiDetail.tableView.reloadData()
-//                                }
             }
         }
     }

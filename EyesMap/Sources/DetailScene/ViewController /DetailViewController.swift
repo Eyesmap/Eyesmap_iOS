@@ -93,7 +93,7 @@ class DetailViewController: UIViewController {
         return controller
     }()
     
-    private lazy var restoreAlertController = RestoreAlertController()
+    private lazy var restoreAlertController = RestoreAlertController(reportId: complaint.reportId)
     
 //MARK: - Life Cycles
     init(complaint: ComplaintLocation, tapedComplaintModel: TapedComplaintResultData) {
@@ -217,14 +217,23 @@ class DetailViewController: UIViewController {
     }
     
     @objc func dangerButtonTap() {
-        ReportNetworkManager.shared.DangerRequest(reportId: complaint.reportId) { [weak self] (error, model) in
-            if let error = error {
-                print(error.localizedDescription)
+        if TokenManager.getUserAccessToken() != nil {
+            ReportNetworkManager.shared.DangerRequest(reportId: complaint.reportId) { [weak self] (error, model) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                if let model = model {
+                    
+                    self?.detailComplaintView.isSelected = model.result.dangerBtnClicked
+                    self?.detailComplaintView.cnt = model.result.dangerousCnt
+                }
             }
-            
-            if let model = model {
-                self?.detailComplaintView.isSelected.toggle()
-            }
+        } else {
+            let loginView = LoginViewController()
+            loginView.delegate = self
+            loginView.modalPresentationStyle = .fullScreen
+            self.present(loginView, animated: true)
         }
     }
     
@@ -238,6 +247,7 @@ class DetailViewController: UIViewController {
             }
             
             if let model = model {
+                print("DEBUG: 상세 화면 버튼 Bool 값 = \(model.result.dangerBtnClicked)")
                 detailComplaintView.detailModel = model.result
             }
         }
@@ -300,9 +310,28 @@ extension DetailViewController: DeletedAlertControllerProtocol {
             // RestoreAlert
             presentRestoreAlertView()
             
-        case .falseReport, .duplicate:
-            
-            self.presentFinishedView()
+        case .falseReport:
+            ReportNetworkManager.shared.deleteComplaintRequest(reportId: complaint.reportId, type: DeleteType.falseReport.rawValue)
+            { [weak self] (error, model) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                if let model = model {
+                    self?.presentFinishedView()
+                }
+            }
+        case .duplicate:
+            ReportNetworkManager.shared.deleteComplaintRequest(reportId: complaint.reportId, type: DeleteType.duplicate.rawValue)
+            { [weak self] (error, model) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                if let model = model {
+                    self?.presentFinishedView()
+                }
+            }
         }
     }
 }
@@ -326,5 +355,13 @@ extension DetailViewController: FinishedFloatingControllerDelegate {
         if let iv = view.subviews.last {
             iv.removeFromSuperview()
         }
+    }
+}
+
+//MARK: - LoginViewControllerDelegate
+extension DetailViewController: LoginViewControllerDelegate {
+    // 로그인 이후
+    func dismissLoginView() {
+        self.getDetailComplaint()
     }
 }

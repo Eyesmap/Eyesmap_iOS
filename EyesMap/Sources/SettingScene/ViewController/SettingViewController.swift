@@ -157,16 +157,27 @@ class SettingViewController: UIViewController {
 
 // MARK: - Handler
     @objc private func logOutButtonTap() {
-        AuthNetworkManager.shared.logoutRequest { [weak self] in
-            guard let tabBarVC = self?.navigationController?.presentingViewController as? TabBarController,
-                  let homeNavVC = tabBarVC.viewControllers?.first as? UINavigationController,
-                  let homeVC = homeNavVC.viewControllers.first as? HomeViewController else { return }
-            
-            self?.navigationController?.setViewControllers([homeVC], animated: true)
-            TokenManager.resetUserToken()
+        let actionAlert = UIAlertController(title: "로그아웃", message: "정말로 로그아웃을 하시겠습니까?", preferredStyle: .alert)
+        
+        let logout = UIAlertAction(title: "로그아웃", style: .default) { _ in
+            AuthNetworkManager.shared.logoutRequest { [weak self] model in
+                DispatchQueue.main.async {
+                    if let tabBarVC = self?.tabBarController as? TabBarController {
+                        print("로그아웃에 \(model.message)")
+                        tabBarVC.configureAuth()
+                        tabBarVC.selectedIndex = 0
+                        TokenManager.resetUserToken()
+                    }
+                }
+            }
         }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        actionAlert.addAction(logout)
+        actionAlert.addAction(cancel)
+        
+        present(actionAlert, animated: true)
     }
-    
 }
 
 //MARK: - CustomToggleButtonDelegate

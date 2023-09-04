@@ -12,7 +12,7 @@ class DetailComplaintView: UIView {
     
     var isSelected: Bool = false {
         didSet {
-            configure()
+            dangerButton.isSelected = isSelected
         }
     }
     
@@ -30,6 +30,13 @@ class DetailComplaintView: UIView {
         }
     }
     
+    var cnt: Int? {
+        didSet {
+            configureCnt()
+            
+        }
+    }
+    
 //MARK: - Properties
     private let titleLabel: UILabel = {
         $0.font = UIFont.boldSystemFont(ofSize: 19)
@@ -39,7 +46,7 @@ class DetailComplaintView: UIView {
     
     private let tagLabel: UILabel = {
         $0.font = UIFont.boldSystemFont(ofSize: 14)
-        $0.textColor = .darkGray
+        $0.textColor = .instanceBlackColor
         return $0
     }(UILabel())
     
@@ -66,13 +73,13 @@ class DetailComplaintView: UIView {
     
     private lazy var distanceLabel: UILabel = {
         $0.font = UIFont.boldSystemFont(ofSize: 15)
-        $0.textColor = .black
+        $0.textColor = .instanceBlackColor
         return $0
     }(UILabel())
     
     private lazy var statusLabel: UILabel = {
         $0.font = UIFont.boldSystemFont(ofSize: 15)
-        $0.textColor = .black
+        $0.textColor = .instanceBlackColor
         return $0
     }(UILabel())
     
@@ -81,7 +88,8 @@ class DetailComplaintView: UIView {
             let imageView = UIImageView()
             imageView.image = UIImage(named: "distance")
             imageView.snp.makeConstraints { make in
-                make.height.width.equalTo(19)
+                make.height.equalTo(18)
+                make.width.equalTo(20)
             }
             return imageView
         }()
@@ -106,7 +114,8 @@ class DetailComplaintView: UIView {
             let imageView = UIImageView()
             imageView.image = UIImage(named: "status_bad")
             imageView.snp.makeConstraints { make in
-                make.height.width.equalTo(19)
+                make.height.equalTo(18)
+                make.width.equalTo(20)
             }
             return imageView
         }()
@@ -127,7 +136,7 @@ class DetailComplaintView: UIView {
     }(UIStackView())
     
     private let divideLine: UIView = {
-        $0.backgroundColor = .darkGray
+        $0.backgroundColor = .systemGray2
         return $0
     }(UIView())
     
@@ -215,7 +224,7 @@ class DetailComplaintView: UIView {
             make.height.equalTo(22)
         }
         divideLine.snp.makeConstraints { make in
-            make.top.equalTo(statusStackView.snp.bottom).inset(-18)
+            make.top.equalTo(statusStackView.snp.bottom).inset(-22)
             make.leading.trailing.equalToSuperview().inset(11)
             make.height.equalTo(0.8)
         }
@@ -228,28 +237,22 @@ class DetailComplaintView: UIView {
     }
     
 //MARK: - Configure
-    private func configure() {
-        guard let tapedComplaintModel = tapedComplaintModel else { return }
+    private func configureCnt() {
+        guard let cnt = cnt else { return }
         
-        dangerButton.isSelected = isSelected
-        if isSelected {
-            let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt + 1)")
-            let combinedString = NSMutableAttributedString()
-            combinedString.append(attributedString)
-            dangerButton.setAttributedTitle(combinedString, for: .normal)
-        } else {
-            let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
-            let combinedString = NSMutableAttributedString()
-            combinedString.append(attributedString)
-            dangerButton.setAttributedTitle(combinedString, for: .normal)
-        }
+        let attributedString = getAttributeString(isSelected: isSelected, text: "위험해요 \(cnt)")
+        let combinedString = NSMutableAttributedString()
+        combinedString.append(attributedString)
+        dangerButton.setAttributedTitle(combinedString, for: .normal)
     }
     
     private func configureDetailModel() {
         guard let model = detailModel else { return }
+        print("DEBUG: detailModel 들어옴")
         
         addressLabel.text = model.address
         isSelected = model.dangerBtnClicked
+        cnt = model.dangerousCnt
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -289,11 +292,8 @@ class DetailComplaintView: UIView {
         guard let url = URL(string:"\(tapedComplaintModel.imageUrls[0])") else { return }
         complaintImageView.sd_setImage(with:url, completed: nil)
         
-        distanceLabel.text = "\(tapedComplaintModel.distance) M"
-        let attributedString = getAttributeString(isSelected: self.isSelected, text: "위험해요 \(tapedComplaintModel.dangerousCnt)")
-        let combinedString = NSMutableAttributedString()
-        combinedString.append(attributedString)
-        dangerButton.setAttributedTitle(combinedString, for: .normal)
+        distanceLabel.text = "\(DistanceFormatter.formatDistance(meters: Int(tapedComplaintModel.distance)))"
+//        cnt = tapedComplaintModel.dangerousCnt
         
     }
     
