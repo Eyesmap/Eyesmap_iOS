@@ -15,6 +15,7 @@ enum ReportRouter {
     case danger
     case deleteComplaint
     case restoreComplaint
+    case createComplaint
 }
 
 extension ReportRouter: HttpRouter {
@@ -41,6 +42,8 @@ extension ReportRouter: HttpRouter {
             return "/api/report/delete"
         case .restoreComplaint:
             return "/api/report/create/restoration"
+        case .createComplaint:
+            return "/api/report/create/damage"
         }
     }
     
@@ -57,6 +60,8 @@ extension ReportRouter: HttpRouter {
         case .deleteComplaint:
             return .delete
         case .restoreComplaint:
+            return .post
+        case .createComplaint:
             return .post
         }
     }
@@ -82,6 +87,9 @@ extension ReportRouter: HttpRouter {
             return ["Content-Type" : "application/json",
                     "Authorization" : "\(accessToken)"]
         case .restoreComplaint:
+            return ["Content-Type" : "application/json",
+                    "Authorization" : "\(accessToken)"]
+        case .createComplaint:
             return ["Content-Type" : "application/json",
                     "Authorization" : "\(accessToken)"]
         }

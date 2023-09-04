@@ -137,8 +137,7 @@ class ReportNetworkManager {
                 }
             }
             
-            
-            // request가 있다면 append
+            // parameter append
             let pram = ["reportId": reportId]
             
             do {
@@ -163,6 +162,47 @@ class ReportNetworkManager {
             }
         }
         
+    }
+    
+    //신고 생성
+    func createComplaintRequest(images: [UIImage], parameters: CreateComplaintRequestModel, completion: @escaping(Bool) -> Void) {
+        let router = reportRouter.createComplaint
+        
+        var requestData: Data?
+        
+        //multipart formdata
+        AF.upload(multipartFormData: { [weak self] multipartFormData in
+            guard let self = self else { return }
+            
+            // 복구 사진 append
+            for i in 0 ..< images.count {
+                if let image = images[i].pngData() {
+                    multipartFormData.append(image, withName: "images", fileName: self.getImageName(name: "restore"), mimeType: "image/jpeg")
+                }
+            }
+            
+            // parameter append
+            do {
+                let requestPayload = try JSONSerialization.data(withJSONObject: parameters, options: [])
+                requestData = requestPayload
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            guard let requestData = requestData else { return }
+            multipartFormData.append(requestData, withName: "createRestoreReportRequest", mimeType: "application/json")
+            
+        }, to: router.url, method: router.method, headers: router.headers)
+        .responseDecodable(of: CreateComplaintResultModel.self) { response in
+            switch response.result {
+            case .success(let data):
+                print("신고 복구 result = \(data)")
+                completion(true)
+            case .failure(let error):
+                print("신고 복구 error = \(error)")
+                completion(false)
+            }
+        }
     }
     
     // 이미지 이름 생성
@@ -242,6 +282,34 @@ struct ResoreComplaintResultModel: Decodable {
 }
 
 struct ResoreComplaintResultData: Decodable {
+    let address: String
+    let gpsX: Double
+    let gpsY: Double
+    let title: String
+    let contents: String
+    let damagedStatus: String
+    let sort: String
+    let imageUrls: [String]
+    let accountId: Int
+}
+
+//MARK: - 신고 생성
+struct CreateComplaintRequestModel: Encodable {
+    let address: String
+    let gpsX: Double
+    let gpsY: Double
+    let title: String
+    let contents: String
+    let damagedStatus: String
+    let sort: String
+}
+
+struct CreateComplaintResultModel: Decodable {
+    let message: String
+    let result: CreateComplaintResultData
+}
+
+struct CreateComplaintResultData: Decodable {
     let address: String
     let gpsX: Double
     let gpsY: Double
