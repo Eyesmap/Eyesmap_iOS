@@ -27,7 +27,7 @@ class HomeComplaintView: UIView {
     
     private lazy var tagLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 14)
-        $0.textColor = .darkGray
+        $0.textColor = .instanceBlackColor
         return $0
     }(UILabel())
     
@@ -41,13 +41,13 @@ class HomeComplaintView: UIView {
     
     private lazy var distanceLabel: UILabel = {
         $0.font = UIFont.boldSystemFont(ofSize: 15)
-        $0.textColor = .black
+        $0.textColor = .instanceBlackColor
         return $0
     }(UILabel())
     
     private lazy var statusLabel: UILabel = {
         $0.font = UIFont.boldSystemFont(ofSize: 15)
-        $0.textColor = .black
+        $0.textColor = .instanceBlackColor
         return $0
     }(UILabel())
     
@@ -215,9 +215,7 @@ class HomeComplaintView: UIView {
         guard let url = URL(string:"\(model.imageUrls[0])") else { return }
         complaintImageView.sd_setImage(with:url, completed: nil)
         
-        distanceLabel.text = "\(model.distance) M"
+        distanceLabel.text = DistanceFormatter.formatDistance(meters: Int(model.distance))
         statusCntLabel.text = "\(model.dangerousCnt)"
-        
-        //MARK: FIXME 상태에 따라 enum으로 변경 예정
     }
 }
