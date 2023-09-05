@@ -1,7 +1,13 @@
 import UIKit
 import SnapKit
 
+protocol Top3ViewDelegate: AnyObject {
+    func jachiViewAppear(title: String)
+}
+
 class Top3View: UIView {
+    
+    weak var delegate: Top3ViewDelegate?
     
     //MARK: - Properties
     private var img = UIImageView()
@@ -97,8 +103,7 @@ class Top3View: UIView {
             if (name.titleLabel?.text?.components(separatedBy: " ")[0] == title.text) {
                 name.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
                 name.setTitleColor(UIColor.black, for: .normal)
-                LocationDataViewController.jachiDetail.alpha = 1
-                LocationDataViewController.jachiDetail.titleLabel.text = title.text
+                self.delegate?.jachiViewAppear(title: title.text ?? "")
             }
         }
     }

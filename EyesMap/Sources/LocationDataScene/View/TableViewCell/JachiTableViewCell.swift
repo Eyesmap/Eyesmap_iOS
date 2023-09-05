@@ -1,23 +1,28 @@
 import UIKit
 import SnapKit
-import SDWebImage
 
-class RankingTableViewCell: UITableViewCell {
-    static let top3Identifier = "Top3RankingTableViewCell"
-    static let otherIdentifier = "OtherRankingTableViewCell"
+enum DataCellType: CaseIterable {
+    case top3
+    case other
+}
+
+class JachiTableViewCell: UITableViewCell {
+    static let top3Identifier = "Top3JachiTableViewCell"
+    static let otherIdentifier = "OtherJachiTableViewCell"
     
-    var top3Model: Top3Data? {
+    var top3Model: JachiTop3Data? {
         didSet {
             top3Configure()
         }
     }
-    var theOtherModel: TheOthersData? {
+    var theOtherModel: JachiTheOthersData? {
         didSet {
             theOtherConfigure()
         }
     }
     
     //MARK: - Properties
+    
     private let ranking: UILabel = {
         let label = UILabel()
         label.text = "1"
@@ -30,17 +35,23 @@ class RankingTableViewCell: UITableViewCell {
     }()
     let name: UILabel = {
         let label = UILabel()
-        label.text = "종로구"
+        label.text = "점자블록 파손"
+        return label
+    }()
+    private let location: UILabel = {
+        let label = UILabel()
+        label.text = "서울 중구 세종대로 지하 2"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.rgb(red: 85, green: 131, blue: 236)
         return label
     }()
     private let cnt: UILabel = {
         let label = UILabel()
-        label.text = "총 18회"
+        label.text = "101"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor(red: 90/255, green: 89/255, blue: 90/255, alpha: 1)
         return label
     }()
-    public var gu_id: String = "hi"
     
     var type: DataCellType = .top3
     
@@ -50,14 +61,16 @@ class RankingTableViewCell: UITableViewCell {
         self.selectionStyle = .none
 
         setUI()
-        
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -66,6 +79,7 @@ class RankingTableViewCell: UITableViewCell {
     func setUI() {
         
         contentView.addSubview(name)
+        contentView.addSubview(location)
         contentView.addSubview(cnt)
         
         switch type {
@@ -82,6 +96,10 @@ class RankingTableViewCell: UITableViewCell {
                 make.top.equalToSuperview()
                 make.leading.equalTo(medalImageView.snp.trailing).offset(19)
             }
+            location.snp.makeConstraints { make in
+                make.top.equalTo(name.snp.bottom).inset(-3)
+                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
+            }
         case .other:
             contentView.addSubview(ranking)
             name.font = UIFont.systemFont(ofSize: 13)
@@ -94,6 +112,10 @@ class RankingTableViewCell: UITableViewCell {
                 make.top.equalToSuperview()
                 make.leading.equalTo(ranking.snp.trailing).offset(19)
             }
+            location.snp.makeConstraints { make in
+                make.top.equalTo(name.snp.bottom).inset(-3)
+                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
+            }
         }
         
         cnt.snp.makeConstraints { (make) in
@@ -101,7 +123,7 @@ class RankingTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview()
         }
     }
-    
+        
     //MARK: - Configure
     private func top3Configure() {
         guard let model = top3Model else { return }
@@ -109,17 +131,18 @@ class RankingTableViewCell: UITableViewCell {
         let medalUrl = URL(string: model.medal)
         
         medalImageView.sd_setImage(with: medalUrl)
-        name.text = "\(model.guName)구"
-        cnt.text = "총 \(model.reportCount) 회"
-        gu_id = "\(model.guNum)"
+        name.text = "\(model.title)"
+        location.text = "\(model.address)"
+        cnt.text = "\(model.count) 개"
+        
     }
     
     private func theOtherConfigure() {
         guard let model = theOtherModel else { return }
         
         ranking.text = "\(model.rank)"
-        name.text = "\(model.guName)구"
-        cnt.text = "총 \(model.reportCount) 회"
-        gu_id = "\(model.guNum)"
+        name.text = "\(model.title)"
+        location.text = "\(model.address)"
+        cnt.text = "\(model.count) 개"
     }
 }

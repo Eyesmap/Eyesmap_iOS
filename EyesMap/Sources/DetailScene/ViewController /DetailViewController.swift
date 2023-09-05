@@ -104,6 +104,8 @@ class DetailViewController: UIViewController {
             guard let self = self else { return }
             self.detailImageList = images
         }
+        
+        print("reportId: \(complaint.reportId)")
     }
     
     required init?(coder: NSCoder) {
