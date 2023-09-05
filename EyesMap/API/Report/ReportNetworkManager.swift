@@ -178,25 +178,35 @@ class ReportNetworkManager {
                 }
             }
             
+            let param: [String: Any] = [
+                "address": parameters.address,
+                "gpsX": parameters.gpsX,
+                "gpsY": parameters.gpsY,
+                "title": parameters.title,
+                "contents": parameters.contents,
+                "damagedStatus": parameters.damagedStatus,
+                "sort": parameters.sort
+            ]
+
             // parameter append
             var requestData = ""
             do {
-                let requestPayload = try JSONSerialization.data(withJSONObject: parameters, options: [])
+                let requestPayload = try JSONSerialization.data(withJSONObject: param, options: [])
                 requestData = String(data: requestPayload, encoding: .utf8) ?? ""
             } catch {
                 print(error.localizedDescription)
             }
             
-            multipartFormData.append("\(requestData)".data(using: .utf8)!, withName: "createRestoreReportRequest", mimeType: "application/json")
+            multipartFormData.append("\(requestData)".data(using: .utf8)!, withName: "createReportRequest", mimeType: "application/json")
             
         }, to: router.url, method: router.method, headers: router.headers)
         .responseDecodable(of: CreateComplaintResultModel.self) { response in
             switch response.result {
             case .success(let data):
-                print("신고 복구 result = \(data)")
+                print("신고 생성 result = \(data)")
                 completion(true)
             case .failure(let error):
-                print("신고 복구 error = \(error)")
+                print("신고 생성 error = \(error)")
                 completion(false)
             }
         }

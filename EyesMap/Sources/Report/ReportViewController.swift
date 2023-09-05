@@ -16,8 +16,10 @@ var checkBox_dis = false
 class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDelegate {
     
     //MARK: - properties
-    var selectedImages: [UIImage] = [] // 이미지 저장
-
+    private var selectedImages: [UIImage] = [] // 이미지 저장
+    private var titleValue = ""
+    private var damagedStatus = ""
+    
     private let scrollView = UIScrollView()
     let contentView = UIView()
     let imagePickerView = UIImageView()
@@ -509,10 +511,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     }
     @objc func Check1() {
         if(checkBox1.isSelected) {
+            titleValue = ""
             checkBox1.isSelected = false
             checkBox_dis = false
             category1.textColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
         } else {
+            titleValue = SortType.dottedBlock.rawValue
             checkBox_dis = true
             checkBox1.isSelected = true
             checkBox2.isSelected = false
@@ -525,10 +529,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     }
     @objc func Check2() {
         if(checkBox2.isSelected) {
+            titleValue = ""
             checkBox2.isSelected = false
             checkBox_dis = false
             category2.textColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
         } else {
+            titleValue = SortType.acousticGuidenceSystem.rawValue
             checkBox_dis = true
             checkBox2.isSelected = true
             checkBox1.isSelected = false
@@ -541,10 +547,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     }
     @objc func Check2_1() {
         if(checkBox2_1.isSelected) {
+            titleValue = ""
             checkBox2_1.isSelected = false
             checkBox_dis = false
             category2_1.textColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
         } else {
+            titleValue = SortType.brailleInfoBoard.rawValue
             checkBox_dis = true
             checkBox2_1.isSelected = true
             checkBox1.isSelected = false
@@ -557,10 +565,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     }
     @objc func Check3() {
         if(checkBox3.isSelected) {
+            damagedStatus = ""
             checkBox3.isSelected = false
             checkBox_dis = false
             category3.textColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
         } else {
+            damagedStatus = DamageStatusType.normal.rawValue
             checkBox_dis = true
             checkBox3.isSelected = true
             checkBox4.isSelected = false
@@ -573,10 +583,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     }
     @objc func Check4() {
         if(checkBox4.isSelected) {
+            damagedStatus = ""
             checkBox4.isSelected = false
             checkBox_dis = false
             category4.textColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
         } else {
+            damagedStatus = DamageStatusType.bad.rawValue
             checkBox_dis = true
             checkBox4.isSelected = true
             checkBox3.isSelected = false
@@ -589,10 +601,12 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     }
     @objc func Check5() {
         if(checkBox5.isSelected) {
+            damagedStatus = ""
             checkBox5.isSelected = false
             checkBox_dis = false
             category5.textColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
         } else {
+            damagedStatus = DamageStatusType.severe.rawValue
             checkBox_dis = true
             checkBox3.isSelected = false
             checkBox4.isSelected = false
@@ -649,18 +663,17 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     
     @objc func Submit() {
         print("submit")
-        //MARK: 임시 Float - API 확인 후 분기처리 예정
-//        let model = CreateComplaintRequestModel(address: reportAddress,
-//                                                gpsX: reportPosition.coordinate.longitude,
-//                                                gpsY: reportPosition.coordinate.latitude,
-//                                                title: titleTextfield.text ?? "",
-//                                                contents: detailTextView.text ?? "",
-//                                                damagedStatus: <#T##String#>, // DamagedStatusType
-//                                                sort: <#T##String#>) // SortType
+        let model = CreateComplaintRequestModel(address: reportAddress,
+                                                gpsX: reportPosition.coordinate.longitude,
+                                                gpsY: reportPosition.coordinate.latitude,
+                                                title: titleTextfield.text ?? "",
+                                                contents: detailTextView.text ?? "",
+                                                damagedStatus: damagedStatus, // DamagedStatusType
+                                                sort: titleValue) // SortType
         
-//        ReportNetworkManager.shared.createComplaintRequest(images: <#T##[UIImage]#>, parameters: <#T##CreateComplaintRequestModel#>, completion: <#T##(Bool) -> Void#>)
-        
-        presentFinishedView()
+        ReportNetworkManager.shared.createComplaintRequest(images: selectedImages, parameters: model) { [weak self] b in
+            b ? self?.presentFinishedView() : self?.dismiss(animated: true)
+        }
     }
 
     func CheckSubmitBtn() {

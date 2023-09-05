@@ -116,8 +116,8 @@ extension ReportMapViewController: NMFMapViewDelegate {
         let lat = targetLocation.coordinate.latitude
         let lng = targetLocation.coordinate.longitude
         
-        GeoCodingNetworkManager.shared.reverseGeocode(latitude: lat, longitude: lng) { location in
-            self.locationSettingView.locationLabel.text = location
+        GeoCodingNetworkManager.shared.reverseGeocode(latitude: lat, longitude: lng) { [weak self] location in
+            self?.locationSettingView.locationLabel.text = location
         }
     }
     
@@ -126,7 +126,8 @@ extension ReportMapViewController: NMFMapViewDelegate {
             guard let self = self else { return }
             let centerLatLng = self.mapView.cameraPosition.target
             self.targetMarker.position = centerLatLng
-            print(self.targetMarker.position)
+            self.targetLocation = CLLocation(latitude: centerLatLng.lat, longitude: centerLatLng.lng)
+            print(centerLatLng)
         }
         
     }
