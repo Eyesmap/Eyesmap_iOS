@@ -124,7 +124,6 @@ class ReportNetworkManager {
     // 신고 복구
     func restoreComplaintRequest(images: [UIImage], reportId: String, completion: @escaping(Bool) -> Void) {
         let router = reportRouter.restoreComplaint
-        var requestData: Data?
         
         //multipart formdata
         AF.upload(multipartFormData: { [weak self] multipartFormData in
@@ -138,17 +137,17 @@ class ReportNetworkManager {
             }
             
             // parameter append
-            let pram = ["reportId": reportId]
+            let param = ["reportId": reportId]
             
+            var requestData = ""
             do {
-                let requestPayload = try JSONSerialization.data(withJSONObject: pram, options: [])
-                requestData = requestPayload
+                let requestPayload = try JSONSerialization.data(withJSONObject: param, options: [])
+                requestData = String(data: requestPayload, encoding: .utf8) ?? ""
             } catch {
                 print(error.localizedDescription)
             }
             
-            guard let requestData = requestData else { return }
-            multipartFormData.append(requestData, withName: "createRestoreReportRequest", mimeType: "application/json")
+            multipartFormData.append("\(requestData)".data(using: .utf8)!, withName: "createRestoreReportRequest", mimeType: "application/json")
             
         }, to: router.url, method: router.method, headers: router.headers)
         .responseDecodable(of: ResoreComplaintResultModel.self) { response in
@@ -168,8 +167,6 @@ class ReportNetworkManager {
     func createComplaintRequest(images: [UIImage], parameters: CreateComplaintRequestModel, completion: @escaping(Bool) -> Void) {
         let router = reportRouter.createComplaint
         
-        var requestData: Data?
-        
         //multipart formdata
         AF.upload(multipartFormData: { [weak self] multipartFormData in
             guard let self = self else { return }
@@ -182,15 +179,15 @@ class ReportNetworkManager {
             }
             
             // parameter append
+            var requestData = ""
             do {
                 let requestPayload = try JSONSerialization.data(withJSONObject: parameters, options: [])
-                requestData = requestPayload
+                requestData = String(data: requestPayload, encoding: .utf8) ?? ""
             } catch {
                 print(error.localizedDescription)
             }
             
-            guard let requestData = requestData else { return }
-            multipartFormData.append(requestData, withName: "createRestoreReportRequest", mimeType: "application/json")
+            multipartFormData.append("\(requestData)".data(using: .utf8)!, withName: "createRestoreReportRequest", mimeType: "application/json")
             
         }, to: router.url, method: router.method, headers: router.headers)
         .responseDecodable(of: CreateComplaintResultModel.self) { response in
