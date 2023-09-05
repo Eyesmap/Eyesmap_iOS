@@ -142,19 +142,25 @@ class JachiDetailView: UIView {
 
 extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "JachiTableViewCell", for: indexPath) as? JachiTableViewCell else { return UITableViewCell()}
+        guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.top3Identifier, for: indexPath) as? JachiTableViewCell,
+              let otherCell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.otherIdentifier, for: indexPath) as? JachiTableViewCell else { return UITableViewCell()}
+        
+        top3Cell.type = .top3
+        otherCell.type = .other
         
         if indexPath.section == 0 {
-            
             let model = jachiTop3DataArray[indexPath.row]
+            top3Cell.top3Model = model
             
-            cell.name.text = "\(String(model.title))"
-            cell.cnt.text = "\(String(model.count))"
+            return top3Cell
+        } else {
+            let model = jachiTheOthersDataArray[indexPath.row]
+            otherCell.theOtherModel = model
+            
+            return otherCell
         }
-
-        
-        return cell
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return jachiTop3DataArray.count
@@ -162,10 +168,18 @@ extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
             return jachiTheOthersDataArray.count
         }
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if indexPath.section == 0 {
+            return 75
+        } else {
+            return 50
+        }
     }
+    
+    
 }

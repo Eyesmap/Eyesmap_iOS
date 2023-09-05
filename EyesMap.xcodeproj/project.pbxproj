@@ -14,7 +14,6 @@
 		371221AE2A976E7B00AEA499 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221AD2A976E7B00AEA499 /* UIButton.swift */; };
 		371221B02A977ABF00AEA499 /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221AF2A977ABF00AEA499 /* TotalView.swift */; };
 		371221B22A979AC600AEA499 /* JachiDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B12A979AC600AEA499 /* JachiDetailView.swift */; };
-		371221B42A97B19900AEA499 /* Top3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B32A97B19900AEA499 /* Top3View.swift */; };
 		371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */; };
 		3719E9B82AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3719E9B72AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift */; };
 		3719E9BA2AA4CBB000B0E1B2 /* JachiTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3719E9B92AA4CBB000B0E1B2 /* JachiTableViewCell.swift */; };
@@ -102,7 +101,6 @@
 		371221AD2A976E7B00AEA499 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		371221AF2A977ABF00AEA499 /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
 		371221B12A979AC600AEA499 /* JachiDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiDetailView.swift; sourceTree = "<group>"; };
-		371221B32A97B19900AEA499 /* Top3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top3View.swift; sourceTree = "<group>"; };
 		371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		3719E9B72AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiReportRankingManger.swift; sourceTree = "<group>"; };
 		3719E9B92AA4CBB000B0E1B2 /* JachiTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiTableViewCell.swift; sourceTree = "<group>"; };
@@ -228,7 +226,6 @@
 				371221A62A97535100AEA499 /* MapView.swift */,
 				371221AF2A977ABF00AEA499 /* TotalView.swift */,
 				371221B12A979AC600AEA499 /* JachiDetailView.swift */,
-				371221B32A97B19900AEA499 /* Top3View.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -892,7 +889,6 @@
 				475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */,
 				47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */,
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
-				371221B42A97B19900AEA499 /* Top3View.swift in Sources */,
 				3719E9BA2AA4CBB000B0E1B2 /* JachiTableViewCell.swift in Sources */,
 				475B744E2A935E3C00C8BB97 /* AuthRouter.swift in Sources */,
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,

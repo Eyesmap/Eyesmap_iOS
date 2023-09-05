@@ -16,13 +16,11 @@ class LocationDataViewController: UIViewController {
             configure()
         }
     }
-    
     var jachiReportRankingModel: JachiReportRanking? {
         didSet {
             configure2()
         }
     }
-    
     var top3DataArray: [Top3Data] = [] {
         didSet {
             reportRanking.top3DataArray = top3DataArray
@@ -57,15 +55,12 @@ class LocationDataViewController: UIViewController {
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         self.seoulMap.isUserInteractionEnabled = true
+        
         setUI()
         seoulMap.addTarget()
         getLocationReportRequest()
     }
-    
-
     
     //MARK: - setUI
     private func setUI() {
@@ -122,8 +117,6 @@ class LocationDataViewController: UIViewController {
         top3DataArray = rankingModel.top3Location
         // 나머지 받기
         theOthersDataArray = rankingModel.theOthers
-//        reportRanking.tableView.reloadData()
-
     }
     
     private func configure2() {
@@ -133,7 +126,6 @@ class LocationDataViewController: UIViewController {
         jachiTop3DataArray = jachiModel.result.top3Report
         // 나머지 받기
         jachiTheOthersDataArray = jachiModel.result.theOthers
-//        reportRanking.tableView.reloadData()
     }
 
     //MARK: - API
@@ -142,7 +134,9 @@ class LocationDataViewController: UIViewController {
             if let error = error {
                 // 오류가 발생한 경우 처리
                 print("오류 발생: \(error.localizedDescription)")
-            } else if let locationReport = locationReport {
+            }
+            
+            if let locationReport = locationReport {
                 // 보고서를 성공적으로 가져온 경우 처리
                 print("보고서: \(locationReport)")
                 self.rankingModel = locationReport.result
@@ -174,6 +168,9 @@ extension LocationDataViewController: RankingViewDelegate {
     func tapedLocation(name: String) {
         self.jachiDetail.alpha = 1
         self.jachiDetail.titleLabel.text = name
+        
+        // 자치 API
+        self.getJachiRequest(name)
     }
 }
 

@@ -1,89 +1,148 @@
 import UIKit
 import SnapKit
 
+enum DataCellType: CaseIterable {
+    case top3
+    case other
+}
+
 class JachiTableViewCell: UITableViewCell {
-    static let identifier = "JachiTableViewCell"
+    static let top3Identifier = "Top3JachiTableViewCell"
+    static let otherIdentifier = "OtherJachiTableViewCell"
+    
+    var top3Model: JachiTop3Data? {
+        didSet {
+            top3Configure()
+        }
+    }
+    var theOtherModel: JachiTheOthersData? {
+        didSet {
+            theOtherConfigure()
+        }
+    }
     
     //MARK: - Properties
-    public let ranking: UILabel = {
+    
+    private let ranking: UILabel = {
         let label = UILabel()
         label.text = "1"
         label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
-    public let name: UILabel = {
+    private let medalImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    let name: UILabel = {
         let label = UILabel()
-        label.text = "종로구"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.text = "점자블록 파손"
         return label
     }()
-    public let cnt: UILabel = {
+    private let location: UILabel = {
         let label = UILabel()
-        label.text = "총 18회"
+        label.text = "서울 중구 세종대로 지하 2"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.rgb(red: 85, green: 131, blue: 236)
+        return label
+    }()
+    private let cnt: UILabel = {
+        let label = UILabel()
+        label.text = "101"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor(red: 90/255, green: 89/255, blue: 90/255, alpha: 1)
         return label
     }()
     
-    
+    var type: DataCellType = .top3
     
     //MARK: - init
-    override init(style: RankingTableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        ranking.translatesAutoresizingMaskIntoConstraints = false
-        name.translatesAutoresizingMaskIntoConstraints = false
-        cnt.translatesAutoresizingMaskIntoConstraints = false
         self.selectionStyle = .none
 
         setUI()
-        
-//        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:))))
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
     
-    
-    // MARK: - settUI
+    // MARK: - set UI
     func setUI() {
-        contentView.addSubview(ranking)
+        
         contentView.addSubview(name)
+        contentView.addSubview(location)
         contentView.addSubview(cnt)
         
-        ranking.snp.makeConstraints { (make) in
-            make.centerY.equalTo(contentView)
-            make.leading.equalTo(contentView.snp.leading).inset(6)
+        switch type {
+        case .top3:
+            contentView.addSubview(medalImageView)
+            name.font = UIFont.boldSystemFont(ofSize: 18)
+            
+            medalImageView.snp.makeConstraints { make in
+                make.leading.equalToSuperview().inset(6)
+                make.centerY.equalToSuperview()
+                make.height.width.equalTo(20)
+            }
+            name.snp.makeConstraints { (make) in
+                make.top.equalToSuperview()
+                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
+            }
+            location.snp.makeConstraints { make in
+                make.top.equalTo(name.snp.bottom).inset(-3)
+                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
+            }
+        case .other:
+            contentView.addSubview(ranking)
+            name.font = UIFont.systemFont(ofSize: 13)
+            
+            ranking.snp.makeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.leading.equalToSuperview().inset(6)
+            }
+            name.snp.makeConstraints { (make) in
+                make.top.equalToSuperview()
+                make.leading.equalTo(ranking.snp.trailing).offset(19)
+            }
+            location.snp.makeConstraints { make in
+                make.top.equalTo(name.snp.bottom).inset(-3)
+                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
+            }
         }
-        name.snp.makeConstraints { (make) in
-            make.centerY.equalTo(contentView)
-            make.leading.equalTo(ranking.snp.trailing).offset(19)
-        }
+        
         cnt.snp.makeConstraints { (make) in
-            make.centerY.equalTo(contentView)
-            make.trailing.equalTo(contentView.snp.trailing)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
     }
+        
+    //MARK: - Configure
+    private func top3Configure() {
+        guard let model = top3Model else { return }
+        
+        let medalUrl = URL(string: model.medal)
+        
+        medalImageView.sd_setImage(with: medalUrl)
+        name.text = "\(model.title)"
+        location.text = "\(model.address)"
+        cnt.text = "\(model.count) 개"
+        
+    }
     
-    
-    
-    // MARK: objc
-//    @objc func handleTap(sender: UITapGestureRecognizer) {
-//        for jachi in MapView.jachiArray {
-//            // 자치구 배열에 있는 객체의 text와 title이 같을 때
-//            if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == name.text) {
-//                jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
-//                jachi.setTitleColor(UIColor.black, for: .normal)
-//                LocationDataViewController.jachiDetail.alpha = 1
-//                LocationDataViewController.jachiDetail.titleLabel.text = name.text
-//
-//            }
-//        }
-//    }
+    private func theOtherConfigure() {
+        guard let model = theOtherModel else { return }
+        
+        ranking.text = "\(model.rank)"
+        name.text = "\(model.title)"
+        location.text = "\(model.address)"
+        cnt.text = "\(model.count) 개"
+    }
 }

@@ -1,23 +1,39 @@
 import UIKit
 import SnapKit
+import SDWebImage
 
 class RankingTableViewCell: UITableViewCell {
-    static let identifier = "RankingTableViewCell"
+    static let top3Identifier = "Top3RankingTableViewCell"
+    static let otherIdentifier = "OtherRankingTableViewCell"
+    
+    var top3Model: Top3Data? {
+        didSet {
+            top3Configure()
+        }
+    }
+    var theOtherModel: TheOthersData? {
+        didSet {
+            theOtherConfigure()
+        }
+    }
     
     //MARK: - Properties
-    public let ranking: UILabel = {
+    private let ranking: UILabel = {
         let label = UILabel()
         label.text = "1"
         label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
-    public let name: UILabel = {
+    private let medalImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    let name: UILabel = {
         let label = UILabel()
         label.text = "종로구"
-        label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
-    public let cnt: UILabel = {
+    private let cnt: UILabel = {
         let label = UILabel()
         label.text = "총 18회"
         label.font = UIFont.systemFont(ofSize: 13)
@@ -26,15 +42,12 @@ class RankingTableViewCell: UITableViewCell {
     }()
     public var gu_id: String = "hi"
     
+    var type: DataCellType = .top3
     
     //MARK: - init
-    override init(style: RankingTableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        ranking.translatesAutoresizingMaskIntoConstraints = false
-        name.translatesAutoresizingMaskIntoConstraints = false
-        cnt.translatesAutoresizingMaskIntoConstraints = false
         self.selectionStyle = .none
-        
 
         setUI()
         
@@ -48,34 +61,65 @@ class RankingTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
-    override func prepareForReuse() {
-        // 셀이 사라질 때 기본값으로 돌려주기(재상ㅇ 때)
-        name.text = ""
-        
-    }
     
-    // MARK: - settUI
+    // MARK: - set UI
     func setUI() {
-        contentView.addSubview(ranking)
+        
         contentView.addSubview(name)
         contentView.addSubview(cnt)
         
-        ranking.snp.makeConstraints { (make) in
-            make.centerY.equalTo(contentView)
-            make.leading.equalTo(contentView.snp.leading).inset(6)
+        switch type {
+        case .top3:
+            contentView.addSubview(medalImageView)
+            name.font = UIFont.boldSystemFont(ofSize: 18)
+            
+            medalImageView.snp.makeConstraints { make in
+                make.leading.equalToSuperview().inset(6)
+                make.centerY.equalToSuperview()
+                make.height.width.equalTo(20)
+            }
+            name.snp.makeConstraints { (make) in
+                make.top.equalToSuperview()
+                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
+            }
+        case .other:
+            contentView.addSubview(ranking)
+            name.font = UIFont.systemFont(ofSize: 13)
+            
+            ranking.snp.makeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.leading.equalToSuperview().inset(6)
+            }
+            name.snp.makeConstraints { (make) in
+                make.top.equalToSuperview()
+                make.leading.equalTo(ranking.snp.trailing).offset(19)
+            }
         }
-        name.snp.makeConstraints { (make) in
-            make.centerY.equalTo(contentView)
-            make.leading.equalTo(ranking.snp.trailing).offset(19)
-        }
+        
         cnt.snp.makeConstraints { (make) in
-            make.centerY.equalTo(contentView)
-            make.trailing.equalTo(contentView.snp.trailing)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
     }
     
+    //MARK: - Configure
+    private func top3Configure() {
+        guard let model = top3Model else { return }
+        
+        let medalUrl = URL(string: model.medal)
+        
+        medalImageView.sd_setImage(with: medalUrl)
+        name.text = "\(model.guName)구"
+        cnt.text = "총 \(model.reportCount) 회"
+        gu_id = "\(model.guNum)"
+    }
     
-    
-
+    private func theOtherConfigure() {
+        guard let model = theOtherModel else { return }
+        
+        ranking.text = "\(model.rank)"
+        name.text = "\(model.guName)구"
+        cnt.text = "총 \(model.reportCount) 회"
+        gu_id = "\(model.guNum)"
+    }
 }
