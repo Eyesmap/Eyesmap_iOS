@@ -42,8 +42,8 @@ struct JachiReportRanking : Decodable {
 }
 
 struct JachiData : Decodable {
-    let top3Report : [JachiTop3Data?]
-    let theOthers : [JachiTheOthersData?]
+    let top3Report : [JachiTop3Data]
+    let theOthers : [JachiTheOthersData]
 }
 
 struct JachiTop3Data : Decodable {

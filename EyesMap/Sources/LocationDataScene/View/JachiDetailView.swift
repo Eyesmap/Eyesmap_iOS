@@ -10,6 +10,17 @@ import SnapKit
 
 class JachiDetailView: UIView {
 
+    var jachiTop3DataArray: [JachiTop3Data] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var jachiTheOthersDataArray: [JachiTheOthersData] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     //MARK: - Properties
     public let titleLabel: UILabel = {
         let label = UILabel()
@@ -46,9 +57,6 @@ class JachiDetailView: UIView {
         label.font = UIFont.systemFont(ofSize: 11)
         return label
     }()
-    
-    var jachiTop3DataArray: [JachiTop3Data?] = []
-    var jachiTheOthersDataArray: [JachiTheOthersData?] = []
     
     //MARK: - Life Cycles
     override init(frame: CGRect) {
@@ -137,8 +145,11 @@ extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "JachiTableViewCell", for: indexPath) as? JachiTableViewCell else { return UITableViewCell()}
         
         if indexPath.section == 0 {
-            cell.name.text = "\(String(jachiTop3DataArray[indexPath.row]!.title))"
-            cell.cnt.text = "\(String(jachiTop3DataArray[indexPath.row]!.count))"
+            
+            let model = jachiTop3DataArray[indexPath.row]
+            
+            cell.name.text = "\(String(model.title))"
+            cell.cnt.text = "\(String(model.count))"
         }
 
         

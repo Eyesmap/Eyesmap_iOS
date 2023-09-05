@@ -37,7 +37,7 @@ class JachiTableViewCell: UITableViewCell {
 
         setUI()
         
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:))))
+//        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:))))
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -74,16 +74,16 @@ class JachiTableViewCell: UITableViewCell {
     
     
     // MARK: objc
-    @objc func handleTap(sender: UITapGestureRecognizer) {
-        for jachi in MapView.jachiArray {
-            // 자치구 배열에 있는 객체의 text와 title이 같을 때
-            if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == name.text) {
-                jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
-                jachi.setTitleColor(UIColor.black, for: .normal)
-                LocationDataViewController.jachiDetail.alpha = 1
-                LocationDataViewController.jachiDetail.titleLabel.text = name.text
-
-            }
-        }
-    }
+//    @objc func handleTap(sender: UITapGestureRecognizer) {
+//        for jachi in MapView.jachiArray {
+//            // 자치구 배열에 있는 객체의 text와 title이 같을 때
+//            if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == name.text) {
+//                jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
+//                jachi.setTitleColor(UIColor.black, for: .normal)
+//                LocationDataViewController.jachiDetail.alpha = 1
+//                LocationDataViewController.jachiDetail.titleLabel.text = name.text
+//
+//            }
+//        }
+//    }
 }

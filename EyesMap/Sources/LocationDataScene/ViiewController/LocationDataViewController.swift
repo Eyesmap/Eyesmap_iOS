@@ -23,10 +23,26 @@ class LocationDataViewController: UIViewController {
         }
     }
     
-    static var top3DataArray: [Top3Data?] = []
-    static var theOthersDataArray: [TheOthersData?] = []
-    static var jachiTop3DataArray: [JachiTop3Data?] = []
-    static var jachiTheOthersDataArray: [JachiTheOthersData?] = []
+    var top3DataArray: [Top3Data] = [] {
+        didSet {
+            reportRanking.top3DataArray = top3DataArray
+        }
+    }
+    var theOthersDataArray: [TheOthersData] = [] {
+        didSet {
+            reportRanking.theOthersDataArray = theOthersDataArray
+        }
+    }
+    var jachiTop3DataArray: [JachiTop3Data] = [] {
+        didSet {
+            jachiDetail.jachiTop3DataArray = jachiTop3DataArray
+        }
+    }
+    var jachiTheOthersDataArray: [JachiTheOthersData] = [] {
+        didSet {
+            jachiDetail.jachiTheOthersDataArray = jachiTheOthersDataArray
+        }
+    }
     
     //MARK: - Properties
     private let scrollView = UIScrollView()
@@ -34,7 +50,7 @@ class LocationDataViewController: UIViewController {
     private let  totalReportView = TotalView()
     private let seoulMap = MapView(frame: CGRect(x: 0, y: 0, width: 375, height: 307))
     private let reportRanking = RankingView()
-    static let jachiDetail = JachiDetailView()
+    private let jachiDetail = JachiDetailView()
     
     
     
@@ -54,11 +70,13 @@ class LocationDataViewController: UIViewController {
     //MARK: - setUI
     private func setUI() {
         view.backgroundColor = UIColor(red: 158/255, green: 186/255, blue: 208/255, alpha: 1)
+        reportRanking.delegate = self
+        seoulMap.delegate = self
         
         contentView.addSubview(totalReportView)
         contentView.addSubview(seoulMap)
         contentView.addSubview(reportRanking)
-        contentView.addSubview(LocationDataViewController.jachiDetail)
+        contentView.addSubview(jachiDetail)
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
         
@@ -88,7 +106,7 @@ class LocationDataViewController: UIViewController {
             make.centerX.equalTo(contentView)
             make.top.equalTo(seoulMap.snp.bottom).offset(23)
         }
-        LocationDataViewController.jachiDetail.snp.makeConstraints { (make) in
+        jachiDetail.snp.makeConstraints { (make) in
             make.width.equalTo(337)
             make.height.equalTo(506)
             make.centerX.equalTo(contentView)
@@ -101,15 +119,10 @@ class LocationDataViewController: UIViewController {
         guard let rankingModel = rankingModel else {return}
                 
         // top3 ranking 받기
-        for x in rankingModel.top3Location {
-            LocationDataViewController.top3DataArray.append(x)
-        }
-        
-        for x in rankingModel.theOthers {
-            LocationDataViewController.theOthersDataArray.append(x)
-        }
-        
-        reportRanking.tableView.reloadData()
+        top3DataArray = rankingModel.top3Location
+        // 나머지 받기
+        theOthersDataArray = rankingModel.theOthers
+//        reportRanking.tableView.reloadData()
 
     }
     
@@ -117,15 +130,10 @@ class LocationDataViewController: UIViewController {
         guard let jachiModel = jachiReportRankingModel else {return}
                 
         // top3 ranking 받기
-        for x in jachiModel.result.top3Report {
-            LocationDataViewController.jachiTop3DataArray.append(x)
-        }
-        
-        for x in jachiModel.result.theOthers {
-            LocationDataViewController.jachiTheOthersDataArray.append(x)
-        }
-        
-        reportRanking.tableView.reloadData()
+        jachiTop3DataArray = jachiModel.result.top3Report
+        // 나머지 받기
+        jachiTheOthersDataArray = jachiModel.result.theOthers
+//        reportRanking.tableView.reloadData()
     }
 
     //MARK: - API
@@ -142,6 +150,7 @@ class LocationDataViewController: UIViewController {
         }
     }
     
+    // 버튼 누를 시
     private func getJachiRequest(_ s:String) {
         JachiReportRankingManger.shared.getJachiReport(s: s) { [weak self] (error, locationReport) in
             
@@ -155,6 +164,27 @@ class LocationDataViewController: UIViewController {
                 print("보고서: \(locationReport)")
                 self?.jachiReportRankingModel = locationReport
             }
+        }
+    }
+}
+
+//MARK: - RankingViewDelegate
+extension LocationDataViewController: RankingViewDelegate {
+    // 지역별 셀을 눌렀을 때
+    func tapedLocation(name: String) {
+        self.jachiDetail.alpha = 1
+        self.jachiDetail.titleLabel.text = name
+    }
+}
+
+//MARK: - MapViewDelegate
+extension LocationDataViewController: MapViewDelegate {
+    func jachiViewAppear(isHidden: Bool, title: String) {
+        if isHidden {
+            jachiDetail.alpha = 0
+        } else {
+            jachiDetail.alpha = 1
+            jachiDetail.titleLabel.text = title
         }
     }
 }

@@ -8,8 +8,25 @@
 import UIKit
 import SnapKit
 
+protocol RankingViewDelegate: AnyObject {
+    func tapedLocation(name: String)
+}
+
 class RankingView: UIView {
 
+    var top3DataArray: [Top3Data] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var theOthersDataArray: [TheOthersData] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    weak var delegate: RankingViewDelegate?
+    
     //MARK: - Properties
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -36,7 +53,8 @@ class RankingView: UIView {
 //    private var first_cell = Top3View(frame: .zero, imgName: "gold-medal", title: "서대문구", cnt: "40")
 //    private var second_cell = Top3View(frame: .zero, imgName: "silver-medal", title: "강남구", cnt: "28")
 //    private var third_cell = Top3View(frame: .zero, imgName: "bronze-medal", title: "강북구", cnt: "18")
-    public let tableView = UITableView()
+    
+    let tableView = UITableView()
     private var basedTimeLabel: UILabel = {
         var label = UILabel()
         label.text = "2023.08.08 10시 기준"
@@ -131,15 +149,19 @@ extension RankingView: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RankingTableViewCell", for: indexPath) as? RankingTableViewCell else { return UITableViewCell()}
         
         if indexPath.section == 0 {
-            cell.name.text = "\(String(LocationDataViewController.top3DataArray[indexPath.row]!.guName))구"
-            cell.ranking.text = String(LocationDataViewController.top3DataArray[indexPath.row]!.rank)
-            cell.cnt.text = "총 \(String(LocationDataViewController.top3DataArray[indexPath.row]!.reportCount))회"
-            cell.gu_id = String(LocationDataViewController.top3DataArray[indexPath.row]!.guNum)
+            let top3model = top3DataArray[indexPath.row]
+            
+            cell.name.text = "\(String(top3model.guName))구"
+            cell.ranking.text = String(top3model.rank)
+            cell.cnt.text = "총 \(String(top3model.reportCount))회"
+            cell.gu_id = String(top3model.guNum)
         } else {
-            cell.name.text = "\(String(LocationDataViewController.theOthersDataArray[indexPath.row]!.guName))구"
-            cell.ranking.text = String(LocationDataViewController.theOthersDataArray[indexPath.row]!.rank)
-            cell.cnt.text = "총 \(String(LocationDataViewController.theOthersDataArray[indexPath.row]!.reportCount))회"
-            cell.gu_id = String(LocationDataViewController.top3DataArray[indexPath.row]!.guNum)
+            let theOtherModel = theOthersDataArray[indexPath.row]
+            
+            cell.name.text = "\(String(theOtherModel.guName))구"
+            cell.ranking.text = String(theOtherModel.rank)
+            cell.cnt.text = "총 \(String(theOtherModel.reportCount))회"
+            cell.gu_id = String(theOtherModel.guNum)
         }
         return cell
     }
@@ -160,18 +182,16 @@ extension RankingView: UITableViewDelegate, UITableViewDataSource {
 
                 jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
                 jachi.setTitleColor(UIColor.black, for: .normal)
-                LocationDataViewController.jachiDetail.alpha = 1
-                LocationDataViewController.jachiDetail.titleLabel.text = cell.name.text
+                self.delegate?.tapedLocation(name: cell.name.text ?? "")
             }
         }
         
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            print(LocationDataViewController.top3DataArray.count)
-            return LocationDataViewController.top3DataArray.count
+            return top3DataArray.count
         } else {
-            return LocationDataViewController.theOthersDataArray.count
+            return theOthersDataArray.count
         }
 
     }
