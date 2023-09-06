@@ -97,7 +97,6 @@ class HomeViewController: UIViewController {
         enableLocationServices()
     }
 
-
 //MARK: - set UI
     func setUIandConstraints() {
         configureMapView()

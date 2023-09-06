@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "phoneSelectedImage.png",
+      "filename" : "restoredPhone.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "phoneSelectedImage2.png",
+      "filename" : "restoredPhone2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "phoneSelectedImage3.png",
+      "filename" : "restoredPhone3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

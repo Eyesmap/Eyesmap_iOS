@@ -19,6 +19,19 @@ class ProfileViewController: UIViewController {
     }
     
 // MARK: - Properties
+    private lazy var profileScrollView: UIScrollView = {
+        $0.backgroundColor = .clear
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.showsVerticalScrollIndicator = true
+        $0.showsHorizontalScrollIndicator = false
+        $0.isScrollEnabled = true
+        // 이거 중요
+        $0.contentSize = contentView.bounds.size
+        return $0
+    }(UIScrollView())
+    
+    private lazy var contentView = UIView()
+    
     private let profileLabel: UILabel = {
         $0.text = "프로필"
         $0.font = UIFont.boldSystemFont(ofSize: 14)
@@ -128,7 +141,14 @@ class ProfileViewController: UIViewController {
         setupPageViewController()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getProfileRequest()
+    }
+    
 //MARK: - Set UI
+    
+//    view.addSubview(profileScrollView)
+//    profileScrollView.addSubview(contentView)
     private func setUI() {
         view.backgroundColor = .white
         

@@ -42,6 +42,8 @@ struct LocationReportRanking : Decodable {
 }
 
 struct ResultData : Decodable {
+    let allReportsCnt: Int
+    let currentDateAndHour: String
     let top3Location : [Top3Data]
     let theOthers : [TheOthersData]
 }

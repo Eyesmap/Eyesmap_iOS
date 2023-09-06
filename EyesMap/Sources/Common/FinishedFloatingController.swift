@@ -10,6 +10,7 @@ import SnapKit
 
 protocol FinishedFloatingControllerDelegate: AnyObject {
     func dismiss()
+    func showReportList()
 }
 
 enum FloatingType: CaseIterable {
@@ -154,12 +155,11 @@ class FinishedFloatingController: UIViewController {
 //MARK: - Selector
     @objc func okButtonTap() {
         self.dismiss(animated: true)
-        delegate?.dismiss()
+        self.delegate?.dismiss()
     }
     
     @objc func reportListButtonTap() {
         self.dismiss(animated: true)
-        delegate?.dismiss()
-        print("Delegate 신고 접수리스트 연결해야함")
+        self.delegate?.showReportList()
     }
 }

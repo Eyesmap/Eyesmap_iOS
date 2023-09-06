@@ -95,6 +95,14 @@ class ReportMapViewController: UIViewController {
         mapView.moveCamera(cameraUpdate)
     }
     
+    private func checkPlaceInSeoul(location: String) -> Bool {
+        if location.contains("서울특별시") {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 //MARK: - Handler
     @objc func deleteBtnTap() {
         self.dismiss(animated: true)
@@ -116,8 +124,18 @@ extension ReportMapViewController: NMFMapViewDelegate {
         let lat = targetLocation.coordinate.latitude
         let lng = targetLocation.coordinate.longitude
         
-        GeoCodingNetworkManager.shared.reverseGeocode(latitude: lat, longitude: lng) { location in
-            self.locationSettingView.locationLabel.text = location
+        GeoCodingNetworkManager.shared.reverseGeocode(latitude: lat, longitude: lng) { [weak self] location in
+            if self?.checkPlaceInSeoul(location: location) == true {
+                self?.locationSettingView.locationLabel.text = location
+                self?.locationSettingView.locationLabel.textColor = .black
+                self?.locationSettingView.locationSettingButton.isEnabled = true
+                self?.locationSettingView.locationSettingButton.backgroundColor = .black
+            } else {
+                self?.locationSettingView.locationLabel.text = "서울 지역이 아닙니다."
+                self?.locationSettingView.locationLabel.textColor = .red
+                self?.locationSettingView.locationSettingButton.isEnabled = false
+                self?.locationSettingView.locationSettingButton.backgroundColor = .systemGray2
+            }
         }
     }
     
@@ -126,7 +144,8 @@ extension ReportMapViewController: NMFMapViewDelegate {
             guard let self = self else { return }
             let centerLatLng = self.mapView.cameraPosition.target
             self.targetMarker.position = centerLatLng
-            print(self.targetMarker.position)
+            self.targetLocation = CLLocation(latitude: centerLatLng.lat, longitude: centerLatLng.lng)
+            print(centerLatLng)
         }
         
     }

@@ -124,7 +124,6 @@ class ReportNetworkManager {
     // 신고 복구
     func restoreComplaintRequest(images: [UIImage], reportId: String, completion: @escaping(Bool) -> Void) {
         let router = reportRouter.restoreComplaint
-        var requestData: Data?
         
         //multipart formdata
         AF.upload(multipartFormData: { [weak self] multipartFormData in
@@ -132,23 +131,23 @@ class ReportNetworkManager {
             
             // 복구 사진 append
             for i in 0 ..< images.count {
-                if let image = images[i].pngData() {
-                    multipartFormData.append(image, withName: "images", fileName: self.getImageName(name: "restore"), mimeType: "image/jpeg")
+                if let image = images[i].jpegData(compressionQuality: 0.7) {
+                    multipartFormData.append(image, withName: "images", fileName: "\(i)_\(self.getImageName(name: "restore"))", mimeType: "image/jpeg")
                 }
             }
             
             // parameter append
-            let pram = ["reportId": reportId]
+            let param = ["reportId": reportId]
             
+            var requestData = ""
             do {
-                let requestPayload = try JSONSerialization.data(withJSONObject: pram, options: [])
-                requestData = requestPayload
+                let requestPayload = try JSONSerialization.data(withJSONObject: param, options: [])
+                requestData = String(data: requestPayload, encoding: .utf8) ?? ""
             } catch {
                 print(error.localizedDescription)
             }
             
-            guard let requestData = requestData else { return }
-            multipartFormData.append(requestData, withName: "createRestoreReportRequest", mimeType: "application/json")
+            multipartFormData.append("\(requestData)".data(using: .utf8)!, withName: "createRestoreReportRequest", mimeType: "application/json")
             
         }, to: router.url, method: router.method, headers: router.headers)
         .responseDecodable(of: ResoreComplaintResultModel.self) { response in
@@ -168,38 +167,46 @@ class ReportNetworkManager {
     func createComplaintRequest(images: [UIImage], parameters: CreateComplaintRequestModel, completion: @escaping(Bool) -> Void) {
         let router = reportRouter.createComplaint
         
-        var requestData: Data?
-        
         //multipart formdata
         AF.upload(multipartFormData: { [weak self] multipartFormData in
             guard let self = self else { return }
             
             // 복구 사진 append
             for i in 0 ..< images.count {
-                if let image = images[i].pngData() {
-                    multipartFormData.append(image, withName: "images", fileName: self.getImageName(name: "restore"), mimeType: "image/jpeg")
+                if let image = images[i].jpegData(compressionQuality: 0.7) {
+                    multipartFormData.append(image, withName: "images", fileName: "\(i)_\(self.getImageName(name: "create"))", mimeType: "image/jpeg")
                 }
             }
             
+            let param: [String: Any] = [
+                "address": parameters.address,
+                "gpsX": parameters.gpsX,
+                "gpsY": parameters.gpsY,
+                "title": parameters.title,
+                "contents": parameters.contents,
+                "damagedStatus": parameters.damagedStatus,
+                "sort": parameters.sort
+            ]
+
             // parameter append
+            var requestData = ""
             do {
-                let requestPayload = try JSONSerialization.data(withJSONObject: parameters, options: [])
-                requestData = requestPayload
+                let requestPayload = try JSONSerialization.data(withJSONObject: param, options: [])
+                requestData = String(data: requestPayload, encoding: .utf8) ?? ""
             } catch {
                 print(error.localizedDescription)
             }
             
-            guard let requestData = requestData else { return }
-            multipartFormData.append(requestData, withName: "createRestoreReportRequest", mimeType: "application/json")
+            multipartFormData.append("\(requestData)".data(using: .utf8)!, withName: "createReportRequest", mimeType: "application/json")
             
         }, to: router.url, method: router.method, headers: router.headers)
         .responseDecodable(of: CreateComplaintResultModel.self) { response in
             switch response.result {
             case .success(let data):
-                print("신고 복구 result = \(data)")
+                print("신고 생성 result = \(data)")
                 completion(true)
             case .failure(let error):
-                print("신고 복구 error = \(error)")
+                print("신고 생성 error = \(error)")
                 completion(false)
             }
         }

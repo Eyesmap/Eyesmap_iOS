@@ -13,7 +13,7 @@ enum ProfileRouter {
     case getReportList
     case getSympathyList
     case deleteProfileImage
-    case uploadProfileImage
+    case updateProfile
 }
 
 extension ProfileRouter: HttpRouter {
@@ -36,7 +36,7 @@ extension ProfileRouter: HttpRouter {
             return "/api/account/dangerouscnt/list"
         case .deleteProfileImage:
             return "/api/account/profile/image/init"
-        case .uploadProfileImage:
+        case .updateProfile:
             return "/api/account/profile/image/update"
         }
     }
@@ -51,7 +51,7 @@ extension ProfileRouter: HttpRouter {
             return .post
         case .deleteProfileImage:
             return .get
-        case .uploadProfileImage:
+        case .updateProfile:
             return .post
         }
     }

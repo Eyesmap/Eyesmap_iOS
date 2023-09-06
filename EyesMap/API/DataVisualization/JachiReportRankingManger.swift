@@ -11,15 +11,14 @@ import Alamofire
 class JachiReportRankingManger {
     //MARK: - shared
     static let shared = JachiReportRankingManger()
-    let reportRouter = ReportRouter.self
+    let rankingRouter = RankingRouter.self
     
     //MARK: - Functons
     
     // 자치 신고순 api
-    func getJachiReport(s: String, completion: @escaping (Error?, JachiReportRanking?) -> Void) {
-        let router = RankingRouter.getJachiReport
-        print(router.url+s)
-        AF.request(router.url+s, method: router.method, headers: router.headers)
+    func getJachiReport(gu_Id: Int, completion: @escaping (Error?, JachiReportRanking?) -> Void) {
+        let router = rankingRouter.getJachiReport(gu_id: gu_Id)
+        AF.request(router.url, method: router.method, headers: router.headers)
             .validate(statusCode: 200..<500)
             .responseDecodable(of:JachiReportRanking.self) { response in
                 switch response.result {

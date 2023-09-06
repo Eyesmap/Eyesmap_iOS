@@ -50,7 +50,7 @@ class JachiDetailView: UIView {
         return btn
     }()
     private let tableView = UITableView()
-    private var basedTimeLabel: UILabel = {
+    var basedTimeLabel: UILabel = {
         var label = UILabel()
         label.text = "2023.08.08 10시 기준"
         label.textColor = UIColor(red: 85/255, green: 131/255, blue: 236/255, alpha: 1)
@@ -65,7 +65,8 @@ class JachiDetailView: UIView {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(JachiTableViewCell.self, forCellReuseIdentifier: "RankingTableViewCell")
+        tableView.register(JachiTableViewCell.self, forCellReuseIdentifier: JachiTableViewCell.top3Identifier)
+        tableView.register(JachiTableViewCell.self, forCellReuseIdentifier: JachiTableViewCell.otherIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = UITableView.automaticDimension
@@ -142,18 +143,18 @@ class JachiDetailView: UIView {
 
 extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.top3Identifier, for: indexPath) as? JachiTableViewCell,
-              let otherCell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.otherIdentifier, for: indexPath) as? JachiTableViewCell else { return UITableViewCell()}
-        
-        top3Cell.type = .top3
-        otherCell.type = .other
-        
         if indexPath.section == 0 {
+            guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.top3Identifier, for: indexPath) as? JachiTableViewCell else { return UITableViewCell() }
+            top3Cell.type = .top3
+            
             let model = jachiTop3DataArray[indexPath.row]
             top3Cell.top3Model = model
             
             return top3Cell
         } else {
+            guard let otherCell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.otherIdentifier, for: indexPath) as? JachiTableViewCell else { return UITableViewCell() }
+            otherCell.type = .other
+            
             let model = jachiTheOthersDataArray[indexPath.row]
             otherCell.theOtherModel = model
             
@@ -175,11 +176,10 @@ extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 75
-        } else {
             return 50
+        } else {
+            return 40
         }
     }
-    
     
 }

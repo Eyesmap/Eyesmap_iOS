@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol RankingViewDelegate: AnyObject {
-    func tapedLocation(name: String)
+    func tapedLocation(name: String, gu_Id: Int)
 }
 
 class RankingView: UIView {
@@ -52,7 +52,7 @@ class RankingView: UIView {
     }()
     
     let tableView = UITableView()
-    private var basedTimeLabel: UILabel = {
+    var basedTimeLabel: UILabel = {
         var label = UILabel()
         label.text = "2023.08.08 10시 기준"
         label.textColor = UIColor(red: 85/255, green: 131/255, blue: 236/255, alpha: 1)
@@ -68,7 +68,8 @@ class RankingView: UIView {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(RankingTableViewCell.self, forCellReuseIdentifier: "RankingTableViewCell")
+        tableView.register(RankingTableViewCell.self, forCellReuseIdentifier: RankingTableViewCell.top3Identifier)
+        tableView.register(RankingTableViewCell.self, forCellReuseIdentifier: RankingTableViewCell.otherIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = UITableView.automaticDimension
@@ -127,19 +128,18 @@ class RankingView: UIView {
 
 extension RankingView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.top3Identifier, for: indexPath) as? RankingTableViewCell,
-              let otherCell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.otherIdentifier, for: indexPath) as? RankingTableViewCell else { return UITableViewCell() }
-        
-        top3Cell.type = .top3
-        otherCell.type = .other
-        
         if indexPath.section == 0 {
+            guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.top3Identifier, for: indexPath) as? RankingTableViewCell else { return UITableViewCell() }
+            top3Cell.type = .top3
+            
             let top3model = top3DataArray[indexPath.row]
             top3Cell.top3Model = top3model
             
             return top3Cell
         } else {
+            guard let otherCell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.otherIdentifier, for: indexPath) as? RankingTableViewCell else { return UITableViewCell() }
+            otherCell.type = .other
+            
             let theOtherModel = theOthersDataArray[indexPath.row]
             otherCell.theOtherModel = theOtherModel
             
@@ -149,9 +149,9 @@ extension RankingView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 50
+            return 40
         } else {
-            return 38
+            return 35
         }
         
     }
@@ -161,28 +161,28 @@ extension RankingView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.top3Identifier, for: indexPath) as? RankingTableViewCell,
-              let otherCell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.otherIdentifier, for: indexPath) as? RankingTableViewCell else { return }
-        
         if indexPath.section == 0 {
+            let top3model = top3DataArray[indexPath.row]
+            
             for jachi in MapView.jachiArray {
                 // 자치구 배열에 있는 객체의 text와 title이 같을 때
-                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == top3Cell.name.text) {
+                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == "\(top3model.guName)구") {
                     jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
                     jachi.setTitleColor(UIColor.black, for: .normal)
                 }
             }
-            self.delegate?.tapedLocation(name: top3Cell.name.text ?? "")
+            self.delegate?.tapedLocation(name: top3model.guName, gu_Id: top3model.guNum)
         } else {
+            let theOtherModel = theOthersDataArray[indexPath.row]
+            
             for jachi in MapView.jachiArray {
                 // 자치구 배열에 있는 객체의 text와 title이 같을 때
-                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == otherCell.name.text) {
+                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == "\(theOtherModel.guName)구") {
                     jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
                     jachi.setTitleColor(UIColor.black, for: .normal)
                 }
             }
-            self.delegate?.tapedLocation(name: otherCell.name.text ?? "")
+            self.delegate?.tapedLocation(name: theOtherModel.guName, gu_Id: theOtherModel.guNum)
         }
         
     }

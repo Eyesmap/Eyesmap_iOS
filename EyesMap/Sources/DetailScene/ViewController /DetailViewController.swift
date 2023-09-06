@@ -358,6 +358,10 @@ extension DetailViewController: FinishedFloatingControllerDelegate {
             iv.removeFromSuperview()
         }
     }
+    
+    func showReportList() {
+        // report type에만 필요
+    }
 }
 
 //MARK: - LoginViewControllerDelegate
