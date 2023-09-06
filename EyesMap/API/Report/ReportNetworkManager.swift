@@ -131,7 +131,7 @@ class ReportNetworkManager {
             
             // 복구 사진 append
             for i in 0 ..< images.count {
-                if let image = images[i].pngData() {
+                if let image = images[i].jpegData(compressionQuality: 0.7) {
                     multipartFormData.append(image, withName: "images", fileName: "\(i)_\(self.getImageName(name: "restore"))", mimeType: "image/jpeg")
                 }
             }

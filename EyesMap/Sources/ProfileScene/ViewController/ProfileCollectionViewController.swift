@@ -48,7 +48,7 @@ class ProfileCollectionViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
-        cv.isScrollEnabled = false
+        cv.isScrollEnabled = true
         cv.showsHorizontalScrollIndicator = false
         cv.allowsMultipleSelection = false
         cv.isPagingEnabled = false

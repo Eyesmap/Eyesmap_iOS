@@ -149,9 +149,14 @@ class ModifyProfileViewController: UIViewController {
             }
         } else {
             guard let selectedProfileImage = selectedProfileImage else { return }
-            ProfileNetworkManager.shared.uploadProfileImageRequest(image: selectedProfileImage) { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-                self?.delegate?.dismissView()
+            ProfileNetworkManager.shared.updateProfileImageRequest(image: selectedProfileImage, nickname: textfieldString) { [weak self] b in
+                if b {
+                    self?.navigationController?.popViewController(animated: true)
+                    self?.delegate?.dismissView()
+                } else {
+                    self?.navigationController?.popViewController(animated: true)
+                    // Toast 실패
+                }
             }
         }
     }

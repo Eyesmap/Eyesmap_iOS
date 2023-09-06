@@ -103,26 +103,39 @@ class ProfileNetworkManager {
         }
     }
     
-    // 프로필 사진 변경
-    func uploadProfileImageRequest(image: UIImage, completion: @escaping() -> Void) {
-        let router = profileRouter.uploadProfileImage
+    // 프로필 변경
+    func updateProfileImageRequest(image: UIImage, nickname: String, completion: @escaping(Bool) -> Void) {
+        let router = profileRouter.updateProfile
         
         AF.upload(multipartFormData: { [weak self] multipartFormData in
             guard let self = self else { return }
             
             // 복구 사진 append
-            if let image = image.pngData() {
+            if let image = image.jpegData(compressionQuality: 0.7) {
                 multipartFormData.append(image, withName: "image", fileName: self.getImageName(name: "profile"), mimeType: "image/jpeg")
             }
+            
+            // parameter append
+            let param = ["nickname": nickname]
+            
+            var requestData = ""
+            do {
+                let requestPayload = try JSONSerialization.data(withJSONObject: param, options: [])
+                requestData = String(data: requestPayload, encoding: .utf8) ?? ""
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            multipartFormData.append("\(requestData)".data(using: .utf8)!, withName: "updateProfileImageReqeuestDto", mimeType: "application/json")
         }, to: router.url, method: router.method, headers: router.headers)
-        .responseDecodable(of: ResoreComplaintResultModel.self) { response in
+        .responseDecodable(of: MessageResultModel.self) { response in
             switch response.result {
             case .success(let data):
                 print("신고 복구 result = \(data)")
-                completion()
+                completion(true)
             case .failure(let error):
                 print("신고 복구 error = \(error)")
-                completion()
+                completion(false)
             }
         }
     }
