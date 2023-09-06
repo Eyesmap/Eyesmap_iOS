@@ -8,7 +8,14 @@
 import UIKit
 import SnapKit
 
+protocol SettingViewControllerDelegate: AnyObject {
+    func dismissSettingView()
+}
+
 class SettingViewController: UIViewController {
+    
+    weak var delegate: SettingViewControllerDelegate?
+    
 // MARK: - Properties
     private let titleLabel: UILabel = {
         $0.text = "음성안내 기능"
@@ -79,6 +86,15 @@ class SettingViewController: UIViewController {
     }(UIButton())
     
 // MARK: - Life Cycles
+    init(isOn: Bool) {
+        toggleButton.isOn = isOn
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -95,7 +111,7 @@ class SettingViewController: UIViewController {
     }
     
     func setupNavigationBackBar() {
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(dismissTap))
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
     }
@@ -213,11 +229,16 @@ class SettingViewController: UIViewController {
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @objc private func dismissTap() {
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.dismissSettingView()
+    }
 }
 
 //MARK: - CustomToggleButtonDelegate
 extension SettingViewController: CustomToggleButtonDelegate {
     func isOnValueChange(isOn: Bool) {
-        print("\(isOn)")
+        print("toggleButton: \(isOn)")
     }
 }

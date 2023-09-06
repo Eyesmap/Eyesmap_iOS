@@ -86,7 +86,16 @@ class CustomToggleButton: UIButton {
     
     //MARK: - 터치 입력 끝냈을 때 상태 변환
     @objc func toggleTap() {
-        self.setOn(on: !self.isOn, animated: true)
+        VoiceNetworkManager.shared.voiceOnOffRequest { [weak self] (error, model) in
+            if let error = error {
+                print("on/off Error: \(error.localizedDescription)")
+            }
+            
+            if let model = model {
+                print("on/off Network isOn - \(model.result)")
+                self?.setOn(on: model.result, animated: true)
+            }
+        }
     }
     
     func setOn(on: Bool, animated: Bool) {
