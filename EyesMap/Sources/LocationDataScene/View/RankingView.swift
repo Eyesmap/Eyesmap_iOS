@@ -116,7 +116,7 @@ class RankingView: UIView {
             make.top.equalTo(line.snp.bottom).offset(10)
             make.centerX.equalTo(self)
             make.width.equalTo(285)
-            make.bottom.equalTo(self.snp.bottom).inset(50)
+            make.bottom.equalTo(self.snp.bottom).inset(35)
         }
         basedTimeLabel.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.snp.bottom).inset(21)
@@ -149,9 +149,9 @@ extension RankingView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 40
+            return 36
         } else {
-            return 35
+            return 32
         }
         
     }

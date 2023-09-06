@@ -54,8 +54,8 @@ class LocationDataViewController: UIViewController {
     }(UIView())
     private let  totalReportView = TotalView()
     private let seoulMap = MapView(frame: CGRect(x: 0, y: 0, width: 375, height: 307))
-    private let reportRanking = RankingView()
-    private let jachiDetail = JachiDetailView()
+    private lazy var reportRanking = RankingView()
+    private lazy var jachiDetail = JachiDetailView()
     
     
     
@@ -70,18 +70,22 @@ class LocationDataViewController: UIViewController {
         getLocationReportRequest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getLocationReportRequest()
+    }
+    
     //MARK: - setUI
     private func setUI() {
         view.backgroundColor = .white
         reportRanking.delegate = self
         seoulMap.delegate = self
-        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
         contentView.addSubview(totalReportView)
         contentView.addSubview(seoulMap)
         contentView.addSubview(reportRanking)
         contentView.addSubview(jachiDetail)
-        scrollView.addSubview(contentView)
-        view.addSubview(scrollView)
+        
         
         scrollView.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -90,31 +94,27 @@ class LocationDataViewController: UIViewController {
         contentView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(1000)
         }
         totalReportView.snp.makeConstraints { (make) in
             make.top.equalTo(contentView.snp.top).inset(16)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(334.5)
+            make.leading.trailing.equalToSuperview().inset(25)
             make.height.equalTo(46)
         }
         seoulMap.snp.makeConstraints { (make) in
-            make.width.equalTo(375)
+            make.leading.trailing.equalToSuperview().inset(10)
             make.height.equalTo(307)
-            make.centerX.equalToSuperview()
             make.top.equalTo(totalReportView.snp.bottom).offset(34)
         }
         reportRanking.snp.makeConstraints { (make) in
-            make.width.equalTo(337)
-            make.height.equalTo(506)
-            make.centerX.equalTo(contentView)
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(580)
             make.top.equalTo(seoulMap.snp.bottom).offset(23)
         }
         jachiDetail.snp.makeConstraints { (make) in
-            make.width.equalTo(337)
-            make.height.equalTo(506)
-            make.centerX.equalTo(contentView)
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(650)
             make.top.equalTo(seoulMap.snp.bottom).offset(23)
+            make.bottom.equalTo(contentView.snp.bottom).inset(20)
         }
     }
     
