@@ -82,11 +82,22 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        switchButtonSetting()
+        functionSetting()
+        setupNavigationBackBar()
     }
     
-    func switchButtonSetting() {
+    func functionSetting() {
         toggleButton.delegate = self
+        
+        faqTermView.imageButton.addTarget(self, action: #selector(faqTap), for: .touchUpInside)
+        useTermView.imageButton.addTarget(self, action: #selector(useTermTap), for: .touchUpInside)
+        privateInfoTermView.imageButton.addTarget(self, action: #selector(privateInfoTermTap), for: .touchUpInside)
+    }
+    
+    func setupNavigationBackBar() {
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
 
 // MARK: - Set UI
@@ -177,6 +188,30 @@ class SettingViewController: UIViewController {
         actionAlert.addAction(cancel)
         
         present(actionAlert, animated: true)
+    }
+    
+    @objc private func faqTap() {
+        let vc = WebViewController()
+        vc.title = "FAQ"
+        vc.url = URL(string: Secret.shared.faqTerm)
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func useTermTap() {
+        let vc = WebViewController()
+        vc.title = "개인정보처리방침"
+        vc.url = URL(string: Secret.shared.serviceTerm)
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func privateInfoTermTap() {
+        let vc = WebViewController()
+        vc.title = "이용약관"
+        vc.url = URL(string: Secret.shared.privateInfoTerm)
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

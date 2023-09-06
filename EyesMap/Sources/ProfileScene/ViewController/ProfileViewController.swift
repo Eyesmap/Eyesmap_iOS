@@ -141,6 +141,10 @@ class ProfileViewController: UIViewController {
         setupPageViewController()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getProfileRequest()
+    }
+    
 //MARK: - Set UI
     
 //    view.addSubview(profileScrollView)
