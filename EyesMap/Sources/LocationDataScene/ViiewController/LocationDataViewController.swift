@@ -40,6 +40,11 @@ class LocationDataViewController: UIViewController {
             jachiDetail.jachiTheOthersDataArray = jachiTheOthersDataArray
         }
     }
+    var baseTime: String? {
+        didSet {
+            configureBaseTime()
+        }
+    }
     
     //MARK: - Properties
     private let scrollView = UIScrollView()
@@ -130,6 +135,14 @@ class LocationDataViewController: UIViewController {
         jachiTop3DataArray = jachiModel.result.top3Report
         // 나머지 받기
         jachiTheOthersDataArray = jachiModel.result.theOthers
+    
+    }
+    
+    private func configureBaseTime() {
+        guard let baseTime = baseTime else { return }
+        
+        reportRanking.basedTimeLabel.text = baseTime
+        jachiDetail.basedTimeLabel.text = baseTime
     }
     
     private func configureNavBar() {
@@ -149,6 +162,7 @@ class LocationDataViewController: UIViewController {
                 // 보고서를 성공적으로 가져온 경우 처리
                 print("보고서: \(locationReport)")
                 self?.rankingModel = locationReport.result
+                self?.baseTime = locationReport.result.currentDateAndHour
                 self?.totalReportView.label_1.text = "서울특별시 신고 현황 총 \(locationReport.result.allReportsCnt)개"
                 self?.totalReportView.basedTimeLabel.text = locationReport.result.currentDateAndHour
             }

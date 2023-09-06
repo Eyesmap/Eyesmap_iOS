@@ -50,7 +50,7 @@ class JachiDetailView: UIView {
         return btn
     }()
     private let tableView = UITableView()
-    private var basedTimeLabel: UILabel = {
+    var basedTimeLabel: UILabel = {
         var label = UILabel()
         label.text = "2023.08.08 10시 기준"
         label.textColor = UIColor(red: 85/255, green: 131/255, blue: 236/255, alpha: 1)
