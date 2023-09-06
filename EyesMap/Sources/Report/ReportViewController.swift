@@ -662,16 +662,21 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
     }
     
     @objc func Submit() {
-        print("submit")
+        var contents = ""
+        if detailTextView.text == "불편 신고 내용을 입력해주세요" {
+            contents = ""
+        } else {
+            contents = detailTextView.text
+        }
+        
         let model = CreateComplaintRequestModel(address: reportAddress,
                                                 gpsX: reportPosition.coordinate.longitude,
                                                 gpsY: reportPosition.coordinate.latitude,
                                                 title: titleTextfield.text ?? "",
-                                                contents: detailTextView.text ?? "",
-                                                damagedStatus: damagedStatus, // DamagedStatusType
-                                                sort: titleValue) // SortType
+                                                contents: contents,
+                                                damagedStatus: damagedStatus,
+                                                sort: titleValue)
         
-        print("submit model = \(model)")
         ReportNetworkManager.shared.createComplaintRequest(images: selectedImages, parameters: model) { [weak self] b in
             b ? self?.presentFinishedView() : self?.dismiss(animated: true)
         }

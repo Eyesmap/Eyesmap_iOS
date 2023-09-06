@@ -95,6 +95,14 @@ class ReportMapViewController: UIViewController {
         mapView.moveCamera(cameraUpdate)
     }
     
+    private func checkPlaceInSeoul(location: String) -> Bool {
+        if location.contains("서울특별시") {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 //MARK: - Handler
     @objc func deleteBtnTap() {
         self.dismiss(animated: true)
@@ -117,7 +125,17 @@ extension ReportMapViewController: NMFMapViewDelegate {
         let lng = targetLocation.coordinate.longitude
         
         GeoCodingNetworkManager.shared.reverseGeocode(latitude: lat, longitude: lng) { [weak self] location in
-            self?.locationSettingView.locationLabel.text = location
+            if self?.checkPlaceInSeoul(location: location) == true {
+                self?.locationSettingView.locationLabel.text = location
+                self?.locationSettingView.locationLabel.textColor = .black
+                self?.locationSettingView.locationSettingButton.isEnabled = true
+                self?.locationSettingView.locationSettingButton.backgroundColor = .black
+            } else {
+                self?.locationSettingView.locationLabel.text = "서울 지역이 아닙니다."
+                self?.locationSettingView.locationLabel.textColor = .red
+                self?.locationSettingView.locationSettingButton.isEnabled = false
+                self?.locationSettingView.locationSettingButton.backgroundColor = .systemGray2
+            }
         }
     }
     
