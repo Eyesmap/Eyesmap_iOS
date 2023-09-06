@@ -28,7 +28,7 @@ class HallTableViewCell: UITableViewCell {
     private let ranking: UILabel = {
         let label = UILabel()
         label.text = "1"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     private let medalImageView: UIImageView = {
@@ -38,13 +38,13 @@ class HallTableViewCell: UITableViewCell {
     let name: UILabel = {
         let label = UILabel()
         label.text = "홍길동"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     private let cnt: UILabel = {
         let label = UILabel()
         label.text = "총 18회"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         label.textColor = UIColor(red: 90/255, green: 89/255, blue: 90/255, alpha: 1)
         return label
     }()
@@ -86,7 +86,6 @@ class HallTableViewCell: UITableViewCell {
         switch type {
         case .top3:
             contentView.addSubview(medalImageView)
-            name.font = UIFont.boldSystemFont(ofSize: 18)
             
             medalImageView.snp.makeConstraints { make in
                 make.leading.equalToSuperview().inset(26)

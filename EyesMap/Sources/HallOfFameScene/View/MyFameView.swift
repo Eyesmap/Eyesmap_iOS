@@ -34,13 +34,14 @@ class MyFameView: UIView {
     private let userName: UILabel = {
         let label = UILabel()
         label.text = "김미나"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     private let reportCnt: UILabel = {
         let label = UILabel()
         label.text = "총 40회"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(red: 37/255, green: 38/255, blue: 42/255, alpha: 1)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     

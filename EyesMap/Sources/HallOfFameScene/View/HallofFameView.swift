@@ -29,6 +29,11 @@ class HallOfFameView: UIView {
         let title = UILabel()
         title.backgroundColor = .white
         title.text = "8월 신고자분들께 감사합니다"
+        title.font = UIFont.boldSystemFont(ofSize: 20)
+        let attributtedString = NSMutableAttributedString(string: title.text!)
+        attributtedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(red: 221/255, green: 112/255, blue: 97/255, alpha: 1), range: (title.text! as NSString).range(of:"8"))
+                
+        title.attributedText = attributtedString
         return title
     }()
     
@@ -36,7 +41,7 @@ class HallOfFameView: UIView {
         let line = UIView()
         line.heightAnchor.constraint(equalToConstant: 1).isActive = true
         line.widthAnchor.constraint(equalToConstant: 315).isActive = true
-        line.layer.borderColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 0.5).cgColor
+        line.layer.borderColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 1).cgColor
         line.layer.borderWidth = 1
         
         
