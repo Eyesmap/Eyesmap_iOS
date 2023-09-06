@@ -213,7 +213,7 @@ class RestoreAlertController: UIViewController {
         phoneImageView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).inset(-15)
             make.centerX.equalToSuperview()
-            make.height.equalTo(124)
+            make.height.equalTo(138)
             make.width.equalTo(123)
         }
         
@@ -294,21 +294,19 @@ class RestoreAlertController: UIViewController {
     private func configure(bool: Bool) {
         // 이미지가 선택 되었을 때
         if bool {
-            titleLabel.text = "\(selectedProfileImages.count) 개의 사진을 업로드 할까요?"
+            let attributedString = NSMutableAttributedString(string: "\(selectedProfileImages.count)", attributes: [.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.alertDeleteButton])
+            attributedString.append(NSMutableAttributedString(string: " 개의 사진을 업로드 할까요?", attributes: [.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black]))
+            
+            titleLabel.attributedText = attributedString
             phoneImageView.image = UIImage(named: "phoneSelectedImage")
-            phoneImageView.snp.makeConstraints { make in
-                make.height.equalTo(155)
-                make.width.equalTo(65)
-            }
             selectImageButton.alpha = 0
             selectedButtonStackView.alpha = 1
         } else {
-            titleLabel.text = "복구 완료된 사진을 올려주세요"
+            let attributedString = NSMutableAttributedString(string: "복구 완료된 사진을 올려주세요", attributes: [.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black])
+            
+            titleLabel.attributedText = attributedString
+            titleLabel.textColor = .black
             phoneImageView.image = UIImage(named: "uploadImage")
-            phoneImageView.snp.makeConstraints { make in
-                make.height.equalTo(124)
-                make.width.equalTo(105)
-            }
             selectImageButton.alpha = 1
             selectedButtonStackView.alpha = 0
         }
