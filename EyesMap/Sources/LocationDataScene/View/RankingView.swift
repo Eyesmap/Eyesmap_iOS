@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol RankingViewDelegate: AnyObject {
-    func tapedLocation(name: String)
+    func tapedLocation(name: String, gu_Id: Int)
 }
 
 class RankingView: UIView {
@@ -161,28 +161,28 @@ extension RankingView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.top3Identifier, for: indexPath) as? RankingTableViewCell,
-              let otherCell = tableView.dequeueReusableCell(withIdentifier: RankingTableViewCell.otherIdentifier, for: indexPath) as? RankingTableViewCell else { return }
-        
         if indexPath.section == 0 {
+            let top3model = top3DataArray[indexPath.row]
+            
             for jachi in MapView.jachiArray {
                 // 자치구 배열에 있는 객체의 text와 title이 같을 때
-                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == top3Cell.name.text) {
+                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == top3model.guName) {
                     jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
                     jachi.setTitleColor(UIColor.black, for: .normal)
                 }
             }
-            self.delegate?.tapedLocation(name: top3Cell.name.text ?? "")
+            self.delegate?.tapedLocation(name: top3model.guName, gu_Id: top3model.guNum)
         } else {
+            let theOtherModel = theOthersDataArray[indexPath.row]
+            
             for jachi in MapView.jachiArray {
                 // 자치구 배열에 있는 객체의 text와 title이 같을 때
-                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == otherCell.name.text) {
+                if (jachi.titleLabel?.text?.components(separatedBy: " ")[0] == theOtherModel.guName) {
                     jachi.backgroundColor = UIColor(red: 250/255, green: 207/255, blue: 6/255, alpha: 1)
                     jachi.setTitleColor(UIColor.black, for: .normal)
                 }
             }
-            self.delegate?.tapedLocation(name: otherCell.name.text ?? "")
+            self.delegate?.tapedLocation(name: theOtherModel.guName, gu_Id: theOtherModel.guNum)
         }
         
     }

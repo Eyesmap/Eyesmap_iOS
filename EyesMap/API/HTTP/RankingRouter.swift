@@ -10,7 +10,7 @@ import Alamofire
 
 enum RankingRouter {
     case getLocationReport
-    case getJachiReport
+    case getJachiReport(gu_id: Int)
 }
 
 extension RankingRouter: HttpRouter {
@@ -27,8 +27,8 @@ extension RankingRouter: HttpRouter {
         switch self {
         case .getLocationReport:
             return "/api/dataanl/gu/ranking/list"
-        case .getJachiReport:
-            return "/api/dataanl/fetch/count/"
+        case .getJachiReport(let gu_Id):
+            return "/api/dataanl/fetch/count/\(gu_Id)"
         }
     }
     
@@ -42,9 +42,7 @@ extension RankingRouter: HttpRouter {
     }
     
     var headers: HTTPHeaders? {
-        guard let accessToken = TokenManager.getUserAccessToken() else { return HTTPHeaders() }
-        return ["Content-Type" : "application/json",
-                "Authorization" : "\(accessToken)"]
+        return ["Content-Type" : "application/json"]
     }
     
     var parameters: Parameters? {

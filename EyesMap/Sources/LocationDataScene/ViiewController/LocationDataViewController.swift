@@ -145,8 +145,8 @@ class LocationDataViewController: UIViewController {
     }
     
     // 버튼 누를 시
-    private func getJachiRequest(_ s:String) {
-        JachiReportRankingManger.shared.getJachiReport(s: s) { [weak self] (error, locationReport) in
+    private func getJachiRequest(gu_id: Int) {
+        JachiReportRankingManger.shared.getJachiReport(gu_Id: gu_id) { [weak self] (error, locationReport) in
             
             if let error = error {
                 // 오류가 발생한 경우 처리
@@ -165,12 +165,12 @@ class LocationDataViewController: UIViewController {
 //MARK: - RankingViewDelegate
 extension LocationDataViewController: RankingViewDelegate {
     // 지역별 셀을 눌렀을 때
-    func tapedLocation(name: String) {
+    func tapedLocation(name: String, gu_Id: Int) {
         self.jachiDetail.alpha = 1
         self.jachiDetail.titleLabel.text = name
         
         // 자치 API
-        self.getJachiRequest(name)
+        self.getJachiRequest(gu_id: gu_Id)
     }
 }
 

@@ -28,7 +28,7 @@ class RankingTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         return imageView
     }()
-    let name: UILabel = {
+    private let name: UILabel = {
         let label = UILabel()
         label.text = "종로구"
         return label
@@ -40,7 +40,7 @@ class RankingTableViewCell: UITableViewCell {
         label.textColor = UIColor(red: 90/255, green: 89/255, blue: 90/255, alpha: 1)
         return label
     }()
-    public var gu_id: String = "hi"
+    public var gu_id: Int = 0
     
     var type: DataCellType = .top3
     
@@ -111,7 +111,7 @@ class RankingTableViewCell: UITableViewCell {
         medalImageView.sd_setImage(with: medalUrl)
         name.text = "\(model.guName)구"
         cnt.text = "총 \(model.reportCount) 회"
-        gu_id = "\(model.guNum)"
+        gu_id = model.guNum
     }
     
     private func theOtherConfigure() {
@@ -120,6 +120,6 @@ class RankingTableViewCell: UITableViewCell {
         ranking.text = "\(model.rank)"
         name.text = "\(model.guName)구"
         cnt.text = "총 \(model.reportCount) 회"
-        gu_id = "\(model.guNum)"
+        gu_id = model.guNum
     }
 }
