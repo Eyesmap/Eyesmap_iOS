@@ -671,6 +671,7 @@ class ReportViewController: UIViewController, UITextDragDelegate, UITextViewDele
                                                 damagedStatus: damagedStatus, // DamagedStatusType
                                                 sort: titleValue) // SortType
         
+        print("submit model = \(model)")
         ReportNetworkManager.shared.createComplaintRequest(images: selectedImages, parameters: model) { [weak self] b in
             b ? self?.presentFinishedView() : self?.dismiss(animated: true)
         }
@@ -789,9 +790,28 @@ extension ReportViewController: FloatingPanelControllerDelegate {
 
 extension ReportViewController: FinishedFloatingControllerDelegate {
     func dismiss() {
+        print("확인 Tap")
         if let iv = view.subviews.last {
             iv.removeFromSuperview()
             self.dismiss(animated: true)
+            // 홈 탭으로 이동해서 재시작
+            if let tabBarVC = self.tabBarController as? TabBarController {
+                tabBarVC.configureAuth()
+            }
+        }
+    }
+    
+    func showReportList() {
+        print("신고내역 가기 Tap")
+        if let iv = view.subviews.last {
+            iv.removeFromSuperview()
+            self.dismiss(animated: true) {
+                // 프로필 탭으로 이동
+                if let tabBarVC = self.tabBarController as? TabBarController {
+                    tabBarVC.configureAuth()
+                    tabBarVC.selectedIndex = 3
+                }
+            }
         }
     }
 }

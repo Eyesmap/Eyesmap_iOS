@@ -6,9 +6,21 @@
 //
 
 import UIKit
+import SnapKit
 
 class JachiDetailView: UIView {
 
+    var jachiTop3DataArray: [JachiTop3Data] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var jachiTheOthersDataArray: [JachiTheOthersData] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     //MARK: - Properties
     public let titleLabel: UILabel = {
         let label = UILabel()
@@ -32,9 +44,6 @@ class JachiDetailView: UIView {
         view.backgroundColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 1)
         return view
     }()
-    private var first_cell = Top3View(frame: .zero, imgName: "gold-medal", title: "인도 도로블록 파손", cnt: "101", address: "서울 중구 세종대로 지하 2")
-    private var second_cell = Top3View(frame: .zero, imgName: "silver-medal", title: "강남구", cnt: "101", address: "서울 중구 세종대로 지하 2")
-    private var third_cell = Top3View(frame: .zero, imgName: "bronze-medal", title: "강북구", cnt: "101", address: "서울 중구 세종대로 지하 2")
     private let backBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "back"),  for: .normal)
@@ -49,8 +58,6 @@ class JachiDetailView: UIView {
         return label
     }()
     
-    
-    
     //MARK: - Life Cycles
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,7 +65,7 @@ class JachiDetailView: UIView {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(RankingTableViewCell.self, forCellReuseIdentifier: "RankingTableViewCell")
+        tableView.register(JachiTableViewCell.self, forCellReuseIdentifier: "RankingTableViewCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = UITableView.automaticDimension
@@ -81,9 +88,6 @@ class JachiDetailView: UIView {
         addSubview(titleLabel)
         addSubview(countLabel)
         addSubview(line)
-        addSubview(first_cell)
-        addSubview(second_cell)
-        addSubview(third_cell)
         addSubview(backBtn)
         addSubview(tableView)
         addSubview(basedTimeLabel)
@@ -104,20 +108,8 @@ class JachiDetailView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.centerX.equalTo(self)
         }
-        first_cell.snp.makeConstraints { (make) in
-            make.top.equalTo(line.snp.bottom).offset(16)
-            make.centerX.equalTo(self)
-        }
-        second_cell.snp.makeConstraints {(make) in
-            make.top.equalTo(first_cell.snp.bottom).offset(14)
-            make.centerX.equalTo(self)
-        }
-        third_cell.snp.makeConstraints { (make) in
-            make.top.equalTo(second_cell.snp.bottom).offset(14)
-            make.centerX.equalTo(self)
-        }
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(third_cell.snp.bottom).offset(10)
+            make.top.equalTo(line.snp.bottom).offset(10)
             make.centerX.equalTo(self)
             make.width.equalTo(285)
             make.bottom.equalTo(self.snp.bottom).inset(50)
@@ -150,13 +142,44 @@ class JachiDetailView: UIView {
 
 extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RankingTableViewCell", for: indexPath) as? RankingTableViewCell else { return UITableViewCell()}
+        guard let top3Cell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.top3Identifier, for: indexPath) as? JachiTableViewCell,
+              let otherCell = tableView.dequeueReusableCell(withIdentifier: JachiTableViewCell.otherIdentifier, for: indexPath) as? JachiTableViewCell else { return UITableViewCell()}
         
-        return cell
+        top3Cell.type = .top3
+        otherCell.type = .other
+        
+        if indexPath.section == 0 {
+            let model = jachiTop3DataArray[indexPath.row]
+            top3Cell.top3Model = model
+            
+            return top3Cell
+        } else {
+            let model = jachiTheOthersDataArray[indexPath.row]
+            otherCell.theOtherModel = model
+            
+            return otherCell
+        }
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {        return 4
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return jachiTop3DataArray.count
+        } else {
+            return jachiTheOthersDataArray.count
+        }
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if indexPath.section == 0 {
+            return 75
+        } else {
+            return 50
+        }
     }
+    
+    
 }

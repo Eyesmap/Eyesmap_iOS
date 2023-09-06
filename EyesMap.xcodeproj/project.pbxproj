@@ -14,8 +14,11 @@
 		371221AE2A976E7B00AEA499 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221AD2A976E7B00AEA499 /* UIButton.swift */; };
 		371221B02A977ABF00AEA499 /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221AF2A977ABF00AEA499 /* TotalView.swift */; };
 		371221B22A979AC600AEA499 /* JachiDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B12A979AC600AEA499 /* JachiDetailView.swift */; };
-		371221B42A97B19900AEA499 /* Top3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B32A97B19900AEA499 /* Top3View.swift */; };
 		371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */; };
+		3719E9B82AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3719E9B72AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift */; };
+		3719E9BA2AA4CBB000B0E1B2 /* JachiTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3719E9B92AA4CBB000B0E1B2 /* JachiTableViewCell.swift */; };
+		375264A12AA0CDD800A68801 /* RankingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375264A02AA0CDD800A68801 /* RankingRouter.swift */; };
+		37D3D0582A9E013C00EC0F09 /* LocationReportRankingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D3D0572A9E013C00EC0F09 /* LocationReportRankingManager.swift */; };
 		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
 		37ED1DD22A93488A00636B6A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD12A93488A00636B6A /* TextField.swift */; };
 		47198FA02A94855B00349181 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47198F9F2A94855B00349181 /* TokenManager.swift */; };
@@ -98,8 +101,11 @@
 		371221AD2A976E7B00AEA499 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		371221AF2A977ABF00AEA499 /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
 		371221B12A979AC600AEA499 /* JachiDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiDetailView.swift; sourceTree = "<group>"; };
-		371221B32A97B19900AEA499 /* Top3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top3View.swift; sourceTree = "<group>"; };
 		371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
+		3719E9B72AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiReportRankingManger.swift; sourceTree = "<group>"; };
+		3719E9B92AA4CBB000B0E1B2 /* JachiTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiTableViewCell.swift; sourceTree = "<group>"; };
+		375264A02AA0CDD800A68801 /* RankingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRouter.swift; sourceTree = "<group>"; };
+		37D3D0572A9E013C00EC0F09 /* LocationReportRankingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportRankingManager.swift; sourceTree = "<group>"; };
 		37ED1DCF2A93486700636B6A /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		37ED1DD12A93488A00636B6A /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		3AB3AC756AE5E04037318087 /* Pods-EyesMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EyesMap.debug.xcconfig"; path = "Target Support Files/Pods-EyesMap/Pods-EyesMap.debug.xcconfig"; sourceTree = "<group>"; };
@@ -220,7 +226,6 @@
 				371221A62A97535100AEA499 /* MapView.swift */,
 				371221AF2A977ABF00AEA499 /* TotalView.swift */,
 				371221B12A979AC600AEA499 /* JachiDetailView.swift */,
-				371221B32A97B19900AEA499 /* Top3View.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -229,8 +234,18 @@
 			isa = PBXGroup;
 			children = (
 				371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */,
+				3719E9B92AA4CBB000B0E1B2 /* JachiTableViewCell.swift */,
 			);
 			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		37D3D0592A9E06F300EC0F09 /* DataVisualization */ = {
+			isa = PBXGroup;
+			children = (
+				37D3D0572A9E013C00EC0F09 /* LocationReportRankingManager.swift */,
+				3719E9B72AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift */,
+			);
+			path = DataVisualization;
 			sourceTree = "<group>";
 		};
 		37ED1DCE2A93485800636B6A /* Secret */ = {
@@ -286,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				475B74322A90AD8900C8BB97 /* GeoCoding */,
+				37D3D0592A9E06F300EC0F09 /* DataVisualization */,
 				475B74482A935B8100C8BB97 /* HTTP */,
 				475B74452A93598B00C8BB97 /* Auth */,
 				47198FAE2A9DEF5A00349181 /* Report */,
@@ -342,6 +358,7 @@
 				475B744D2A935E3C00C8BB97 /* AuthRouter.swift */,
 				47198FB12A9DEFDF00349181 /* ReportRouter.swift */,
 				47198FB62A9DF83500349181 /* ProfileRouter.swift */,
+				375264A02AA0CDD800A68801 /* RankingRouter.swift */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -872,7 +889,7 @@
 				475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */,
 				47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */,
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
-				371221B42A97B19900AEA499 /* Top3View.swift in Sources */,
+				3719E9BA2AA4CBB000B0E1B2 /* JachiTableViewCell.swift in Sources */,
 				475B744E2A935E3C00C8BB97 /* AuthRouter.swift in Sources */,
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
 				47FD24C02A86369100529342 /* ReportFloatingPanelLayout.swift in Sources */,
@@ -904,12 +921,15 @@
 				47198FA22A94963900349181 /* ModifyProfileViewController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
 				37ED1DD22A93488A00636B6A /* TextField.swift in Sources */,
+				37D3D0582A9E013C00EC0F09 /* LocationReportRankingManager.swift in Sources */,
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
 				47E049B62A8FB3CE000A789D /* ReportLocationSettingView.swift in Sources */,
 				47E049A72A8B644B000A789D /* CustomToggleButton.swift in Sources */,
+				375264A12AA0CDD800A68801 /* RankingRouter.swift in Sources */,
 				47198FA02A94855B00349181 /* TokenManager.swift in Sources */,
 				475B744C2A935E1D00C8BB97 /* HttpRouter.swift in Sources */,
 				47E0499D2A8A2D10000A789D /* SettingViewController.swift in Sources */,
+				3719E9B82AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift in Sources */,
 				371221AE2A976E7B00AEA499 /* UIButton.swift in Sources */,
 				47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */,
 				47198FB22A9DEFDF00349181 /* ReportRouter.swift in Sources */,

@@ -104,6 +104,8 @@ class DetailViewController: UIViewController {
             guard let self = self else { return }
             self.detailImageList = images
         }
+        
+        print("reportId: \(complaint.reportId)")
     }
     
     required init?(coder: NSCoder) {
@@ -355,6 +357,10 @@ extension DetailViewController: FinishedFloatingControllerDelegate {
         if let iv = view.subviews.last {
             iv.removeFromSuperview()
         }
+    }
+    
+    func showReportList() {
+        // report type에만 필요
     }
 }
 
