@@ -15,6 +15,7 @@ extension UIView {
         gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradient.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradient.frame = bounds
-        layer.addSublayer(gradient)
+//        layer.addSublayer(gradient)
+        layer.insertSublayer(gradient, at: 0)
     }
 }
