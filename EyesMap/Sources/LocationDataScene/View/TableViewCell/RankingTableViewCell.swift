@@ -20,7 +20,7 @@ class RankingTableViewCell: UITableViewCell {
     //MARK: - Properties
     private let ranking: UILabel = {
         let label = UILabel()
-        label.text = "1"
+        label.text = "4"
         label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
@@ -42,7 +42,11 @@ class RankingTableViewCell: UITableViewCell {
     }()
     public var gu_id: Int = 0
     
-    var type: DataCellType = .top3
+    var type: DataCellType? {
+        didSet {
+            setUI()
+        }
+    }
     
     //MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -50,7 +54,6 @@ class RankingTableViewCell: UITableViewCell {
         self.selectionStyle = .none
 
         setUI()
-        
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -64,14 +67,13 @@ class RankingTableViewCell: UITableViewCell {
     
     // MARK: - set UI
     func setUI() {
-        
         contentView.addSubview(name)
         contentView.addSubview(cnt)
         
         switch type {
         case .top3:
             contentView.addSubview(medalImageView)
-            name.font = UIFont.boldSystemFont(ofSize: 18)
+            name.font = UIFont.boldSystemFont(ofSize: 16)
             
             medalImageView.snp.makeConstraints { make in
                 make.leading.equalToSuperview().inset(6)
@@ -79,7 +81,7 @@ class RankingTableViewCell: UITableViewCell {
                 make.height.width.equalTo(20)
             }
             name.snp.makeConstraints { (make) in
-                make.top.equalToSuperview()
+                make.centerY.equalToSuperview()
                 make.leading.equalTo(medalImageView.snp.trailing).offset(19)
             }
         case .other:
@@ -88,12 +90,15 @@ class RankingTableViewCell: UITableViewCell {
             
             ranking.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.leading.equalToSuperview().inset(6)
+                make.leading.equalToSuperview().inset(12)
             }
             name.snp.makeConstraints { (make) in
-                make.top.equalToSuperview()
-                make.leading.equalTo(ranking.snp.trailing).offset(19)
+                make.centerY.equalToSuperview()
+                make.leading.equalTo(ranking.snp.trailing).offset(24)
             }
+        case .none:
+            // 초기 값 none
+            break
         }
         
         cnt.snp.makeConstraints { (make) in

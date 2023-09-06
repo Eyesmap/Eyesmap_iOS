@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class LocationDataViewController: UIViewController {
-    
 
     var rankingModel: ResultData? {
         didSet {
@@ -44,7 +43,10 @@ class LocationDataViewController: UIViewController {
     
     //MARK: - Properties
     private let scrollView = UIScrollView()
-    let contentView = UIView()
+    let contentView: UIView = {
+        $0.backgroundColor = UIColor.rgb(red: 158, green: 186, blue: 208)
+        return $0
+    }(UIView())
     private let  totalReportView = TotalView()
     private let seoulMap = MapView(frame: CGRect(x: 0, y: 0, width: 375, height: 307))
     private let reportRanking = RankingView()
@@ -58,13 +60,14 @@ class LocationDataViewController: UIViewController {
         self.seoulMap.isUserInteractionEnabled = true
         
         setUI()
+        configureNavBar()
         seoulMap.addTarget()
         getLocationReportRequest()
     }
     
     //MARK: - setUI
     private func setUI() {
-        view.backgroundColor = UIColor(red: 158/255, green: 186/255, blue: 208/255, alpha: 1)
+        view.backgroundColor = .white
         reportRanking.delegate = self
         seoulMap.delegate = self
         
@@ -76,10 +79,11 @@ class LocationDataViewController: UIViewController {
         view.addSubview(scrollView)
         
         scrollView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         contentView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview() // == make.edges.equalTo(0)
+            make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
             make.height.equalTo(1000)
         }
@@ -127,10 +131,15 @@ class LocationDataViewController: UIViewController {
         // 나머지 받기
         jachiTheOthersDataArray = jachiModel.result.theOthers
     }
+    
+    private func configureNavBar() {
+        title = "시설물 신고 데이터"
+        self.navigationController?.navigationBar.backgroundColor = .white
+    }
 
     //MARK: - API
     private func getLocationReportRequest() {
-        LocationReportRankingManger.shared.getLocationReport { (error, locationReport) in
+        LocationReportRankingManger.shared.getLocationReport { [weak self] (error, locationReport) in
             if let error = error {
                 // 오류가 발생한 경우 처리
                 print("오류 발생: \(error.localizedDescription)")
@@ -139,7 +148,9 @@ class LocationDataViewController: UIViewController {
             if let locationReport = locationReport {
                 // 보고서를 성공적으로 가져온 경우 처리
                 print("보고서: \(locationReport)")
-                self.rankingModel = locationReport.result
+                self?.rankingModel = locationReport.result
+                self?.totalReportView.label_1.text = "서울특별시 신고 현황 총 \(locationReport.result.allReportsCnt)개"
+                self?.totalReportView.basedTimeLabel.text = locationReport.result.currentDateAndHour
             }
         }
     }
@@ -167,7 +178,7 @@ extension LocationDataViewController: RankingViewDelegate {
     // 지역별 셀을 눌렀을 때
     func tapedLocation(name: String, gu_Id: Int) {
         self.jachiDetail.alpha = 1
-        self.jachiDetail.titleLabel.text = name
+        self.jachiDetail.titleLabel.text = "\(name)구"
         
         // 자치 API
         self.getJachiRequest(gu_id: gu_Id)
@@ -176,12 +187,13 @@ extension LocationDataViewController: RankingViewDelegate {
 
 //MARK: - MapViewDelegate
 extension LocationDataViewController: MapViewDelegate {
-    func jachiViewAppear(isHidden: Bool, title: String) {
+    func jachiViewAppear(isHidden: Bool, title: String, gu_Id: Int) {
         if isHidden {
             jachiDetail.alpha = 0
         } else {
             jachiDetail.alpha = 1
             jachiDetail.titleLabel.text = title
+            self.getJachiRequest(gu_id: gu_Id)
         }
     }
 }

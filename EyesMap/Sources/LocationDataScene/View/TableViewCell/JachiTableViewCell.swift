@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import SDWebImage
 
 enum DataCellType: CaseIterable {
     case top3
@@ -33,7 +34,14 @@ class JachiTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         return imageView
     }()
-    let name: UILabel = {
+    private let nameLocationStackView: UIStackView = {
+        let stView = UIStackView()
+        stView.axis = .vertical
+        stView.spacing = 0.5
+        stView.alignment = .leading
+        return stView
+    }()
+    private let name: UILabel = {
         let label = UILabel()
         label.text = "점자블록 파손"
         return label
@@ -53,7 +61,11 @@ class JachiTableViewCell: UITableViewCell {
         return label
     }()
     
-    var type: DataCellType = .top3
+    var type: DataCellType? {
+        didSet {
+            setUI()
+        }
+    }
     
     //MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -78,8 +90,9 @@ class JachiTableViewCell: UITableViewCell {
     // MARK: - set UI
     func setUI() {
         
-        contentView.addSubview(name)
-        contentView.addSubview(location)
+        contentView.addSubview(nameLocationStackView)
+        nameLocationStackView.addArrangedSubview(name)
+        nameLocationStackView.addArrangedSubview(location)
         contentView.addSubview(cnt)
         
         switch type {
@@ -92,12 +105,8 @@ class JachiTableViewCell: UITableViewCell {
                 make.centerY.equalToSuperview()
                 make.height.width.equalTo(20)
             }
-            name.snp.makeConstraints { (make) in
-                make.top.equalToSuperview()
-                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
-            }
-            location.snp.makeConstraints { make in
-                make.top.equalTo(name.snp.bottom).inset(-3)
+            nameLocationStackView.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
                 make.leading.equalTo(medalImageView.snp.trailing).offset(19)
             }
         case .other:
@@ -106,7 +115,7 @@ class JachiTableViewCell: UITableViewCell {
             
             ranking.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.leading.equalToSuperview().inset(6)
+                make.leading.equalToSuperview().inset(12)
             }
             name.snp.makeConstraints { (make) in
                 make.top.equalToSuperview()
@@ -116,6 +125,9 @@ class JachiTableViewCell: UITableViewCell {
                 make.top.equalTo(name.snp.bottom).inset(-3)
                 make.leading.equalTo(medalImageView.snp.trailing).offset(19)
             }
+        case .none:
+            // 초기 값 none
+            break
         }
         
         cnt.snp.makeConstraints { (make) in

@@ -13,11 +13,11 @@ class TotalView: UIView {
     //MARK: - Properties
     let label_1: UILabel = {
         $0.text = "서울 특별시 신고 현황 총 1,277"
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 13)
         $0.textColor = .white
         return $0
     }(UILabel())
-    private var basedTimeLabel: UILabel = {
+    let basedTimeLabel: UILabel = {
         var label = UILabel()
         label.text = "2023.08.08 10시 기준"
         label.textColor = .white
