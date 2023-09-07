@@ -10,7 +10,6 @@ import SnapKit
 
 protocol FinishedFloatingControllerDelegate: AnyObject {
     func dismiss()
-    func showReportList()
 }
 
 enum FloatingType: CaseIterable {
@@ -76,7 +75,6 @@ class FinishedFloatingController: UIViewController {
         $0.setAttributedTitle(attributedString, for: .normal)
         $0.backgroundColor = .systemGray2
         $0.layer.cornerRadius = 22
-        $0.addTarget(self, action: #selector(reportListButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -141,7 +139,7 @@ class FinishedFloatingController: UIViewController {
             self.titleLabel.text = "신고가 완료되었습니다!"
             self.subTitleLabel.text = "신고해주셔서 감사합니다 :)"
             
-            buttonStackView.addArrangedSubview(reportListButton)
+//            buttonStackView.addArrangedSubview(reportListButton)
         }
         
         buttonStackView.snp.makeConstraints { make in
@@ -156,10 +154,5 @@ class FinishedFloatingController: UIViewController {
     @objc func okButtonTap() {
         self.dismiss(animated: true)
         self.delegate?.dismiss()
-    }
-    
-    @objc func reportListButtonTap() {
-        self.dismiss(animated: true)
-        self.delegate?.showReportList()
     }
 }

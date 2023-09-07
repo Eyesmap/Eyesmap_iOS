@@ -67,7 +67,9 @@ class HallOfFameViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getHallData()
+        getMine()
     }
     
     // MARK: - Set UI

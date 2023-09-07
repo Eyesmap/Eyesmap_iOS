@@ -142,7 +142,10 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getProfileRequest()
+        reportResultController.getReportRequest()
+        sympathyResultController.getSympathyRequest()
     }
     
 //MARK: - Set UI

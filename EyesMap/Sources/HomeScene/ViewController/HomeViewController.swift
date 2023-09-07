@@ -266,7 +266,6 @@ class HomeViewController: UIViewController {
     
     // 음원 출력
     func playStreamingAudio(url: String) {
-        // "https://elasticbeanstalk-ap-northeast-2-235351651020.s3.ap-northeast-2.amazonaws.com/voice/DOTTED_BLOCK.mp3"
         guard let url = URL(string: url) else { return }
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
@@ -278,6 +277,19 @@ class HomeViewController: UIViewController {
             player?.pause()
             print("음원 중단")
         }
+    }
+    
+    // 모든 complaint 지우고 다시 complaint 조회
+    func resetComplaint() {
+        complaints = []
+        markers = []
+        tapedComplaint = nil
+        selectedComplaint = nil
+        complaintView.alpha = 0
+        selectedMarker = nil
+        calledReportId = ""
+        
+        getComplaints()
     }
     
     //MARK: - Handler
@@ -297,14 +309,22 @@ class HomeViewController: UIViewController {
     }
     
     @objc func reportButtonTap() {
-        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
-        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
-        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
+        // 액세스토큰이 없을 때
+        if TokenManager.getUserAccessToken() == nil {
+            let loginView = LoginViewController()
+            loginView.modalPresentationStyle = .fullScreen
+            self.present(loginView, animated: true)
+        // 로그인 했을 때
+        } else {
+            guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+            guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+            let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
 
-        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
-        let nav = UINavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .overFullScreen
-        self.present(nav, animated: true)
+            let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .overFullScreen
+            self.present(nav, animated: true)
+        }
     }
     
     //MARK: - API

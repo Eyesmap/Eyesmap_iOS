@@ -71,7 +71,7 @@ class MyFameView: UIView {
         profileImage.snp.makeConstraints { (make) in
             make.leading.equalTo(self.snp.leading).inset(23)
             make.centerY.equalTo(self)
-            make.width.height.equalTo(21)
+            make.width.height.equalTo(25)
         }
         userName.snp.makeConstraints { (make) in
             make.leading.equalTo(profileImage.snp.trailing).offset(12)
