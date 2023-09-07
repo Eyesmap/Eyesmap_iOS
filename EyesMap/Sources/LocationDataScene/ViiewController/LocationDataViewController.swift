@@ -108,7 +108,7 @@ class LocationDataViewController: UIViewController {
         }
         reportRanking.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(580)
+            make.height.equalTo(600)
             make.top.equalTo(seoulMap.snp.bottom).offset(23)
         }
         jachiDetail.snp.makeConstraints { (make) in

@@ -161,7 +161,7 @@ struct GetProfileResultData: Decodable {
     let nickname: String
     let profileImageUrl: String
     let imageName: String
-    let voiceOnOffBtn: Bool
+    let voiceOnOff: Bool
 }
 
 //MARK: - 사용자 신고/공감 내역 조회

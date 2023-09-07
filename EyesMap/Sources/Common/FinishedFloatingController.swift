@@ -48,13 +48,6 @@ class FinishedFloatingController: UIViewController {
         return $0
     }(UILabel())
     
-    private lazy var buttonStackView: UIStackView = {
-        $0.spacing = 10
-        $0.distribution = .fillEqually
-        $0.axis = .horizontal
-        return $0
-    }(UIStackView())
-    
     private let okButton: UIButton = {
         let textAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
@@ -64,17 +57,6 @@ class FinishedFloatingController: UIViewController {
         $0.backgroundColor = .black
         $0.layer.cornerRadius = 22
         $0.addTarget(self, action: #selector(okButtonTap), for: .touchUpInside)
-        return $0
-    }(UIButton())
-    
-    private let reportListButton: UIButton = {
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black,
-            .font: UIFont.boldSystemFont(ofSize: 12)]
-        let attributedString = NSAttributedString(string: "신고내역 보기", attributes: textAttributes)
-        $0.setAttributedTitle(attributedString, for: .normal)
-        $0.backgroundColor = .systemGray2
-        $0.layer.cornerRadius = 22
         return $0
     }(UIButton())
     
@@ -103,8 +85,7 @@ class FinishedFloatingController: UIViewController {
         contentView.addSubview(mainImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(subTitleLabel)
-        contentView.addSubview(buttonStackView)
-        buttonStackView.addArrangedSubview(okButton)
+        contentView.addSubview(okButton)
         
         scrollView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -139,10 +120,9 @@ class FinishedFloatingController: UIViewController {
             self.titleLabel.text = "신고가 완료되었습니다!"
             self.subTitleLabel.text = "신고해주셔서 감사합니다 :)"
             
-//            buttonStackView.addArrangedSubview(reportListButton)
         }
         
-        buttonStackView.snp.makeConstraints { make in
+        okButton.snp.makeConstraints { make in
             make.top.equalTo(subTitleLabel.snp.bottom).inset(-52)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(contentView.snp.bottom).inset(20)

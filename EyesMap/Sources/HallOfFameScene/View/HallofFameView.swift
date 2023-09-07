@@ -28,7 +28,7 @@ class HallOfFameView: UIView {
     private let title: UILabel = {
         let title = UILabel()
         title.backgroundColor = .white
-        title.text = "8월 신고자분들께 감사합니다"
+        title.text = "9월 신고자분들께 감사합니다"
         title.font = UIFont.boldSystemFont(ofSize: 17)
         let attributtedString = NSMutableAttributedString(string: title.text!)
         attributtedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(red: 221/255, green: 112/255, blue: 97/255, alpha: 1), range: (title.text! as NSString).range(of:"8"))

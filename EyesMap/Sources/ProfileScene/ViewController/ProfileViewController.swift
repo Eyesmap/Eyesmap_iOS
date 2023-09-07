@@ -295,7 +295,7 @@ class ProfileViewController: UIViewController {
     
     @objc func settingBtnTap() {
         guard let profileModel = profileModel else { return }
-        let setVC = SettingViewController(isOn: profileModel.voiceOnOffBtn)
+        let setVC = SettingViewController(isOn: profileModel.voiceOnOff)
         setVC.delegate = self
         self.navigationController?.pushViewController(setVC, animated: true)
     }
