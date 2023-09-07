@@ -143,7 +143,7 @@ class HallTableViewCell: UITableViewCell {
         guard let model = hallTheOtherModel else { return }
         
         ranking.text = "\(model.rank)"
-        name.text = "\(model.nickname)구"
+        name.text = "\(model.nickname)"
         cnt.text = "총 \(model.reportCnt) 회"
     }
 }
