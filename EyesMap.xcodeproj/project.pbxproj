@@ -17,6 +17,11 @@
 		371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */; };
 		3719E9B82AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3719E9B72AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift */; };
 		3719E9BA2AA4CBB000B0E1B2 /* JachiTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3719E9B92AA4CBB000B0E1B2 /* JachiTableViewCell.swift */; };
+		374AEABC2AA8B9F0007D266E /* HallofFameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374AEABB2AA8B9F0007D266E /* HallofFameView.swift */; };
+		374AEABF2AA8BA3A007D266E /* HallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374AEABE2AA8BA3A007D266E /* HallTableViewCell.swift */; };
+		374AEAC22AA8BA82007D266E /* HallOfFameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374AEAC12AA8BA82007D266E /* HallOfFameManager.swift */; };
+		374AEAC42AA8BA9C007D266E /* HallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374AEAC32AA8BA9C007D266E /* HallRouter.swift */; };
+		374AEAC62AA8CFF9007D266E /* HallMyInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374AEAC52AA8CFF9007D266E /* HallMyInfoManager.swift */; };
 		375264A12AA0CDD800A68801 /* RankingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375264A02AA0CDD800A68801 /* RankingRouter.swift */; };
 		37D3D0582A9E013C00EC0F09 /* LocationReportRankingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D3D0572A9E013C00EC0F09 /* LocationReportRankingManager.swift */; };
 		37ED1DD02A93486700636B6A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DCF2A93486700636B6A /* Secret.swift */; };
@@ -107,6 +112,11 @@
 		371221B52A97D1B100AEA499 /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		3719E9B72AA4BF4F00B0E1B2 /* JachiReportRankingManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiReportRankingManger.swift; sourceTree = "<group>"; };
 		3719E9B92AA4CBB000B0E1B2 /* JachiTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JachiTableViewCell.swift; sourceTree = "<group>"; };
+		374AEABB2AA8B9F0007D266E /* HallofFameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallofFameView.swift; sourceTree = "<group>"; };
+		374AEABE2AA8BA3A007D266E /* HallTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallTableViewCell.swift; sourceTree = "<group>"; };
+		374AEAC12AA8BA82007D266E /* HallOfFameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallOfFameManager.swift; sourceTree = "<group>"; };
+		374AEAC32AA8BA9C007D266E /* HallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallRouter.swift; sourceTree = "<group>"; };
+		374AEAC52AA8CFF9007D266E /* HallMyInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallMyInfoManager.swift; sourceTree = "<group>"; };
 		375264A02AA0CDD800A68801 /* RankingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRouter.swift; sourceTree = "<group>"; };
 		37D3D0572A9E013C00EC0F09 /* LocationReportRankingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportRankingManager.swift; sourceTree = "<group>"; };
 		37ED1DCF2A93486700636B6A /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
@@ -245,6 +255,23 @@
 			path = TableViewCell;
 			sourceTree = "<group>";
 		};
+		374AEABD2AA8BA21007D266E /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				374AEABE2AA8BA3A007D266E /* HallTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		374AEAC02AA8BA63007D266E /* HallOfFame */ = {
+			isa = PBXGroup;
+			children = (
+				374AEAC12AA8BA82007D266E /* HallOfFameManager.swift */,
+				374AEAC52AA8CFF9007D266E /* HallMyInfoManager.swift */,
+			);
+			path = HallOfFame;
+			sourceTree = "<group>";
+		};
 		37D3D0592A9E06F300EC0F09 /* DataVisualization */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,7 +309,9 @@
 		47198FAB2A9C9C1B00349181 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				374AEABD2AA8BA21007D266E /* TableViewCell */,
 				47198FAC2A9C9C8800349181 /* MyFameView.swift */,
+				374AEABB2AA8B9F0007D266E /* HallofFameView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -306,6 +335,7 @@
 		475B74312A90AD8200C8BB97 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				374AEAC02AA8BA63007D266E /* HallOfFame */,
 				475B74322A90AD8900C8BB97 /* GeoCoding */,
 				37D3D0592A9E06F300EC0F09 /* DataVisualization */,
 				475B74482A935B8100C8BB97 /* HTTP */,
@@ -367,6 +397,7 @@
 				47198FB62A9DF83500349181 /* ProfileRouter.swift */,
 				375264A02AA0CDD800A68801 /* RankingRouter.swift */,
 				47E365292AA8CFB80047C9E4 /* VoiceRouter.swift */,
+				374AEAC32AA8BA9C007D266E /* HallRouter.swift */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -901,6 +932,7 @@
 			files = (
 				47E049A92A8B83E4000A789D /* TermView.swift in Sources */,
 				37ED1DD02A93486700636B6A /* Secret.swift in Sources */,
+				374AEABF2AA8BA3A007D266E /* HallTableViewCell.swift in Sources */,
 				47E049B32A8F7BBA000A789D /* ReportMapViewController.swift in Sources */,
 				47FD24CD2A88A7DD00529342 /* ProfileCollectionViewController.swift in Sources */,
 				475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */,
@@ -924,6 +956,7 @@
 				475B74442A93485600C8BB97 /* LoginViewController.swift in Sources */,
 				47FD24C72A86921900529342 /* ProfileViewController.swift in Sources */,
 				371221A12A97309400AEA499 /* LocationDataViewController.swift in Sources */,
+				374AEAC22AA8BA82007D266E /* HallOfFameManager.swift in Sources */,
 				371221A92A975BDD00AEA499 /* RankingView.swift in Sources */,
 				47E365222AA5D4000047C9E4 /* DistanceFormatter.swift in Sources */,
 				47198FA42A94987E00349181 /* ProfileSetImageView.swift in Sources */,
@@ -935,6 +968,7 @@
 				47198FB02A9DEFB400349181 /* ReportNetworkManager.swift in Sources */,
 				47198FB72A9DF83500349181 /* ProfileRouter.swift in Sources */,
 				478CA0222A6E600F000FA196 /* SceneDelegate.swift in Sources */,
+				374AEAC42AA8BA9C007D266E /* HallRouter.swift in Sources */,
 				47FD24BA2A85F92400529342 /* DeleteAlertController.swift in Sources */,
 				47198FA22A94963900349181 /* ModifyProfileViewController.swift in Sources */,
 				47FD24B42A8518C200529342 /* DetailComplaintView.swift in Sources */,
@@ -943,6 +977,7 @@
 				47FE7A912A7C0BD500075B0C /* ComplaintModel.swift in Sources */,
 				47E049B62A8FB3CE000A789D /* ReportLocationSettingView.swift in Sources */,
 				47E049A72A8B644B000A789D /* CustomToggleButton.swift in Sources */,
+				374AEABC2AA8B9F0007D266E /* HallofFameView.swift in Sources */,
 				47E365252AA899A90047C9E4 /* WebViewController.swift in Sources */,
 				375264A12AA0CDD800A68801 /* RankingRouter.swift in Sources */,
 				47198FA02A94855B00349181 /* TokenManager.swift in Sources */,
@@ -959,6 +994,7 @@
 				47198FB52A9DF81900349181 /* ProfileNetworkManager.swift in Sources */,
 				475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */,
 				371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */,
+				374AEAC62AA8CFF9007D266E /* HallMyInfoManager.swift in Sources */,
 				371221B22A979AC600AEA499 /* JachiDetailView.swift in Sources */,
 				47E3652A2AA8CFB80047C9E4 /* VoiceRouter.swift in Sources */,
 			);
