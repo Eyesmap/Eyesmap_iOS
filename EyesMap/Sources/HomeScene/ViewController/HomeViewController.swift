@@ -97,37 +97,6 @@ class HomeViewController: UIViewController {
         getComplaints() // 서버연동 시 변경
         setUIandConstraints()
         enableLocationServices()
-        playStreamingAudio()
-    }
-    
-//    func testVoice() {
-//        requestMicrophonePermission()
-//        let url = "https://elasticbeanstalk-ap-northeast-2-235351651020.s3.ap-northeast-2.amazonaws.com/voice/DOTTED_BLOCK.mp3"
-//        guard let data = getDataFrom(url: url) else { return }
-//        print("audio Data = \(data)")
-//        do {
-//            player = try AVAudioPlayer(data: data)
-//            player?.play()
-//            print("audio play")
-//          } catch {
-//            print("Failed to play mp3 file. error = \(error.localizedDescription)")
-//          }
-//    }
-    
-    func playStreamingAudio() {
-        guard let url = URL(string: "https://elasticbeanstalk-ap-northeast-2-235351651020.s3.ap-northeast-2.amazonaws.com/voice/DOTTED_BLOCK.mp3") else { return }
-        
-        let playerItem = AVPlayerItem(url: url)
-        
-        player = AVPlayer(playerItem: playerItem)
-        
-        if player?.rate == 0 {
-            player?.play()
-            print("음원 실행")
-        } else {
-            player?.pause()
-            print("음원 중단")
-        }
     }
 
 //MARK: - set UI
@@ -247,7 +216,7 @@ class HomeViewController: UIViewController {
             let complaintLocaion = CLLocation(latitude: complaint.gpsY, longitude: complaint.gpsX)
             let distance = userLocation.distance(from: complaintLocaion)
             
-            if distance <= 5.0 {
+            if distance <= 15.0 {
                 print("DEBUG: 거리 들어옴")
                 let bearing = calculateBearing(location: userLocation, destination: complaintLocaion)
                 let headingDifference = abs(calculateHeadingDifference(userHeading, bearing))
@@ -255,7 +224,7 @@ class HomeViewController: UIViewController {
                 // 45도 이내인지 확인
                 let maxAllowedDifference = 45.0 // 허용 오차 범위 (45도)
                 if headingDifference <= maxAllowedDifference {
-                    print("DEBUG: 사용자 디바이스 방향으로 마킹의 위치에 5미터 내로 접근하였습니다.")
+                    print("DEBUG: 사용자 디바이스 방향으로 마킹의 위치에 15미터 내로 접근하였습니다.")
                     if calledReportId == complaint.reportId {
                         print("이미 불려진 음성입니다.")
                     } else {
@@ -295,6 +264,22 @@ class HomeViewController: UIViewController {
         return radiansBearing.toDegrees()
     }
     
+    // 음원 출력
+    func playStreamingAudio(url: String) {
+        // "https://elasticbeanstalk-ap-northeast-2-235351651020.s3.ap-northeast-2.amazonaws.com/voice/DOTTED_BLOCK.mp3"
+        guard let url = URL(string: url) else { return }
+        let playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        
+        if player?.rate == 0 {
+            player?.play()
+            print("음원 실행")
+        } else {
+            player?.pause()
+            print("음원 중단")
+        }
+    }
+    
     //MARK: - Handler
     @objc func complaintViewTap(_ gesture: UIGestureRecognizer) {
         guard let selectedComplaint = selectedComplaint,
@@ -312,15 +297,14 @@ class HomeViewController: UIViewController {
     }
     
     @objc func reportButtonTap() {
-        playStreamingAudio()
-//        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
-//        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
-//        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
-//
-//        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
-//        let nav = UINavigationController(rootViewController: vc)
-//        nav.modalPresentationStyle = .overFullScreen
-//        self.present(nav, animated: true)
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
+
+        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        self.present(nav, animated: true)
     }
     
     //MARK: - API
@@ -364,11 +348,9 @@ class HomeViewController: UIViewController {
             
             if let model = model {
                 if model.message == "성공했습니다." {
-                    // 음성 파일 실행
-                    guard let url = URL(string: model.result?.url ?? "") else { return }
-                    let player = AVPlayer(url: url)
-                    
-                    player.play()
+                    // 음성 파일 출력
+                    guard let url = model.result?.url else { return }
+                    self.playStreamingAudio(url: url)
                 } else {
                     print("DEBUG: TOKEN 없음 - 음성 꺼져있음")
                 }
@@ -445,6 +427,8 @@ extension HomeViewController: NMFMapViewDelegate {
     // 지도 탭 시
     func didTapMapView(_ point: CGPoint, latLng latlng: NMGLatLng) {
         // 마킹 제거
+        print("lat: \(latlng.lat), lng: \(latlng.lng)")
+        
         UIView.animate(withDuration: 0.5) {
             if let selectedMarker = self.selectedMarker {
                 selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)

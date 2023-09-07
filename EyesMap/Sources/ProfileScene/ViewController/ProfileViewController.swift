@@ -280,6 +280,7 @@ class ProfileViewController: UIViewController {
         guard let profileModel = profileModel else { return }
         
         let url = URL(string:"\(profileModel.profileImageUrl)")
+        print("프로필 이미지 url: \(url)")
         imageValueImageView.sd_setImage(with:url, completed: nil)
         nickNameValueLabel.text = profileModel.nickname
     }

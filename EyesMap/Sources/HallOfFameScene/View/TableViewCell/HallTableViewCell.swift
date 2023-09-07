@@ -38,25 +38,29 @@ class HallTableViewCell: UITableViewCell {
     let name: UILabel = {
         let label = UILabel()
         label.text = "홍길동"
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     private let cnt: UILabel = {
         let label = UILabel()
         label.text = "총 18회"
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.textColor = UIColor.rgb(red: 90, green: 89, blue: 90)
         return label
     }()
     private let profileImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "defaultProfile")
-        imageView.layer.cornerRadius = 21 / 2
+        imageView.layer.cornerRadius = 25 / 2
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    var type: DataCellType = .top3
+    var type: DataCellType? {
+        didSet {
+            setUI()
+        }
+    }
     
     //MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -90,15 +94,14 @@ class HallTableViewCell: UITableViewCell {
             medalImageView.snp.makeConstraints { make in
                 make.leading.equalToSuperview().inset(26)
                 make.centerY.equalToSuperview()
-                make.height.width.equalTo(21)
+                make.height.width.equalTo(24)
             }
             name.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.leading.equalTo(profileImage.snp.trailing).offset(12)
+                make.leading.equalTo(profileImage.snp.trailing).offset(14)
             }
         case .other:
             contentView.addSubview(ranking)
-            name.font = UIFont.systemFont(ofSize: 13)
             
             ranking.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()
@@ -106,8 +109,10 @@ class HallTableViewCell: UITableViewCell {
             }
             name.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.leading.equalTo(profileImage.snp.trailing).offset(12)
+                make.leading.equalTo(profileImage.snp.trailing).offset(14)
             }
+        case .none:
+            break
         }
         
         cnt.snp.makeConstraints { (make) in
@@ -116,8 +121,8 @@ class HallTableViewCell: UITableViewCell {
         }
         profileImage.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.leading.equalTo(self.snp.leading).inset(59)
-            make.width.height.equalTo(21)
+            make.leading.equalTo(self.snp.leading).inset(62)
+            make.width.height.equalTo(25)
         }
     }
     
@@ -137,9 +142,8 @@ class HallTableViewCell: UITableViewCell {
     private func theOtherConfigure() {
         guard let model = hallTheOtherModel else { return }
         
-//        ranking.text = "\(model.rank)"
-//        name.text = "\(model.guName)구"
-//        cnt.text = "총 \(model.reportCount) 회"
-//        gu_id = "\(model.guNum)"
+        ranking.text = "\(model.rank)"
+        name.text = "\(model.nickname)구"
+        cnt.text = "총 \(model.reportCnt) 회"
     }
 }

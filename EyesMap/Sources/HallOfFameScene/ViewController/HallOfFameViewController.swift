@@ -66,6 +66,9 @@ class HallOfFameViewController: UIViewController {
         configureNavBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getHallData()
+    }
     
     // MARK: - Set UI
     private func setUI() {
