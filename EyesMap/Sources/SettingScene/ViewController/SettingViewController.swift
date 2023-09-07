@@ -8,7 +8,14 @@
 import UIKit
 import SnapKit
 
+protocol SettingViewControllerDelegate: AnyObject {
+    func dismissSettingView()
+}
+
 class SettingViewController: UIViewController {
+    
+    weak var delegate: SettingViewControllerDelegate?
+    
 // MARK: - Properties
     private let titleLabel: UILabel = {
         $0.text = "음성안내 기능"
@@ -39,11 +46,6 @@ class SettingViewController: UIViewController {
         $0.textColor = .black
         return $0
     }(UILabel())
-    
-    let faqTermView: TermView = {
-        $0.titleLabel.text = "FAQ"
-        return $0
-    }(TermView())
     
     let useTermView: TermView = {
         $0.titleLabel.text = "이용약관"
@@ -79,6 +81,15 @@ class SettingViewController: UIViewController {
     }(UIButton())
     
 // MARK: - Life Cycles
+    init(isOn: Bool) {
+        toggleButton.isOn = isOn
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -89,13 +100,12 @@ class SettingViewController: UIViewController {
     func functionSetting() {
         toggleButton.delegate = self
         
-        faqTermView.imageButton.addTarget(self, action: #selector(faqTap), for: .touchUpInside)
         useTermView.imageButton.addTarget(self, action: #selector(useTermTap), for: .touchUpInside)
         privateInfoTermView.imageButton.addTarget(self, action: #selector(privateInfoTermTap), for: .touchUpInside)
     }
     
     func setupNavigationBackBar() {
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(dismissTap))
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
     }
@@ -110,7 +120,6 @@ class SettingViewController: UIViewController {
         view.addSubview(detailInfoLabel)
         view.addSubview(toggleButton)
         view.addSubview(termsLabel)
-        view.addSubview(faqTermView)
         view.addSubview(useTermView)
         view.addSubview(privateInfoTermView)
         view.addSubview(accountLabel)
@@ -138,13 +147,8 @@ class SettingViewController: UIViewController {
             make.top.equalTo(detailInfoLabel.snp.bottom).inset(-42)
             make.leading.equalToSuperview().inset(20)
         }
-        faqTermView.snp.makeConstraints { make in
-            make.top.equalTo(termsLabel.snp.bottom).inset(-20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(40)
-        }
         useTermView.snp.makeConstraints { make in
-            make.top.equalTo(faqTermView.snp.bottom).inset(-18)
+            make.top.equalTo(termsLabel.snp.bottom).inset(-20)
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(40)
         }
@@ -190,14 +194,6 @@ class SettingViewController: UIViewController {
         present(actionAlert, animated: true)
     }
     
-    @objc private func faqTap() {
-        let vc = WebViewController()
-        vc.title = "FAQ"
-        vc.url = URL(string: Secret.shared.faqTerm)
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
     @objc private func useTermTap() {
         let vc = WebViewController()
         vc.title = "개인정보처리방침"
@@ -213,11 +209,16 @@ class SettingViewController: UIViewController {
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @objc private func dismissTap() {
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.dismissSettingView()
+    }
 }
 
 //MARK: - CustomToggleButtonDelegate
 extension SettingViewController: CustomToggleButtonDelegate {
     func isOnValueChange(isOn: Bool) {
-        print("\(isOn)")
+        print("toggleButton: \(isOn)")
     }
 }

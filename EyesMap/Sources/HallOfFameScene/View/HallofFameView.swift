@@ -28,8 +28,8 @@ class HallOfFameView: UIView {
     private let title: UILabel = {
         let title = UILabel()
         title.backgroundColor = .white
-        title.text = "8월 신고자분들께 감사합니다"
-        title.font = UIFont.boldSystemFont(ofSize: 20)
+        title.text = "9월 신고자분들께 감사합니다"
+        title.font = UIFont.boldSystemFont(ofSize: 17)
         let attributtedString = NSMutableAttributedString(string: title.text!)
         attributtedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(red: 221/255, green: 112/255, blue: 97/255, alpha: 1), range: (title.text! as NSString).range(of:"8"))
                 
@@ -74,7 +74,7 @@ class HallOfFameView: UIView {
         tableView.isScrollEnabled = false
         tableView.backgroundColor = .clear
         self.widthAnchor.constraint(equalToConstant: 337).isActive = true
-        self.heightAnchor.constraint(equalToConstant: 520).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 500).isActive = true
         self.layer.cornerRadius = 15
         
         self.backgroundColor = .white
@@ -95,9 +95,8 @@ class HallOfFameView: UIView {
             make.top.equalTo(title.snp.bottom).offset(16)
         }
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(line.snp.bottom).offset(17)
+            make.top.equalTo(line.snp.bottom).offset(12)
             make.leading.trailing.bottom.equalTo(self)
-//            make.centerX.equalTo(self)
         }
     }
  
@@ -129,9 +128,9 @@ extension HallOfFameView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 20
+            return 42
         } else {
-            return 38
+            return 42
         }
     }
     

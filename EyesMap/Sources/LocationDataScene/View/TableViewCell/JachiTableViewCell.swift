@@ -98,16 +98,12 @@ class JachiTableViewCell: UITableViewCell {
         switch type {
         case .top3:
             contentView.addSubview(medalImageView)
-            name.font = UIFont.boldSystemFont(ofSize: 18)
+            name.font = UIFont.boldSystemFont(ofSize: 15)
             
             medalImageView.snp.makeConstraints { make in
                 make.leading.equalToSuperview().inset(6)
                 make.centerY.equalToSuperview()
                 make.height.width.equalTo(20)
-            }
-            nameLocationStackView.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
             }
         case .other:
             contentView.addSubview(ranking)
@@ -117,22 +113,17 @@ class JachiTableViewCell: UITableViewCell {
                 make.centerY.equalToSuperview()
                 make.leading.equalToSuperview().inset(12)
             }
-            name.snp.makeConstraints { (make) in
-                make.top.equalToSuperview()
-                make.leading.equalTo(ranking.snp.trailing).offset(19)
-            }
-            location.snp.makeConstraints { make in
-                make.top.equalTo(name.snp.bottom).inset(-3)
-                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
-            }
         case .none:
             // 초기 값 none
             break
         }
-        
+        nameLocationStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(39)
+        }
         cnt.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.trailing.equalToSuperview().inset(7)
         }
     }
         

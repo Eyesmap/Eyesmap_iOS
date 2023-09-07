@@ -27,21 +27,21 @@ class MyFameView: UIView {
     private let profileImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "defaultProfile")
-        imageView.widthAnchor.constraint(equalToConstant: 21).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 21).isActive = true
+        imageView.layer.cornerRadius = 25 / 2
+        imageView.clipsToBounds = true
         return imageView
     }()
     private let userName: UILabel = {
         let label = UILabel()
         label.text = "김미나"
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     private let reportCnt: UILabel = {
         let label = UILabel()
         label.text = "총 40회"
-        label.textColor = UIColor(red: 37/255, green: 38/255, blue: 42/255, alpha: 1)
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.textColor = UIColor.rgb(red: 90, green: 89, blue: 90)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
@@ -59,7 +59,7 @@ class MyFameView: UIView {
     //MARK: - Set UI
     func setUI() {
         self.widthAnchor.constraint(equalToConstant: 337).isActive = true
-        self.heightAnchor.constraint(equalToConstant: 46).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.layer.cornerRadius = 10
         
         self.backgroundColor = .white
@@ -71,6 +71,7 @@ class MyFameView: UIView {
         profileImage.snp.makeConstraints { (make) in
             make.leading.equalTo(self.snp.leading).inset(23)
             make.centerY.equalTo(self)
+            make.width.height.equalTo(25)
         }
         userName.snp.makeConstraints { (make) in
             make.leading.equalTo(profileImage.snp.trailing).offset(12)

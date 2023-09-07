@@ -22,7 +22,7 @@ class JachiDetailView: UIView {
     }
     
     //MARK: - Properties
-    public let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "중구"
         label.font = UIFont.boldSystemFont(ofSize: 20)
@@ -49,7 +49,7 @@ class JachiDetailView: UIView {
         btn.setImage(UIImage(named: "back"),  for: .normal)
         return btn
     }()
-    private let tableView = UITableView()
+    let tableView = UITableView()
     var basedTimeLabel: UILabel = {
         var label = UILabel()
         label.text = "2023.08.08 10시 기준"
@@ -67,6 +67,7 @@ class JachiDetailView: UIView {
         tableView.dataSource = self
         tableView.register(JachiTableViewCell.self, forCellReuseIdentifier: JachiTableViewCell.top3Identifier)
         tableView.register(JachiTableViewCell.self, forCellReuseIdentifier: JachiTableViewCell.otherIdentifier)
+        tableView.isScrollEnabled = true
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = UITableView.automaticDimension
@@ -94,30 +95,29 @@ class JachiDetailView: UIView {
         addSubview(basedTimeLabel)
         
         backBtn.snp.makeConstraints { (make) in
-            make.leading.equalTo(self.snp.leading).inset(25)
-            make.top.equalTo(self.snp.top).inset(25)
+            make.leading.equalToSuperview().inset(25)
+            make.top.equalToSuperview().inset(25)
         }
         titleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(backBtn.snp.trailing).offset(17.3)
-            make.top.equalTo(self.snp.top).inset(20)
+            make.top.equalToSuperview().inset(20)
         }
         countLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(self.snp.top).inset(25)
-            make.trailing.equalTo(self.snp.trailing).inset(23)
+            make.top.equalToSuperview().inset(25)
+            make.trailing.equalToSuperview().inset(23)
         }
         line.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
-            make.centerX.equalTo(self)
+            make.centerX.equalToSuperview()
         }
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(line.snp.bottom).offset(10)
-            make.centerX.equalTo(self)
-            make.width.equalTo(285)
-            make.bottom.equalTo(self.snp.bottom).inset(50)
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(50)
         }
         basedTimeLabel.snp.makeConstraints { (make) in
-            make.bottom.equalTo(self.snp.bottom).inset(21)
-            make.leading.equalTo(self.snp.leading).inset(23)
+            make.bottom.equalToSuperview().inset(21)
+            make.leading.equalToSuperview().inset(23)
         }
     }
     
@@ -176,9 +176,9 @@ extension JachiDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 50
+            return 55
         } else {
-            return 40
+            return 45
         }
     }
     

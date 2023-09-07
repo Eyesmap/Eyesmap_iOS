@@ -17,6 +17,7 @@ struct DistanceFormatter {
             return "\(meters) m"
         } else {
             let kilometers = Double(meters) / 1000.0
+            formatter.maximumFractionDigits = 1
             if let formattedKilometers = formatter.string(from: NSNumber(value: kilometers)) {
                 return "\(formattedKilometers) km"
             } else {

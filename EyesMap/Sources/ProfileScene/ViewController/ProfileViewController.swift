@@ -142,13 +142,14 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getProfileRequest()
+        reportResultController.getReportRequest()
+        sympathyResultController.getSympathyRequest()
     }
     
 //MARK: - Set UI
     
-//    view.addSubview(profileScrollView)
-//    profileScrollView.addSubview(contentView)
     private func setUI() {
         view.backgroundColor = .white
         
@@ -282,6 +283,7 @@ class ProfileViewController: UIViewController {
         guard let profileModel = profileModel else { return }
         
         let url = URL(string:"\(profileModel.profileImageUrl)")
+        print("프로필 이미지 url: \(url)")
         imageValueImageView.sd_setImage(with:url, completed: nil)
         nickNameValueLabel.text = profileModel.nickname
     }
@@ -292,7 +294,9 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func settingBtnTap() {
-        let setVC = SettingViewController()
+        guard let profileModel = profileModel else { return }
+        let setVC = SettingViewController(isOn: profileModel.voiceOnOff)
+        setVC.delegate = self
         self.navigationController?.pushViewController(setVC, animated: true)
     }
     
@@ -337,6 +341,16 @@ extension ProfileViewController: UIPageViewControllerDelegate, UIPageViewControl
 extension ProfileViewController: ModifyProfileViewControllerDelegate {
     // 프로필 수정 뷰에서 나오면
     func dismissView() {
+        getProfileRequest()
+        reportResultController.getReportRequest()
+        sympathyResultController.getSympathyRequest()
+    }
+}
+
+//MARK: - SettingViewControllerDelegate
+extension ProfileViewController: SettingViewControllerDelegate {
+    // 세팅 뷰에서 나오면
+    func dismissSettingView() {
         getProfileRequest()
         reportResultController.getReportRequest()
         sympathyResultController.getSympathyRequest()

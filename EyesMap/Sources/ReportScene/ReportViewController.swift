@@ -798,25 +798,12 @@ extension ReportViewController: FinishedFloatingControllerDelegate {
         print("확인 Tap")
         if let iv = view.subviews.last {
             iv.removeFromSuperview()
-            self.dismiss(animated: true)
-            // 홈 탭으로 이동해서 재시작
-            if let tabBarVC = self.tabBarController as? TabBarController {
-                tabBarVC.configureAuth()
-            }
         }
-    }
-    
-    func showReportList() {
-        print("신고내역 가기 Tap")
-        if let iv = view.subviews.last {
-            iv.removeFromSuperview()
-            self.dismiss(animated: true) {
-                // 프로필 탭으로 이동
-                if let tabBarVC = self.tabBarController as? TabBarController {
-                    tabBarVC.configureAuth()
-                    tabBarVC.selectedIndex = 3
-                }
-            }
-        }
+        self.dismiss(animated: true)
+        
+        guard let tabBarVC = self.navigationController?.presentingViewController as? TabBarController,
+              let homeNavVC = tabBarVC.viewControllers?.first as? UINavigationController,
+              let homeVC = homeNavVC.viewControllers.first as? HomeViewController else { return }
+        homeVC.resetComplaint()
     }
 }

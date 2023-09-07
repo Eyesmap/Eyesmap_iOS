@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import NMapsMap
 import CoreLocation
+import AVFoundation
 
 enum SortType: String, CaseIterable {
     case dottedBlock = "DOTTED_BLOCK"
@@ -26,7 +27,6 @@ class HomeViewController: UIViewController {
 
 //MARK: - Properties
     private let locationManager = LocationHandler.shared.locationManager
-    private var userLocation: CLLocation? // 현 위치
     private var userHeading: CLHeading? // 바라보는 방향
     private var complaints = [ComplaintLocation]() { // API 연결 민원들 추가 값
         didSet {
@@ -34,10 +34,12 @@ class HomeViewController: UIViewController {
         }
     }
     private var markers = [NMFMarker]()
+    private var player: AVPlayer?
     
     private var tapedComplaint: TapedComplaintResultData? = nil
     private var selectedComplaint: ComplaintLocation? = nil
     private var selectedMarker: NMFMarker? = nil
+    private var calledReportId: String = ""
     
     
     private let mapView = NMFMapView()
@@ -96,6 +98,11 @@ class HomeViewController: UIViewController {
         setUIandConstraints()
         enableLocationServices()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        calledReportId = ""
+    }
 
 //MARK: - set UI
     func setUIandConstraints() {
@@ -113,7 +120,8 @@ class HomeViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        currentLocationCameraUpdate()
+        currentLocationUpdate()
+        cameraUpdate()
         configureMarking(complaints: complaints)
     }
     
@@ -147,9 +155,9 @@ class HomeViewController: UIViewController {
     }
     
     // 현 위치 아이콘 & 카메라 업데이트
-    func currentLocationCameraUpdate() {
-        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
-        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+    func currentLocationUpdate() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude,
+              let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
         
         locationOverlay.location = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
         locationOverlay.hidden = false
@@ -157,6 +165,13 @@ class HomeViewController: UIViewController {
         locationOverlay.iconWidth = 38
         locationOverlay.iconHeight = 42
         locationOverlay.anchor = CGPoint(x: 0.5, y: 0.5)
+        
+        
+    }
+    
+    func cameraUpdate() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude,
+              let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
         
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
         cameraUpdate.animation = .easeIn
@@ -175,13 +190,14 @@ class HomeViewController: UIViewController {
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                 guard let self = self,
-                      let userLocation = userLocation else { return false }
+                      let currentUserLat = locationManager?.location?.coordinate.latitude,
+                      let currentUserlong = locationManager?.location?.coordinate.longitude else { return false }
                 
                 // 마커 선택 시
                 if let marker = overlay as? NMFMarker {
                     let model = TapedComplaintRequestModel(reportId: complaint.reportId,
-                                                           userGpsX: userLocation.coordinate.longitude,
-                                                           userGpsY: userLocation.coordinate.latitude)
+                                                           userGpsX: currentUserlong,
+                                                           userGpsY: currentUserLat)
                     self.tapedComplaint(model: model)
                     
                     // 이미 선택된 마커 초기화
@@ -204,11 +220,13 @@ class HomeViewController: UIViewController {
     
     // 현재 위치와 complaints에 저장된 민원들의 주소 위치 거리 파악
     func checkComplaintsDistance() {
-        guard let userLocation = userLocation,
-              let userHeading = userHeading?.trueHeading else { return }
+        guard let userHeading = userHeading?.trueHeading,
+              let currentUserLat = locationManager?.location?.coordinate.latitude,
+              let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        let userLocation = CLLocation(latitude: currentUserLat, longitude: currentUserlong)
         
         for complaint in complaints {
-            let complaintLocaion = CLLocation(latitude: complaint.gpsX, longitude: complaint.gpsY)
+            let complaintLocaion = CLLocation(latitude: complaint.gpsY, longitude: complaint.gpsX)
             let distance = userLocation.distance(from: complaintLocaion)
             
             if distance <= 15.0 {
@@ -219,7 +237,13 @@ class HomeViewController: UIViewController {
                 // 45도 이내인지 확인
                 let maxAllowedDifference = 45.0 // 허용 오차 범위 (45도)
                 if headingDifference <= maxAllowedDifference {
-                    print("DEBUG: 사용자 디바이스 방향으로 마킹의 위치에 5미터 내로 접근하였습니다.")
+                    print("DEBUG: 사용자 디바이스 방향으로 마킹의 위치에 15미터 내로 접근하였습니다.")
+                    if calledReportId == complaint.reportId {
+                        print("이미 불려진 음성입니다.")
+                    } else {
+                        calledReportId = complaint.reportId
+                        self.getVoiceRequest(reportId: complaint.reportId)
+                    }
                 }
             }
         }
@@ -253,6 +277,34 @@ class HomeViewController: UIViewController {
         return radiansBearing.toDegrees()
     }
     
+    // 음원 출력
+    func playStreamingAudio(url: String) {
+        guard let url = URL(string: url) else { return }
+        let playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        
+        if player?.rate == 0 {
+            player?.play()
+            print("음원 실행")
+        } else {
+            player?.pause()
+            print("음원 중단")
+        }
+    }
+    
+    // 모든 complaint 지우고 다시 complaint 조회
+    func resetComplaint() {
+        complaints = []
+        markers = []
+        tapedComplaint = nil
+        selectedComplaint = nil
+        complaintView.alpha = 0
+        selectedMarker = nil
+        calledReportId = ""
+        
+        getComplaints()
+    }
+    
     //MARK: - Handler
     @objc func complaintViewTap(_ gesture: UIGestureRecognizer) {
         guard let selectedComplaint = selectedComplaint,
@@ -270,14 +322,22 @@ class HomeViewController: UIViewController {
     }
     
     @objc func reportButtonTap() {
-        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
-        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
-        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
+        // 액세스토큰이 없을 때
+        if TokenManager.getUserAccessToken() == nil {
+            let loginView = LoginViewController()
+            loginView.modalPresentationStyle = .fullScreen
+            self.present(loginView, animated: true)
+        // 로그인 했을 때
+        } else {
+            guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+            guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+            let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
 
-        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
-        let nav = UINavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .overFullScreen
-        self.present(nav, animated: true)
+            let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .overFullScreen
+            self.present(nav, animated: true)
+        }
     }
     
     //MARK: - API
@@ -294,6 +354,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // 마크 탭 했을 시
     func tapedComplaint(model: TapedComplaintRequestModel) {
         ReportNetworkManager.shared.tapedComplaintRequest(parameters: model) { [weak self] (error, model) in
             guard let self = self else { return }
@@ -309,7 +370,26 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
+    func getVoiceRequest(reportId: String) {
+        print("음원 API 호출")
+        VoiceNetworkManager.shared.getVoiceRequest(reportId: reportId) { [weak self] (error, model) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                if model.message == "성공했습니다." {
+                    // 음성 파일 출력
+                    guard let url = model.result?.url else { return }
+                    self.playStreamingAudio(url: url)
+                } else {
+                    print("DEBUG: TOKEN 없음 - 음성 꺼져있음")
+                }
+            }
+        }
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -317,8 +397,7 @@ extension HomeViewController: CLLocationManagerDelegate {
     // 사용자 위치 변경 시
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        userLocation = location
-    
+        currentLocationUpdate()
         checkComplaintsDistance()
     }
     
@@ -382,6 +461,8 @@ extension HomeViewController: NMFMapViewDelegate {
     // 지도 탭 시
     func didTapMapView(_ point: CGPoint, latLng latlng: NMGLatLng) {
         // 마킹 제거
+        print("lat: \(latlng.lat), lng: \(latlng.lng)")
+        
         UIView.animate(withDuration: 0.5) {
             if let selectedMarker = self.selectedMarker {
                 selectedMarker.iconImage = NMFOverlayImage(image: UIImage(named: "mark")!)

@@ -82,7 +82,7 @@ class RankingTableViewCell: UITableViewCell {
             }
             name.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.leading.equalTo(medalImageView.snp.trailing).offset(19)
+                make.leading.equalToSuperview().offset(45)
             }
         case .other:
             contentView.addSubview(ranking)
@@ -94,7 +94,7 @@ class RankingTableViewCell: UITableViewCell {
             }
             name.snp.makeConstraints { (make) in
                 make.centerY.equalToSuperview()
-                make.leading.equalTo(ranking.snp.trailing).offset(24)
+                make.leading.equalToSuperview().offset(45)
             }
         case .none:
             // 초기 값 none
