@@ -98,6 +98,11 @@ class HomeViewController: UIViewController {
         setUIandConstraints()
         enableLocationServices()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        calledReportId = ""
+    }
 
 //MARK: - set UI
     func setUIandConstraints() {
@@ -115,7 +120,8 @@ class HomeViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        currentLocationCameraUpdate()
+        currentLocationUpdate()
+        cameraUpdate()
         configureMarking(complaints: complaints)
     }
     
@@ -149,9 +155,9 @@ class HomeViewController: UIViewController {
     }
     
     // 현 위치 아이콘 & 카메라 업데이트
-    func currentLocationCameraUpdate() {
-        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
-        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+    func currentLocationUpdate() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude,
+              let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
         
         locationOverlay.location = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
         locationOverlay.hidden = false
@@ -159,6 +165,13 @@ class HomeViewController: UIViewController {
         locationOverlay.iconWidth = 38
         locationOverlay.iconHeight = 42
         locationOverlay.anchor = CGPoint(x: 0.5, y: 0.5)
+        
+        
+    }
+    
+    func cameraUpdate() {
+        guard let currentUserLat = locationManager?.location?.coordinate.latitude,
+              let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
         
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentUserLat, lng: currentUserlong))
         cameraUpdate.animation = .easeIn
@@ -384,6 +397,7 @@ extension HomeViewController: CLLocationManagerDelegate {
     // 사용자 위치 변경 시
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+        currentLocationUpdate()
         checkComplaintsDistance()
     }
     
