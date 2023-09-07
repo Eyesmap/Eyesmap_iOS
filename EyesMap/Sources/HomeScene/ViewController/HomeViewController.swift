@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import NMapsMap
 import CoreLocation
+import AVFoundation
 
 enum SortType: String, CaseIterable {
     case dottedBlock = "DOTTED_BLOCK"
@@ -26,7 +27,6 @@ class HomeViewController: UIViewController {
 
 //MARK: - Properties
     private let locationManager = LocationHandler.shared.locationManager
-    private var userLocation: CLLocation? // 현 위치
     private var userHeading: CLHeading? // 바라보는 방향
     private var complaints = [ComplaintLocation]() { // API 연결 민원들 추가 값
         didSet {
@@ -34,10 +34,12 @@ class HomeViewController: UIViewController {
         }
     }
     private var markers = [NMFMarker]()
+    private var player: AVPlayer?
     
     private var tapedComplaint: TapedComplaintResultData? = nil
     private var selectedComplaint: ComplaintLocation? = nil
     private var selectedMarker: NMFMarker? = nil
+    private var calledReportId: String = ""
     
     
     private let mapView = NMFMapView()
@@ -95,6 +97,37 @@ class HomeViewController: UIViewController {
         getComplaints() // 서버연동 시 변경
         setUIandConstraints()
         enableLocationServices()
+        playStreamingAudio()
+    }
+    
+//    func testVoice() {
+//        requestMicrophonePermission()
+//        let url = "https://elasticbeanstalk-ap-northeast-2-235351651020.s3.ap-northeast-2.amazonaws.com/voice/DOTTED_BLOCK.mp3"
+//        guard let data = getDataFrom(url: url) else { return }
+//        print("audio Data = \(data)")
+//        do {
+//            player = try AVAudioPlayer(data: data)
+//            player?.play()
+//            print("audio play")
+//          } catch {
+//            print("Failed to play mp3 file. error = \(error.localizedDescription)")
+//          }
+//    }
+    
+    func playStreamingAudio() {
+        guard let url = URL(string: "https://elasticbeanstalk-ap-northeast-2-235351651020.s3.ap-northeast-2.amazonaws.com/voice/DOTTED_BLOCK.mp3") else { return }
+        
+        let playerItem = AVPlayerItem(url: url)
+        
+        player = AVPlayer(playerItem: playerItem)
+        
+        if player?.rate == 0 {
+            player?.play()
+            print("음원 실행")
+        } else {
+            player?.pause()
+            print("음원 중단")
+        }
     }
 
 //MARK: - set UI
@@ -175,13 +208,14 @@ class HomeViewController: UIViewController {
             
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                 guard let self = self,
-                      let userLocation = userLocation else { return false }
+                      let currentUserLat = locationManager?.location?.coordinate.latitude,
+                      let currentUserlong = locationManager?.location?.coordinate.longitude else { return false }
                 
                 // 마커 선택 시
                 if let marker = overlay as? NMFMarker {
                     let model = TapedComplaintRequestModel(reportId: complaint.reportId,
-                                                           userGpsX: userLocation.coordinate.longitude,
-                                                           userGpsY: userLocation.coordinate.latitude)
+                                                           userGpsX: currentUserlong,
+                                                           userGpsY: currentUserLat)
                     self.tapedComplaint(model: model)
                     
                     // 이미 선택된 마커 초기화
@@ -204,14 +238,16 @@ class HomeViewController: UIViewController {
     
     // 현재 위치와 complaints에 저장된 민원들의 주소 위치 거리 파악
     func checkComplaintsDistance() {
-        guard let userLocation = userLocation,
-              let userHeading = userHeading?.trueHeading else { return }
+        guard let userHeading = userHeading?.trueHeading,
+              let currentUserLat = locationManager?.location?.coordinate.latitude,
+              let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+        let userLocation = CLLocation(latitude: currentUserLat, longitude: currentUserlong)
         
         for complaint in complaints {
-            let complaintLocaion = CLLocation(latitude: complaint.gpsX, longitude: complaint.gpsY)
+            let complaintLocaion = CLLocation(latitude: complaint.gpsY, longitude: complaint.gpsX)
             let distance = userLocation.distance(from: complaintLocaion)
             
-            if distance <= 15.0 {
+            if distance <= 5.0 {
                 print("DEBUG: 거리 들어옴")
                 let bearing = calculateBearing(location: userLocation, destination: complaintLocaion)
                 let headingDifference = abs(calculateHeadingDifference(userHeading, bearing))
@@ -220,6 +256,12 @@ class HomeViewController: UIViewController {
                 let maxAllowedDifference = 45.0 // 허용 오차 범위 (45도)
                 if headingDifference <= maxAllowedDifference {
                     print("DEBUG: 사용자 디바이스 방향으로 마킹의 위치에 5미터 내로 접근하였습니다.")
+                    if calledReportId == complaint.reportId {
+                        print("이미 불려진 음성입니다.")
+                    } else {
+                        calledReportId = complaint.reportId
+                        self.getVoiceRequest(reportId: complaint.reportId)
+                    }
                 }
             }
         }
@@ -270,14 +312,15 @@ class HomeViewController: UIViewController {
     }
     
     @objc func reportButtonTap() {
-        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
-        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
-        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
-
-        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
-        let nav = UINavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .overFullScreen
-        self.present(nav, animated: true)
+        playStreamingAudio()
+//        guard let currentUserLat = locationManager?.location?.coordinate.latitude else { return }
+//        guard let currentUserlong = locationManager?.location?.coordinate.longitude else { return }
+//        let position = NMGLatLng(lat: currentUserLat, lng: currentUserlong)
+//
+//        let vc = ReportMapViewController(location: CLLocation(latitude: position.lat, longitude: position.lng))
+//        let nav = UINavigationController(rootViewController: vc)
+//        nav.modalPresentationStyle = .overFullScreen
+//        self.present(nav, animated: true)
     }
     
     //MARK: - API
@@ -294,6 +337,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // 마크 탭 했을 시
     func tapedComplaint(model: TapedComplaintRequestModel) {
         ReportNetworkManager.shared.tapedComplaintRequest(parameters: model) { [weak self] (error, model) in
             guard let self = self else { return }
@@ -309,7 +353,28 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
+    func getVoiceRequest(reportId: String) {
+        print("음원 API 호출")
+        VoiceNetworkManager.shared.getVoiceRequest(reportId: reportId) { [weak self] (error, model) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let model = model {
+                if model.message == "성공했습니다." {
+                    // 음성 파일 실행
+                    guard let url = URL(string: model.result?.url ?? "") else { return }
+                    let player = AVPlayer(url: url)
+                    
+                    player.play()
+                } else {
+                    print("DEBUG: TOKEN 없음 - 음성 꺼져있음")
+                }
+            }
+        }
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -317,8 +382,6 @@ extension HomeViewController: CLLocationManagerDelegate {
     // 사용자 위치 변경 시
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        userLocation = location
-    
         checkComplaintsDistance()
     }
     

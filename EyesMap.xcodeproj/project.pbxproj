@@ -60,6 +60,8 @@
 		47E049B62A8FB3CE000A789D /* ReportLocationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E049B52A8FB3CE000A789D /* ReportLocationSettingView.swift */; };
 		47E365222AA5D4000047C9E4 /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E365212AA5D4000047C9E4 /* DistanceFormatter.swift */; };
 		47E365252AA899A90047C9E4 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E365242AA899A90047C9E4 /* WebViewController.swift */; };
+		47E365282AA8CFAA0047C9E4 /* VoiceNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E365272AA8CFAA0047C9E4 /* VoiceNetworkManager.swift */; };
+		47E3652A2AA8CFB80047C9E4 /* VoiceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E365292AA8CFB80047C9E4 /* VoiceRouter.swift */; };
 		47FD24A32A80CB3400529342 /* HomeComplaintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24A22A80CB3400529342 /* HomeComplaintView.swift */; };
 		47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24AD2A84FB0A00529342 /* DetailViewController.swift */; };
 		47FD24B22A850ACB00529342 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */; };
@@ -153,6 +155,8 @@
 		47E049B52A8FB3CE000A789D /* ReportLocationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportLocationSettingView.swift; sourceTree = "<group>"; };
 		47E365212AA5D4000047C9E4 /* DistanceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceFormatter.swift; sourceTree = "<group>"; };
 		47E365242AA899A90047C9E4 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		47E365272AA8CFAA0047C9E4 /* VoiceNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceNetworkManager.swift; sourceTree = "<group>"; };
+		47E365292AA8CFB80047C9E4 /* VoiceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRouter.swift; sourceTree = "<group>"; };
 		47FD24A22A80CB3400529342 /* HomeComplaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComplaintView.swift; sourceTree = "<group>"; };
 		47FD24AD2A84FB0A00529342 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		47FD24B12A850ACB00529342 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 				475B74452A93598B00C8BB97 /* Auth */,
 				47198FAE2A9DEF5A00349181 /* Report */,
 				47198FB32A9DF7FE00349181 /* Profile */,
+				47E365262AA8CF850047C9E4 /* Voice */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -320,13 +325,13 @@
 			path = GeoCoding;
 			sourceTree = "<group>";
 		};
-		475B743C2A92FFF600C8BB97 /* Report */ = {
+		475B743C2A92FFF600C8BB97 /* ReportScene */ = {
 			isa = PBXGroup;
 			children = (
 				475B743D2A93003C00C8BB97 /* ReportViewController.swift */,
 				475B743F2A93006400C8BB97 /* ReportImageColletionViewCell.swift */,
 			);
-			path = Report;
+			path = ReportScene;
 			sourceTree = "<group>";
 		};
 		475B74412A93482500C8BB97 /* LoginScene */ = {
@@ -361,6 +366,7 @@
 				47198FB12A9DEFDF00349181 /* ReportRouter.swift */,
 				47198FB62A9DF83500349181 /* ProfileRouter.swift */,
 				375264A02AA0CDD800A68801 /* RankingRouter.swift */,
+				47E365292AA8CFB80047C9E4 /* VoiceRouter.swift */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -441,7 +447,7 @@
 				475B74412A93482500C8BB97 /* LoginScene */,
 				478CA0582A6EB1FD000FA196 /* HomeScene */,
 				47E049B02A8F7BA3000A789D /* ReportMapScene */,
-				475B743C2A92FFF600C8BB97 /* Report */,
+				475B743C2A92FFF600C8BB97 /* ReportScene */,
 				3712219F2A97301600AEA499 /* LocationDataScene */,
 				47198FA52A9C993A00349181 /* HallOfFameScene */,
 				47FD24AC2A84FAF000529342 /* DetailScene */,
@@ -530,6 +536,14 @@
 				47E049B52A8FB3CE000A789D /* ReportLocationSettingView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		47E365262AA8CF850047C9E4 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				47E365272AA8CFAA0047C9E4 /* VoiceNetworkManager.swift */,
+			);
+			path = Voice;
 			sourceTree = "<group>";
 		};
 		47FD24A02A80CAF700529342 /* ViewController */ = {
@@ -892,6 +906,7 @@
 				475B74342A90ADB900C8BB97 /* GeoCodingNetworkManager.swift in Sources */,
 				47E049A02A8A31D2000A789D /* TapBarController.swift in Sources */,
 				47FD24AE2A84FB0A00529342 /* DetailViewController.swift in Sources */,
+				47E365282AA8CFAA0047C9E4 /* VoiceNetworkManager.swift in Sources */,
 				3719E9BA2AA4CBB000B0E1B2 /* JachiTableViewCell.swift in Sources */,
 				475B744E2A935E3C00C8BB97 /* AuthRouter.swift in Sources */,
 				47FD24BE2A862D8500529342 /* UIColor.swift in Sources */,
@@ -945,6 +960,7 @@
 				475B74362A90CA0900C8BB97 /* RestoreAlertController.swift in Sources */,
 				371221B62A97D1B100AEA499 /* RankingTableViewCell.swift in Sources */,
 				371221B22A979AC600AEA499 /* JachiDetailView.swift in Sources */,
+				47E3652A2AA8CFB80047C9E4 /* VoiceRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
