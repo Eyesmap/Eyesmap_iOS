@@ -1,30 +1,72 @@
 # Eyesmap
-파손된 채 방치된 점자블록으로 불편을 호소하는 사례는 더욱 늘어나고 있으며 매해 시각장애인 편의시설의 파손과 이에 대한 관리가 부족하다는 기사가 확인된다.   
-‘아이즈맵’은 위의 문제를 개선하고자 하는 목적을 가지고 있다.  
-1. 시각장애인의 권리와 복지 보장
-2. 시각장애인의 편의시설 사용 개선
-3. 시민의식과 공동 참여 증진
 
-# 개발환경 및 개발언어
-<img width="966" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/261cdded-30c8-4ca8-b39f-df860a39cf1f">
+"Eyesmap" is a voice map service that informs the damage of facilities for the blind.
+
+## Overview
+
+There are more and more cases of complaining of inconvenience with broken braille blocks. Every year, we see articles about inadequate management of facilities for the disabled.
+1. guarantee of the rights and welfare of the visually impaired.
+2. Improving the use of convenience facilities for the visually impaired
+3. Promotion of citizenship and joint participation
   
-# 아키텍처
-<img width="963" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/4f12116c-00ca-411c-88d2-3c4748631146">
+### Architecture
+
+<img width="963" alt="image" src="https://github.com/user-attachments/assets/772cd9db-b663-43de-8dbf-74db3d39d387">
+
   
-# 주요 기능
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/597f9550-8ea6-4e07-8650-9c4374351b03">
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/8bcd364d-df47-462e-a2ca-44ab653d8345">
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/49325058-939e-4c8c-8c6f-b7fd45c1bdd9">
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/1a87a316-5b8b-4f51-92dd-91361a5e3312">
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/08d7cef2-1a55-44f8-bf2f-93875e7e6955">
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/558b4052-cc98-42b5-9e89-29ec806f912c">
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/de089f2e-aefc-4bd0-9991-dcc68b8037b9">
+## For End User
+
+* ### Checking Demaged Facilities
+  * #### Voice Service
+    When the user's direction and distance align, they receive a voice prompt informing them of nearby facilities with issues.
+
+  * #### Displaying Information in Detail
+    The following information is provided: photo, report title, report category, location, distance to the facility, status, and the number of "dangerous" reactions.
+    Users can express their agreement through the "dangerous" button.
+
+  <img width="393" alt="image" src="https://github.com/user-attachments/assets/2467ed70-93ad-4cd0-a517-e9f97854d778">
+
   
+* ### Reporting Facilities for The Blind
+  Users enter the location of the facility, title, category, status, photo and report details.
+
+  <img width="187" alt="image" src="https://github.com/user-attachments/assets/b2c31641-310d-4385-8763-2014ce53dcab">
+
   
+* ### Deleting Report
+  After entering the report deletion section, reports can be deleted.
 
-# 디자인적 의미
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/48d81f36-48b6-4d04-a4d1-f6c625d55045">
-<img width="960" alt="image" src="https://github.com/Eyesmap/Eyesmap_Spring/assets/121854089/93ae6c72-6343-4dc9-a388-d0da1d7cafda">
+  <img width="429" alt="image" src="https://github.com/user-attachments/assets/038ddbf6-5df5-4209-884a-68b5588df6cb">
 
+* ### Reporting Repaired Facilities
+  After entering the report deletion section, restored facilities can be reported.
+  
+  The restoration reporting process will be completed as long as a photo is uploaded.
+  
+  <img width="394" alt="image" src="https://github.com/user-attachments/assets/236cc441-7002-4567-90df-d9e483845615">
 
+* ### Analysing Current State
+  1. Rank districts in Seoul based on the number of remaining reports.
+  2. When clicking on a district button on the map, it will display a ranked list of reports from that district, starting with the one that received the most "dangerous" reactions.
+ 
+     
+  <img width="326" alt="image" src="https://github.com/user-attachments/assets/0bc07883-1729-423f-b763-6e57eb887c35">
 
+* ### Hall of Fame
+  Display a list of users ranked by the number of reports they provided in each month.
+
+  <img width="188" alt="image" src="https://github.com/user-attachments/assets/d542221d-be83-449e-83b7-03384b70febf">
+
+* ### Profile
+  Click on the bottom right of the screen. It allows users to edit their own profile.
+  
+  <img width="187" alt="image" src="https://github.com/user-attachments/assets/ffe999b9-9c94-441f-abf5-2f1d5898dea0">
+
+## Video
+[🔗 Demonstration video](https://www.youtube.com/watch?v=vg7h92Tk2nc)
+
+## Connect
+- InGyu Na
+- HyeIn Lee: hil679922@gmail.com
+- MinSeop Kwak
+- HyeonJun Park
